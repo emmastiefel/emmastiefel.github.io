@@ -294,6 +294,13 @@
                 .on("click", function(d){
                     //clear out the tool tip
                     d3.select("#tooltip").classed("hidden", true);
+
+                    //display initial instructive tooltip
+                    d3.select("#tooltip")
+                        .classed("hidden", false)
+                        .style("left", "10%")
+                        .style("top", "75%")
+                        .text("Yo");
                     
                     //draw rects for each specific visa
                     //fil bar svg with rects for amount by country    
