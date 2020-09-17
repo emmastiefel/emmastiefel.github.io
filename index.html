@@ -46,8 +46,7 @@
                              .attr("class", "combined");
             //add title
             combined_div.append("h1")
-                        .text("💸 Exploring Student Visa Fees 💸")
-                        .style("color", "green");
+                        .text("💸 Exploring Student Visa Fees 💸");
 
             //instructions
             combined_div.append("p")
@@ -93,7 +92,7 @@
             //make scatter plot svg
             var scat_svg = d3.select(".scatter-plot").append("svg");
             //define variables for the pixels of the box
-            var h = 400
+            var h = 500
             var w = 700 //width of entire viz
             var padding = 60; //set padding for edges
 
@@ -103,7 +102,7 @@
             
         //MISC UNIVERSAL FORMATTING
         //colors for each rotation country
-        var country_colors = ["red", "blue", "green", "orange", "yellow", "purple", "brown"]
+        var country_colors = ["#EF4554", "#313F99", "#0C9146", "#F36F3B", "#FED41A", "#47BEE3", "#89181E"]
             //names for each rotation country, also column names for convenience
             var country_names = ["USA", "South Korea", "India", "Germany", "Argentina", "UK", "Taiwan"]
             //format values as currency
@@ -131,7 +130,7 @@
             x_max = 90000;//made manual cutoff so it wasnt ridiculously stretched out - screw you luxembourg
             var xScale = d3.scaleLinear()
                             .domain([0, x_max])
-                            .range([padding, w]);  
+                            .range([padding, w-padding/2]);  
             var yScale = d3.scaleLinear()
                             .domain([y_min - padding, y_max + padding])
                             .range([h - padding, padding/2]);  
@@ -191,8 +190,10 @@
                 .attr("x", function(d){    
                     return xScale(d.GDP_PC) - flag_size / 2; })
                 .attr("y", function(d){     return yScale(d.Approximate_Total) + flag_size / 4;})
-                .text(function(d){   return d.Emojis; }) //
-                .style("font-size", flag_size + "px");
+                .text(function(d){   return d.Emojis; }) 
+                .style("font-size", flag_size + "px")
+                .style("position", "relative");
+
                 //old circle code
                 //.append("circle")
                 //.attr("cx", function(d){    return xScale(d.GDP_PC); })
@@ -256,6 +257,7 @@
         //COUNTRY OVERVIEW - SCATTERPLOT POINTS HOVER
         scat_svg.selectAll(".nationality-icon")
             .on("mouseover", function(d){
+                    //make flag big and on top
                     d3.select(this)
                         .transition()
                         .style("font-size", (flag_size*2)+ "px");
@@ -269,6 +271,7 @@
                         .style("top", yP + xScale(flag_size) + "px")
                         //update the country name label
                         .select("#header")
+                        .style("color", "black")
                         .text(function(){
                             //show an asterisk if there are notes for the country
                             if (d.Notes){
@@ -295,13 +298,6 @@
                 .on("click", function(d){
                     //clear out the tool tip
                     d3.select("#tooltip").classed("hidden", true);
-
-                    //display initial instructive tooltip
-                    d3.select("#tooltip")
-                        .classed("hidden", false)
-                        .style("left", "10%")
-                        .style("top", "75%")
-                        .text("Yo");
                     
                     //draw rects for each specific visa
                     //fil bar svg with rects for amount by country    
