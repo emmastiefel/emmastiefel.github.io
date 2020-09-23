@@ -7,544 +7,191 @@
         <meta charset="utf-8">
         <title>Test Student Visa Fee Viz</title>
         <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://unpkg.com/enter-view"></script>
+
         <style>
-            h1, h2, h3, p {
+            h1, h2, h3, p, section {
                 font-family: sans-serif;
             }
-            #tooltip {
+            .sections {
                 position: absolute;
-                width: auto;
-                height: auto;
-                background-color: white;
-                -webkit-border-radius: 5px;
-                -moz-border-radius: 5px;
-                border-radius: 5px;
-                pointer-events: none;
-                -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-                -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+                display: inline-block;
+                z-index: 100;
+                width: 25%;
+                top: 50%;
+                left: 37.5%;
             }
-            #tooltip.hidden{
-                display: none;
+            .step {
+                text-align: center;
+                background-color: rgba(255, 255, 255, 0.5);
+                margin-bottom: 200%;
+            }
+            .plot-container{
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                overflow: scroll;
+                display: inline-block;
+                position: fixed;
+                z-index: 1;
+            }
+            .flag{
+                font-size: 100%;
             }
         </style>
     </head>
 
 <body>
+    <div class="sections">
+        <section class="step">
+            💸 Understanding Student Visa Fees 💸
+        </section>
+    </div>
+    <div class="plot-container"></div>
     <script type="text/javascript">
         var dataset;
         //LOAD DATA
         d3.csv("student_visa_fees_emojis - student_visa_fees_emojis (1).csv", d3.autoType).then(function(data){
             //store data as var:
             dataset = data;
+        
+        //OVERALL SETUP
+        var steps = ["USA","South Korea","India","Germany","Argentina","UK","Taiwan"]
+        var step_colors = {"USA": "#EF4554", 
+                              "South Korea": "#313F99", 
+                              "India": "#0C9146", 
+                              "Germany": "#F36F3B", 
+                              "Argentina": "#FED41A", 
+                              "UK": "#47BEE3", 
+                              "Taiwan": "#89181E",
+                              "Approximate_Total": "grey"}
 
-        ///////DRAW SCATTERPLOT
-        ///CREATE PLOT BOX DIV AND SVG + UNIVERSAL FORMATTING/COLORS
-        //make div for both scatter plot and bar
-        var combined_div = d3.select("body")
-                             .append("div")
-                             .attr("class", "combined");
-            //add title
-            combined_div.append("h1")
-                        .text("💸 Exploring Student Visa Fees 💸");
-
-            //instructions
-            combined_div.append("p")
-                   .text("Filter fees by visa country:")
-                   .style("display", "block");
-            //filter menu div - filled later
-            var filter_menu = combined_div.append("div")
-                   .attr("class", "filter-menu");
-
-
-        //TOOLTIPS - UNIVERSAL FORMATTING 
-        var tt_p = 10;
-        var tooltip_div = d3.select(".combined").append("div")
-                                                 .attr("id", "tooltip")
-                                                .attr("class", "hidden")
-                                                .style("padding", 5 +"px");
-            tooltip_div.append("p")
-                       .attr("id", "header")
-                       .style("font-weight", "bold")
-                       .text("Hover on a flag to learn more about visa fees for that nationality!");
-            tooltip_div.append("p")
-                       .attr("id", "body");
-            tooltip_div.append("p")
-                       .attr("id", "notes");
-            //style all text elements
-            tooltip_div.selectAll("p")
-                        .style("font-family", "sans-serif")
-                        .style("margin", "0")
-                        .style("line-height", "20px")
-                        .style("font-size", "16px");
-
-        //display initial instructive tooltip
-        d3.select("#tooltip")
-            .classed("hidden", false)
-            .style("left", "10%")
-            .style("top", "25%");
-
-                        
-        //make scatter plot div
-        var scat_div = d3.select(".combined")
-                             .append("div")
-                             .attr("class", "scatter-plot");
-            //make scatter plot svg
-            var scat_svg = d3.select(".scatter-plot").append("svg");
-            //define variables for the pixels of the box
-            var h = 500
-            var w = 700 //width of entire viz
-            var padding = 60; //set padding for edges
-
-            //generate svg                
-            scat_svg.attr("width", w)
-                    .attr("height", h);
-            
-        //MISC UNIVERSAL FORMATTING
-        //colors for each rotation country
-        var country_colors = ["#EF4554", "#313F99", "#0C9146", "#F36F3B", "#FED41A", "#47BEE3", "#89181E"]
-            //names for each rotation country, also column names for convenience
-            var country_names = ["USA", "South Korea", "India", "Germany", "Argentina", "UK", "Taiwan"]
-            //format values as currency
-            var formatAsCurrency = d3.format("$1,")
-        //overwrite cursorr so it is always the arrow, not the text bar
-        d3.select("body").style("cursor", "default"); 
+        //SETUP SVG
+        var w = 100;
+        h = 100;
+        var p = 5;
+        //generate svg container
+        var plot_svg = d3.select(".plot-container")
+                         .append("svg")
+                         .attr("width", "100%")
+                         .attr("height", "100%");
 
         //SCALES
-        //set base scale
-        var scale = d3.scaleLinear();
-            
-            //retrieve max values of each dimension of the list
-            //x-axis = gdp per capita
-            var x_max = (d3.max(dataset, function(d){
-                return d.GDP_PC;
+        //x-axis = approximate total
+        var y_max = (d3.max(dataset, function(d){
+                return d["Approximate_Total"];
             }));
-            //y-axis = total student visa fee price
-            var y_max = (d3.max(dataset, function(d){
-                return d.Approximate_Total;
+        //minimum x-value is lowest initial (usa) fee
+        var y_min= (d3.min(dataset, function(d){
+                return d["USA"];
             }));
-            var y_min = (d3.min(dataset, function(d){
-                return d.Approximate_Total;
-            }));
-            //set linear scales for each axis
-            x_max = 90000;//made manual cutoff so it wasnt ridiculously stretched out - screw you luxembourg
-            var xScale = d3.scaleLinear()
-                            .domain([0, x_max])
-                            .range([padding, w-padding/2]);  
-            var yScale = d3.scaleLinear()
-                            .domain([y_min - padding, y_max + padding])
-                            .range([h - padding, padding/2]);  
+        var yScale = d3.scaleLinear()
+                        .domain([y_min, y_max])
+                        .range([h-p, p]);  
+        
 
-        //AXES
-        //add left vertical axis 
-        var yAxis = d3.axisLeft()
-                             .scale(yScale)
-                             .ticks(5)
-                             .tickFormat(formatAsCurrency);
-            scat_svg.append("g")
-                    .attr("class", "y-axis")
-                    //if you dont move it over it wont show up :)
-                    .attr("transform", "translate(" + padding + ",0)")
-                    .call(yAxis);
-            //add bottom horizontal axis 
-            var xAxis = d3.axisBottom()
-                             .scale(xScale)
-                             .ticks(10)
-                             .tickFormat(formatAsCurrency);
-            scat_svg.append("g")
-                    .attr("class", "x-axis")
-                    .attr("transform", "translate(0," + (h-padding) + ")")
-                    .call(xAxis);
+        //DRAW FLAGS
 
-            // add y-axis label
-            scat_svg.append("text")
-                .attr("class", "axis-label")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 0)
-                .attr("x", 0 - (h / 2))
-                .attr("dy", "10px")
-                .style("text-anchor", "middle")
-                .text("Approximate Student Visa Fees (USD)"); 
-            // add x-axis label
-            scat_svg.append("text")
-                .attr("class", "axis-label")
-                .attr("x", (w / 2))
-                .attr("y", h-(padding /4))
-                .style("text-anchor", "middle")
-                .text("GDP Per Capita (USD)"); 
+        //function to calculate cumulative fee/y-value
+        function calculate_y(d, filter){
+            //iterate through all steps but the last one (dont sum the total)
+            current_sum = d[filter];
+            for (i = 0; i < steps.length; i++){
+                if (steps[i] != filter){
+                    this_fee = d[steps[i]];
+                    current_sum += this_fee;
+                }
+                else{
+                    break;
+                }
+            };
+            return yScale(current_sum) + "%"; //return new x value as a percentage
+        };
+        
+        //function to space out flags along x-axis:
+        function space_flags(d, i, filter){
+            //default x-axis value
+            this_x = 0;
+            c = 1;
+            //find y-value for current datapoint
+            this_y = calculate_y(d, filter);//yScale(dataset[i][filter]);
+            //iterate through all datapoints until you reach the first one
+            while ((i-c) > 0) {
+                //find the y-value for the given previous point
+                prev_y = calculate_y(dataset[i-c],filter);
+                //if the previous point overlaps with this one, increment its x-position by p
+                if (this_y == prev_y){
+                    this_x = this_x + 1;
+                };
+                c = c + 1;//increment c by 1 each iteration
+            };
+            if (this_x > x_max) {
+                x_max = this_x;
+            }
+            return this_x + "%"; //return new x value as a percentage
+        };
 
-            //style axis labels
-            d3.selectAll(".axis-label")
-                .style("font-family", "sans-serif")
-                .style("font-size", "14");
+        //function to update data each time filter is called
+        function update_flags(filter){
+            //update background color to match current filter
+            d3.select(".plot-container").style("background-color", step_colors[filter])
 
-        //DRAW THE PLOT POINTS
-        //variable for radius, also used w/label distance
-        //but now replace dots with emojis!!!
-        var flag_size = "30";
-        scat_svg.selectAll(".nationality-icon")
-                .data(dataset)
-                .enter()
-                .append("text")
-                .attr("class", "nationality-icon")
-                .attr("x", function(d){    
-                    return xScale(d.GDP_PC) - flag_size / 2; })
-                .attr("y", function(d){     return yScale(d.Approximate_Total) + flag_size / 4;})
-                .text(function(d){   return d.Emojis; }) 
-                .style("font-size", flag_size + "px")
-                .style("position", "relative");
+            //add flags to svg
+            x_max = 100; //var to track max x-value :)
+            raw_amount = 0;
+            plot_svg.selectAll(".flag")
+                    .transition()
+                    .attr("y", function(d){
+                        return calculate_y(d, filter);
+                    })
+                    .attr("x", function(d, i){
+                        return space_flags(d, i, filter);
+                    });
+            //resize to match width
+            plot_svg.attr("width", x_max + "%");
+        };
 
-                //old circle code
-                //.append("circle")
-                //.attr("cx", function(d){    return xScale(d.GDP_PC); })
-                //.attr("cy", function(d){     return yScale(d.Approximate_Total);})
-                //.attr("r", r);
-
-        //DRAW SPECIFIC COUNTRY BAR
-        var b_w = w;
-        var b_h = h/4;
-        var bar_div = d3.select(".combined").append("div").attr("class", "bar-div")
-                            .style("background-color", "white");
-
-            //create header to show what country details are for
-            var bar_head = d3.select(".bar-div").append("p")
-                            .style("font-size", "20px");
-            var bar_head_bold = bar_head.append("span")
-                             .attr("id", "bold");
-            //initialize as:
-            bar_head_bold.text("Click a dot to display details for a specific nationality.")
-                    .style("font-weight", "bold");
-            //create span to showw non-bold text
-            var bar_head_light = d3.select(".bar-div").select("p")
-                             .append("span")
-                             .attr("id", "light");
-                    
-            //create and size svg to contain single bar chart
-            var bar_svg = d3.select(".bar-div").append("svg");    
-                bar_svg.attr("width", b_w)
-                       .attr("height", b_h)
-                       .style("background-color", "white");
-
-            //append temp rectangles, updated with values later on click
-            var temp_data = [1,2,3,4,5,6,7];
-                bar_svg.selectAll("rect")
-                    .data(temp_data)
+        //INITIALIZE FLAGS
+        plot_svg.selectAll("text")
+                    .data(dataset)
                     .enter()
-                    .append("rect")
-                    .attr("x", 0)
-                    .attr("width",0)
-                    .attr("y", 0)
-                    .attr("height", b_h)
-                    .style("fill", function(d, i){
-                        return country_colors[i];
+                    .append("text")
+                    .attr("class", "flag")
+                    .attr("y", function(){
+                        return yScale(Math.random() * (y_max-y_min)) + "%";
                     })
-                    //store country name as the id
-                    .attr("id", function(d, i){
-                        return country_names[i];
-                    });
-
-            //create span to show notes
-            var bar_notes = d3.select(".bar-div")
-                             .append("p")
-                             .attr("id", "notes")
-                             .style("font-size", "12px")
-                             .text(" ");
-            //format all text
-            bar_div.selectAll("p")
-                   .style("margin", "5px");
-                       
-        //INTERACTIVITY
-        //COUNTRY OVERVIEW - SCATTERPLOT POINTS HOVER
-        scat_svg.selectAll(".nationality-icon")
-            .on("mouseover", function(d){
-                    //make flag big and on top
-                    d3.select(this)
-                        .transition()
-                        .style("font-size", (flag_size*2)+ "px");
-                    //create label
-                    //grab positions from svg circle and feed into label
-                    var xP = parseFloat(d3.select(this).attr("x"));
-                    var yP = parseFloat(d3.select(this).attr("y"));
-
-                    d3.select("#tooltip")
-                        .style("left", xP + xScale(flag_size)*1.25 + "px")
-                        .style("top", yP + xScale(flag_size) + "px")
-                        //update the country name label
-                        .select("#header")
-                        .style("color", "black")
-                        .text(function(){
-                            //show an asterisk if there are notes for the country
-                            if (d.Notes){
-                                return (d.Nationality + "*")
-                            } else {
-                                return (d.Nationality)
-                            }
-                        });
-                    //update the approximate total amount
-                    d3.select("#tooltip")
-                      .select("#body")
-                      .text("Approximate Total: " + formatAsCurrency(d.Approximate_Total));
-
-                    //Show the label (tooltip)
-                    d3.select("#tooltip").classed("hidden", false);
-                })
-                .on("mouseout", function(d){
-                    d3.select(this)
-                        .transition()
-                        .style("font-size", flag_size+ "px");
-                    d3.select("#tooltip").classed("hidden", true);
-                })
-                //CLICK FOR DETAILS
-                .on("click", function(d){
-                    //clear out the tool tip
-                    d3.select("#tooltip").classed("hidden", true);
-                    
-                    //draw rects for each specific visa
-                    //fil bar svg with rects for amount by country    
-                    var specific_data = [d.USA, d["South Korea"], d.India, d.Germany, d.Argentina, d.UK, d.Taiwan];
-                    var specific_total = d.Approximate_Total;
-                    //normalize data so it fills in the bar
-                    var norm_specific_data = [];
-                    for (i = 0; i < 7; i++){
-                        //var norm_this = (specific_data[i] / specific_total)*b_w;
-                        var norm_this = (specific_data[i] / y_max)*b_w;
-                        //store d in each rect for future use?? 
-                        norm_specific_data.push([norm_this, d]);
-                    };
-                    //generate indices for each rectangle
-                    var x_indices = [0]
-                    var x_prior = 0;
-                    for (i = 1; i < 7; i++){
-                        var x_this = norm_specific_data[i-1][0] + x_prior;
-                        x_indices.push(x_this);
-                        x_prior = x_this;       
-                    };
-                    //update rectangles appropriately
-                    bar_svg.selectAll("rect")
-                            .data(norm_specific_data)
-                            .transition()
-                            .attr("x", function(d, i){
-                                return x_indices[i];
-                            })
-                            .attr("width", function(d){
-                                return d[0];
-                            })
-                            .attr("y", 0)
-                            .attr("height", b_h);
-                    //update the bar header for this country
-                    bar_head_bold.text(d.Emojis + " " + d.Nationality + ": ");
-                    bar_head_light.text("approximately " + formatAsCurrency(d.Approximate_Total) + " total");
-                    //update notes if needed
-                    bar_notes.text(function(x){
-                        if (d.Notes){
-                            return ("*" + d.Notes);
-                        } 
-                    });
-                });
-
-            //TOOLTIPS + DETAILS FOR BARS
-            bar_svg.selectAll("rect")
-                   .on("mouseover", function(d, i){
-                       //access original data about overall country:
-                       var this_d = d[1];
-                       //get original name
-                       var this_name = d3.select(this).attr("id");
-                       //create label
-                        //grab positions from svg circle and feed into label
-                        var xP = parseFloat(d3.select(this).attr("x"));
-                        var wP = parseFloat(d3.select(this).attr("width"));
-                        d3.select("#tooltip")
-                            .style("left", xP + "px")
-                        d3.select("#tooltip")
-                            .style("left", xP + tt_p + "px")
-                            .style("top", h + b_h*1.5 + "px")
-                            //update the country name label
-                            .select("#header")
-                            .text(this_name)
-                            .style("color", country_colors[i]);
-                            //update the amount for that country
-                        d3.select("#tooltip")
-                            .select("#body")
-                            //us id/country name to access visa fee amount, display as currency
-                            .text(function(d){
-                                return formatAsCurrency(this_d[this_name]);
-                            });
-                        
-                        //Show the label (tooltip)
-                        d3.select("#tooltip").classed("hidden", false);
-                   })
-                   .on("mouseout", function(d){
-                        //hide the label (tooltip)
-                        d3.select("#tooltip").classed("hidden", true);
-                   })
-
-        //FILTER VIEWS - SINGLE VISAS (VS. TOTAL)
-        //add return to total view option
-        //shown as highlighted from init
-        filter_menu.append("p")
-                   .text("Total")
-                   .attr("class", "total-option")
-                   .style("background-color", "black")
-                    .style("color", "white");;
-        //GENERATE Paragraphs FOR EACH FILTER
-            //each is the name of the country
-            filter_menu.selectAll(".filter-option")
-                   .data(country_names)
-                   .enter()
-                   .append("p")
-                   .text(function(d){
-                       return d;
-                   })
-                   .attr("class", "filter-option")
-                   .style("color", function(d, i){return country_colors[i];} );
-            filter_menu.selectAll("p")
-                   .style("display", "inline")
-                   .style("font-weight", "bold")
-                   .style("margin-right", padding/2+"px")
-                   .style("padding", "5px")
-                   .style("border-radius", "5px");
-
-
-        //FILTER VIEW SCALE generate scale + axis for single-country views
-        //only generate one scale vs. update for each country because I want constant comparisons!!!!!!! heck ya
-        //y-axis = total student visa fee price
-        //find match individual visa price for all nationalities
-        var single_y_max = (d3.max(dataset, function(x){
-                    //find max individual visa price for given nationality
-                    var row_max = d3.max(country_names, function(c){
-                        return x[c];
-                    });
-                    return row_max;
-                }));
-        //create yScale domain for single visas
-        var single_yScale = d3.scaleLinear()
-                    .domain([0, single_y_max])
-                    .range([h - padding, padding]); 
-
-        //INTERACTIVITY - CLICK TO FILTER 
-        var active = ""
-        var from_total = true //only change axis color if its being adjusted
-        d3.selectAll(".filter-option")
-            //highlight on mouseover, for fun 
-            .on("mouseover", function(d, i){
-                d3.select(this)
-                    .transition()
-                    .style("background-color", country_colors[i])
-                    .style("color", "white");
-            })
-            .on("mouseout", function(d, i){
-                //if it isn't the active view, return to normal
-                //otherrwise keep highlight active 
-                if (active != d){
-                    d3.select(this)
-                    .transition()
-                    .style("color", country_colors[i])
-                    .style("background-color", "white");
-                }
-                
-            })
-            //click to update data (rewrite yScale to focus on that country)
-            .on("click", function(d, i){
-                active = d;
-
-                //reset total option to black
-                filter_menu.select(".total-option")
-                    .style("color", "black")
-                    .style("background-color", "white");
-                //rese others to relevant color
-                filter_menu.selectAll(".filter-option")
-                    .data(country_names)
-                    .style("color", function(d, i){
-                        return(country_colors[i]);
+                    .attr("x", function(){
+                        return yScale(Math.random() * (y_max-y_min)) + "%";
                     })
-                    .style("background-color", "white");
+                    .text(function(d){   return d.Emojis; });
 
-                //highlight 4 clarity
-                d3.select(this)
-                    .style("background-color", country_colors[i])
-                    .style("color", "white");
+        //SETUP STEP TEXT
+        //add a step section for each available filter
+        d3.select(".sections")
+                .selectAll(".data-step")
+                .data(steps)
+                .enter()
+                .append("section")
+                .attr("class", "step data-step")
+                .attr("id", function(d){return d;})
+                .text(function(d){return d;});
 
-                //update axis w/previously created single-visa scale
-                yAxis = d3.axisLeft()
-                    .scale(single_yScale)
-                    .ticks(5)
-                    .tickFormat(formatAsCurrency);
-                scat_svg.select(".y-axis")
-                    .transition()
-                    .on("start", function(){
-                        if (from_total === true){
-                            from_total = false;
-                            d3.select(this).style("color", "red");
-                        }
-                    })
-                    .call(yAxis)
-                    .on("end", function(){
-                        d3.select(this).style("color", "black");
-                    });
-                //update y position
-                d3.selectAll(".nationality-icon")
-                    .transition()
-                    .attr("y", function(x){     return single_yScale(x[country_names[i]]) + flag_size / 4;});
-            });
+        //SCROLL TRIGGERS - ENTER VIEW
+        enterView({
+            selector: '.data-step',
+            enter: function(el) {
+                el.classList.add('entered');
+                this_filter = el.id; // store filter/element id
+                console.log(el.id)
+                update_flags(this_filter)
+            },
+            exit: function(el){
+                el.classList.remove('entered');
+            },
+            offset: 0.25, // enter at bottom of viewport
+        });
 
-            //INTERACTIVITY - CLICK TO return to filter 
-            d3.selectAll(".total-option")
-            //highlight on mouseover, for fun 
-            .on("mouseover", function(d, i){
-                d3.select(this)
-                    .transition()
-                    .style("background-color", "black")
-                    .style("color", "white");
-            })
-            .on("mouseout", function(d){
-                //if it isn't the active view, return to normal
-                //otherrwise keep highlight active 
-                if (active != d){
-                    d3.select(this)
-                    .transition()
-                    .style("color", "black")
-                    .style("background-color", "white");
-                }
-                
-            })
-            //click to update data (rewrite yScale to focus on that country)
-            .on("click", function(d, i){
-                from_total = true;
-                //rese others to relevant color
-                filter_menu.selectAll(".filter-option")
-                    .data(country_names)
-                    .style("color", function(d, i){
-                        return(country_colors[i]);
-                    })
-                    .style("background-color", "white");
-
-                active = d;
-                //highlight 4 clarity
-                d3.select(this)
-                    .style("background-color", "black")
-                    .style("color", "white");
-
-                //update axis w/previously created total scale
-                yAxis = d3.axisLeft()
-                    .scale(yScale);
-                scat_svg.select(".y-axis")
-                    .transition()
-                    .on("start", function(){
-                        if (from_total === true){
-                            d3.select(this).style("color", "red");
-                        }
-                    })
-                    .call(yAxis)
-                    .on("end", function(){
-                        d3.select(this).style("color", "black");
-                    });
-                //update y position
-                d3.selectAll(".nationality-icon")
-                    .transition()
-                    .attr("y", function(x){     return yScale(x.Approximate_Total) + flag_size / 4;});
-            });
-
-
-            });//leave here
-     </script>
+            });//leave here 
+            </script>
 </body>
