@@ -36,8 +36,8 @@
                 position: fixed;
                 z-index: 1;
             }
-            .hidden{
-                display: none;
+            .flag{
+                font-size: 100%;
             }
         </style>
     </head>
@@ -55,9 +55,6 @@
         d3.csv("student_visa_fees_emojis - student_visa_fees_emojis (1).csv", d3.autoType).then(function(data){
             //store data as var:
             dataset = data;
-
-        //sort data by appr. total
-        dataset.sort(function (a,b) {return d3.descending(a["Approximate_Total"], b["Approximate_Total"]);});
         
         //OVERALL SETUP
         var steps = ["USA","South Korea","India","Germany","Argentina","UK","Taiwan"]
@@ -73,7 +70,7 @@
         //SETUP SVG
         var w = 100;
         h = 100;
-        var p = 2;
+        var p = 5;
         //generate svg container
         var plot_svg = d3.select(".plot-container")
                          .append("svg")
@@ -81,42 +78,23 @@
                          .attr("height", "100%");
 
         //SCALES
-        //max fee value is highest total fee
-        var fee_max = (d3.max(dataset, function(d){
+        //x-axis = approximate total
+        var y_max = (d3.max(dataset, function(d){
                 return d["Approximate_Total"];
             }));
-        //minimum fee value is lowest initial (usa) fee
-        var fee_min= (d3.min(dataset, function(d){
+        //minimum x-value is lowest initial (usa) fee
+        var y_min= (d3.min(dataset, function(d){
                 return d["USA"];
             }));
-        //returns fee as percentage ww/ padding
-        var fee_percent_scale = d3.scaleLinear()
-                        .domain([fee_min, fee_max])
-                        .range([p, 100-p]);  
-        var bar_percent_scale = d3.scaleBand()
-                                  .domain(dataset.map(d => d["Nationality"]))
-                                  .range([5, 95]);
+        var yScale = d3.scaleLinear()
+                        .domain([y_min, y_max])
+                        .range([h-p, p]);  
         
-        //DRAW AXIS
-        var fee_axis_scale = d3.scaleLinear()
-                               .domain([fee_min, fee_max])
-                               .range(500, 50);
-
-        var formatAsCurrency = d3.format("$1,")
-        var yAxis = d3.axisLeft()
-                             .scale(fee_axis_scale)
-                             .ticks(5)
-                             .tickFormat(formatAsCurrency);
-            plot_svg.append("g")
-                    .attr("class", "y-axis")
-                    //if you dont move it over it wont show up :)
-                    .attr("transform", "translate(" + 50 + ",0)")
-                    .call(yAxis);
 
         //DRAW FLAGS
 
         //function to calculate cumulative fee/y-value
-        function calculate_total(d, filter){
+        function calculate_y(d, filter){
             //iterate through all steps but the last one (dont sum the total)
             current_sum = d[filter];
             for (i = 0; i < steps.length; i++){
@@ -128,53 +106,67 @@
                     break;
                 }
             };
-            return current_sum; //return new total value as a percentage
+            return yScale(current_sum) + "%"; //return new x value as a percentage
         };
         
-        //function to update data each time filter is called
-        function update_flags(filter){
-            //select + show bars for this filter
-            plot_svg.selectAll("."+filter.replace(" ", "-"))
-                .classed("hidden", false)
-
+        //function to space out flags along x-axis:
+        function space_flags(d, i, filter){
+            //default x-axis value
+            this_x = 0;
+            c = 1;
+            //find y-value for current datapoint
+            this_y = calculate_y(d, filter);//yScale(dataset[i][filter]);
+            //iterate through all datapoints until you reach the first one
+            while ((i-c) > 0) {
+                //find the y-value for the given previous point
+                prev_y = calculate_y(dataset[i-c],filter);
+                //if the previous point overlaps with this one, increment its x-position by p
+                if (this_y == prev_y){
+                    this_x = this_x + 1;
+                };
+                c = c + 1;//increment c by 1 each iteration
+            };
+            if (this_x > x_max) {
+                x_max = this_x;
+            }
+            return this_x + "%"; //return new x value as a percentage
         };
 
-        //INITIALIZE BARS
-        //create div for each nationality
-        plot_svg.selectAll(".fee-bar")
+        //function to update data each time filter is called
+        function update_flags(filter){
+            //update background color to match current filter
+            d3.select(".plot-container")
+                .transition()
+                .style("background-color", step_colors[filter]);
+
+            //add flags to svg
+            x_max = 100; //var to track max x-value :)
+            raw_amount = 0;
+            plot_svg.selectAll(".flag")
+                    .transition()
+                    .attr("y", function(d){
+                        return calculate_y(d, filter);
+                    })
+                    .attr("x", function(d, i){
+                        return space_flags(d, i, filter);
+                    });
+            //resize to match width
+            plot_svg.attr("width", x_max + "%");
+        };
+
+        //INITIALIZE FLAGS
+        plot_svg.selectAll("text")
                     .data(dataset)
                     .enter()
-                    .append("g")
-                    .attr("id", function(d){
-                        return d["Nationality"];
+                    .append("text")
+                    .attr("class", "flag")
+                    .attr("y", function(){
+                        return yScale(Math.random() * (y_max-y_min)) + "%";
                     })
-                    .attr("class", "fee-bar")
-                        //create rect for each fee :D
-                        .selectAll("rect")
-                        .data(steps)
-                        .enter()
-                        .append("rect")
-                        //class is hidden and fee country name
-                        .attr("class", function(d){
-                            return d.replace(" ", "-") + " hidden";
-                        })
-                        .attr("x", function(){
-                            //calculate x using parent div nationality
-                            parent_d = d3.select(this.parentNode).datum();
-                            return bar_percent_scale(parent_d["Nationality"]) +"%";
-                        })
-                        .attr("width", bar_percent_scale.bandwidth()*2)
-                        .attr("y", function(d){
-                        parent_d = d3.select(this.parentNode).datum();
-                        return h - fee_percent_scale(calculate_total(parent_d, d)) +"%";
-                        })
-                        .attr("height", function(d){
-                            parent_d = d3.select(this.parentNode).datum();
-                            return fee_percent_scale(parent_d[d])+"%";
-                        })
-                        .style("fill", function(d){
-                            return step_colors[d];
-                        });
+                    .attr("x", function(){
+                        return yScale(Math.random() * (y_max-y_min)) + "%";
+                    })
+                    .text(function(d){   return d.Emojis; });
 
         //SETUP STEP TEXT
         //add a step section for each available filter
