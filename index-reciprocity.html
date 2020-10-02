@@ -59,16 +59,6 @@
             </p>
 
         </section>
-        <section class="step data-step" id="USA">USA</section>
-        <section class="step data-step" id="USA Reciprocity Fee">USA Reciprocity Fee</section>
-        <section class="step data-step" id="South Korea">South Korea</section>
-        <section class="step data-step" id="India">India</section>
-        <section class="step data-step" id="Germany">Germany</section>
-        <section class="step data-step" id="Argentina">Argentina</section>
-        <section class="step data-step" id="UK">UK</section>
-        <section class="step data-step" id="Taiwan">Taiwan</section>
-        <section class="step data-step" id="USA Reapply">USA Reapply</section>
-        <section class="step data-step" id="USA Reapply Reciprocity">USA Reapply Reciprocity</section>
         
     </div>
     
@@ -245,7 +235,18 @@
                 //hide tooltip again
                 d3.select(".tooltip").classed("hidden", true);
             })
-             
+            
+            
+        //SETUP STEP TEXT
+        //add a step section for each available filter
+        d3.select(".sections")
+                .selectAll(".data-step")
+                .data(steps)
+                .enter()
+                .append("section")
+                .attr("class", "step data-step")
+                .attr("id", function(d){return d;})
+                .text(function(d){return d;});
 
         //SCROLL TRIGGERS - ENTER VIEW
         enterView({
