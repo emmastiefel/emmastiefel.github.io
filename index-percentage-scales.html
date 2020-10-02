@@ -20,15 +20,11 @@
                 width: 25%;
                 top: 50%;
                 left: 37.5%;
-                pointer-events:none;
             }
             .step {
                 text-align: center;
                 background-color: rgba(255, 255, 255, 0.5);
                 margin-bottom: 200%;
-            }
-            .tooltip{
-                position: absolute;
             }
             .plot-container{
                 top: 0;
@@ -50,47 +46,38 @@
     <div class="sections">
         <section class="step">
             💸 Understanding Student Visa Fees 💸
-            <p>All Minerva students have to pay student visa fees in order to complete the global rotation. But many students are not fully aware of these fees when they enroll, and more misestimate fees even if they anticipate them. Of 12 students who responded to a Quest anonymous survey, five students said they either did not expect to pay for student visa fees or did not have any estimated amount in mind when they enrolled. Eight of the respondents reported paying more for student visa fees than they anticipated. 
-            </p>
-            <p>How much students pay in student visa fees varies significantly between nationalities. Some rotation countries raise fees for specific nationalities, increasing costs.
-            </p>
-
         </section>
     </div>
-    
-    <div class="plot-container">
-        <div class="yeet hidden">
-            <p>yeeeeeeee</p>
-        </div>
-    </div>
+    <div class="plot-container"></div>
     <script type="text/javascript">
         var dataset;
         //LOAD DATA
-        // now have reciprocity fees :)
-        d3.csv("reapply_reciprocity_student_visa_fees.csv", d3.autoType).then(function(data){
+        d3.csv("student_visa_fees_emojis - student_visa_fees_emojis (1).csv", d3.autoType).then(function(data){
             //store data as var:
             dataset = data;
+        
+        //CALCULATE APPROXIMATE TOTALS
+        for (i = 0; i < dataset.length; i++){
+            console.log("hey")
+        }
 
         //sort data by appr. total
         dataset.sort(function (a,b) {return d3.descending(a["Approximate_Total"], b["Approximate_Total"]);});
         
         //OVERALL SETUP
-        var steps = ["USA", "USA Reciprocity Fee", "South Korea","India","Germany","Argentina","UK","Taiwan", "USA Reapply", "USA Reapply Reciprocity"]
+        var steps = ["USA","South Korea","India","Germany","Argentina","UK","Taiwan"]
         var step_colors = {"USA": "#EF4554", 
-                              "USA Reciprocity Fee": "#EF4554",
                               "South Korea": "#313F99", 
                               "India": "#0C9146", 
                               "Germany": "#F36F3B", 
                               "Argentina": "#FED41A", 
                               "UK": "#47BEE3", 
                               "Taiwan": "#89181E",
-                              "USA Reapply": "#EF4554",
-                              "USA Reapply Reciprocity": "#EF4554"}
+                              "Approximate_Total": "grey"}
 
         //SETUP SVG
         var w = 1000;
-        var p_h = 10;
-        var p_w = 45;
+        var p = 2;
         var h = 450;
         //generate svg container
         var plot_svg = d3.select(".plot-container")
@@ -109,16 +96,16 @@
         //returns fee as percentage ww/ padding
         var fee_percent_scale = d3.scaleLinear()
                         .domain([fee_min, fee_max])
-                        .range([0, h-p_h]);  
+                        .range([p, 100-p]);  
         var bar_percent_scale = d3.scaleBand()
                                   .domain(dataset.map(d => d["Nationality"]))
-                                  .range([p_w, w-p_w/4]);
+                                  .range([5, 95]);
         
         //DRAW AXIS
         console.log(fee_min, fee_max)
         var fee_axis_scale = d3.scaleLinear()
                                .domain([fee_max, fee_min])
-                               .range([0, h-p_h]);
+                               .range([p, h-p]);
 
         var formatAsCurrency = d3.format("$1,")
         var yAxis = d3.axisLeft()
@@ -131,18 +118,13 @@
                     .attr("transform", "translate(" + 40 + ", 0)")
                     .call(yAxis);
 
-        //CREATE TOOLTIP
-        var tooltip_div = plot_svg.append("text").attr("class", "tooltip")
-                                    .text("aljd");
+        //DRAW FLAGS
 
-        //DRAW BARS
         //function to calculate cumulative fee/y-value
         function calculate_total(d, filter){
-            //set initial value to fee for this step
+            //iterate through all steps but the last one (dont sum the total)
             current_sum = d[filter];
-            
-            //iterate through all steps
-            for (i = 0; i < steps.length + 1; i++){
+            for (i = 0; i < steps.length; i++){
                 if (steps[i] != filter){
                     this_fee = d[steps[i]];
                     current_sum += this_fee;
@@ -151,17 +133,14 @@
                     break;
                 }
             };
-            
             return current_sum; //return new total value as a percentage
         };
         
         //function to update data each time filter is called
         function update_flags(filter){
             //select + show bars for this filter
-            plot_svg.selectAll("."+filter.replaceAll(" ", "-"))
+            plot_svg.selectAll("."+filter.replace(" ", "-"))
                 .classed("hidden", false)
-            plot_svg.selectAll(".fee-bar")
-                    .attr("filter", filter);
 
         };
 
@@ -182,57 +161,26 @@
                         .append("rect")
                         //class is hidden and fee country name
                         .attr("class", function(d){
-                            return d.replaceAll(" ", "-") + " hidden";
+                            return d.replace(" ", "-") + " hidden";
                         })
                         .attr("x", function(){
                             //calculate x using parent div nationality
                             parent_d = d3.select(this.parentNode).datum();
-                            return bar_percent_scale(parent_d["Nationality"]);
+                            return bar_percent_scale(parent_d["Nationality"]) +"%";
                         })
-                        //set width using bar scale
-                        .attr("width", bar_percent_scale.bandwidth())
+                        .attr("width", bar_percent_scale.bandwidth()*2)
                         .attr("y", function(d){
-                            parent_d = d3.select(this.parentNode).datum();
-                            return h - fee_percent_scale(calculate_total(parent_d, d))- p_h;// ;
+                        parent_d = d3.select(this.parentNode).datum();
+                        return 100 - fee_percent_scale(calculate_total(parent_d, d)) +"%";
                         })
                         .attr("height", function(d){
                             parent_d = d3.select(this.parentNode).datum();
-                            return fee_percent_scale(parent_d[d]);
+                            return fee_percent_scale(parent_d[d])+"%";
                         })
                         .style("fill", function(d){
                             return step_colors[d];
                         });
 
-        //HOVER TOOLTIPS - SHOW COUNTRY NAME + NOTES
-        plot_svg.selectAll(".fee-bar")
-            .on("mouseover", function(d){
-                //make bars transparent to highlight
-                d3.select(this).selectAll("rect")
-                    .style("opacity", 0.6);
-
-                //grab positions from svg circle and feed into label
-                var xP = parseFloat(d3.select(this).select("rect").attr("x"));
-                step_selector = d3.select(this).attr("filter").replaceAll(" ", "-")
-                var yP = d3.select(this).select("." + step_selector).attr("y")
-                console.log(((yP / h)*100))
-
-                d3.select(".tooltip")
-                    .attr("x", (xP / w )*100 + "%")
-                    .attr("y", ((yP / h)*100) + "%")
-                    .select("p")
-                    .text(d["Nationality"]);
-
-                d3.select(".tooltip").classed("hidden", false);
-            })
-            .on("mouseout", function(d){
-                //return to full opacity
-                d3.select(this).selectAll("rect")
-                    .style("opacity", 1);
-                //hide tooltip again
-                d3.select(".tooltip").classed("hidden", true);
-            })
-            
-            
         //SETUP STEP TEXT
         //add a step section for each available filter
         d3.select(".sections")
@@ -242,6 +190,7 @@
                 .append("section")
                 .attr("class", "step data-step")
                 .attr("id", function(d){return d;})
+                .attr("number", function(d, i){return i;})
                 .text(function(d){return d;});
 
         //SCROLL TRIGGERS - ENTER VIEW
@@ -253,7 +202,7 @@
                 update_flags(this_filter)
             },
             exit: function(el){
-                //console.log(el.id);
+                console.log(el.number);
             },
             offset: 0.25, // enter at bottom of viewport
         });
