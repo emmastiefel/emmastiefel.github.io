@@ -192,6 +192,9 @@
                 When applicable, students must also pay the reciprocity fee again if they re-apply for an F-1 visa. Currently, the only nationalities represented at Minerva that must pay a reciprocity fee and re-apply for an F-1 visa are Nigeria and Thailand. 
                 </p>
         </section>
+        <section class="data-step" id="number-students">
+            <h3>XXXXXX</h3>
+        </section>
         <section class="step">
             <h3>Conclusion</h3>
                 <p>
@@ -249,7 +252,7 @@
         var dataset;
         //LOAD DATA
         // now have reciprocity fees :)
-        d3.csv("FINAL Minerva Student Visa Fees Data - corrected - minerva_students_visa_fees - minerva_students_visa_fees.csv", d3.autoType).then(function(data){
+        d3.csv("FINAL Minerva Student Visa Fees Data - FINAL Minerva Student Visa Fees Data - corrected - minerva_students_visa_fees - minerva_students_visa_fees.csv", d3.autoType).then(function(data){
             //store data as var:
             dataset = data;
 
@@ -286,7 +289,7 @@
             .attr("class", "d3-tip")
             .offset([0, 0])
             .html(function(d){return "<b style='color:" + step_colors[d[0]] + "''>" + 
-            d[0] + "</b>" + " visa fee for " + "<b>" + d[1] + "</b>" + " citizens: " + "approximately " + "<b>" + "$"+ d[2] + "</b>";});
+            d[0] + "</b>" + " visa fee for " + "<b>" + d[1] + "</b>" + " students: " + "approximately " + "<b>" + "$"+ d[2] + "</b>";});
         plot_svg.call(tool_tip);
 
         //SCALES
@@ -298,7 +301,7 @@
         var fee_min= (d3.min(dataset, function(d){
                 return d["USA"];
             }));
-        //returns fee as percentage ww/ padding
+        //returns fee as percentage w/ padding
         var fee_percent_scale = d3.scaleLinear()
                         .domain([fee_min, fee_max])
                         .range([0, h-p_h]);  
@@ -350,6 +353,26 @@
                 .style("text-anchor", "middle")
                 .style("font-size", 14)
                 .text("Student Nationality"); 
+
+        //SCALE BY # OF STUDENTS WITH NATIONALITY
+        var offset = 2;
+        var students_total = d3.sum(dataset.map(d => d["Total Students"]));
+        var bar_students_scale = d3.scaleLinear()
+                                  .domain([0, students_total])
+                                  .range([0, w-p_w-(offset*(dataset.length - 1))]);
+        //function to calculate cumulative x-position for percentage scaled charts
+        function calculate_xpos(nationality) {
+            current_pos = p_w;
+            for (i = 0; i < dataset.length + 1; i++) {
+                if (dataset[i]["Nationality"] != nationality){
+                    this_width = bar_students_scale(dataset[i]["Total Students"]) + offset;
+                    current_pos += this_width; 
+                } else{
+                    break;
+                }
+            }
+            return current_pos;
+        };
         
         //DRAW LEGEND
         //["USA", "South Korea", "India", "Germany", "Argentina", "UK", "Taiwan"]
@@ -396,14 +419,25 @@
         
         //function to update data each time filter is called
         function update_flags(filter){
-            //select + show bars for this filter
-            plot_svg.selectAll("."+filter.replaceAll(" ", "-"))
-                .classed("hidden", false)
-            plot_svg.selectAll(".fee-bar")
-                    .attr("filter", filter);
-            console.log(d3.median(data, function(d) { 
-                return d[filter]; }))
-
+            if (filter == 'number-students') {
+                console.log(":P")
+                plot_svg.selectAll(".fee-bar").selectAll("rect")
+                    .attr("width", function(d){
+                                //console.log(d[1], bar_students_scale(d[3]), d[3], students_total);
+                                return bar_students_scale(d[3]);
+                            })
+                    .attr("x", function(d){
+                            return calculate_xpos(d[1]);
+                        });
+            } else {
+                //select + show bars for this filter
+                plot_svg.selectAll("."+filter.replaceAll(" ", "-"))
+                    .classed("hidden", false)
+                plot_svg.selectAll(".fee-bar")
+                        .attr("filter", filter);
+                console.log(d3.median(data, function(d) { 
+                    return d[filter]; }))
+            }
         };
 
         //INITIALIZE BARS
@@ -423,7 +457,7 @@
                             //iterate through all steps, return nationality and step
                             this_data = []
                             for (i = 0; i < steps.length; i++){
-                                this_data.push([steps[i], d["Nationality"], d[steps[i]]]);
+                                this_data.push([steps[i], d["Nationality"], d[steps[i]], d["Total Students"]]);
                             };
                             return this_data;
                         })
@@ -433,7 +467,7 @@
                         .attr("class", function(d){
                             return d[0].replaceAll(" ", "-") + " hidden";
                         })
-                        .attr("x", function(){
+                        .attr("x", function(d){
                             //calculate x using parent div nationality
                             parent_d = d3.select(this.parentNode).datum();
                             return bar_percent_scale(parent_d["Emojis"]);
@@ -497,7 +531,6 @@
                 update_flags(this_filter)
             },
             exit: function(el){
-                //console.log(el.id);
             },
             offset: 0.25, // enter at bottom of viewport
         });
