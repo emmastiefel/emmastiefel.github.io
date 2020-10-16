@@ -12,7 +12,7 @@
         <script src='https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.js'></script>
 
         <style>
-            h1, h2, h3, p, section, text {
+            body {
                 font-family: sans-serif;
             }
             .sections {
@@ -21,8 +21,8 @@
                 display: inline-block;
                 z-index: 100;
                 width: 25%;
-                top: 10%;
-                left: 75%;
+                top: 25%;
+                left: 0%;
             }
             .sections p {
                 text-align: left;
@@ -50,9 +50,9 @@
             }
             .plot-container{
                 top: 0;
-                left: 0;
-                width: 70%;
-                height: 75%;
+                left: 25%;
+                width: 74%;
+                height: 100%;
                 overflow: hidden;
                 display: inline-block;
                 position: fixed;
@@ -61,19 +61,16 @@
                 padding-left: 0;
                 overflow: hidden;
             }
-            .sources{
-                position: fixed;
-                top: 75%;
-                width: 70%;
-                height: 25%;
-                overflow: scroll;
-                padding: 1%;
-                background-color: gainsboro;
-                
+            .header {
+                position: block;
+                margin-left: 5%;
             }
-            .sources-text {
-                padding-right: 1%;
-                column-count: 4;
+            .header h1, p {
+                margin-top: 0;
+                margin-bottom: 10px;
+            }
+            .button {
+                margin-bottom: 10px;
             }
             .hidden{
                 display: none;
@@ -84,32 +81,46 @@
 <body>
     <div class="sections">
         <section class="step">
-            <h2>Understanding Student Visa Fees</h2>
-                <p>
-                By Emma Stiefel for <a href="https://www.minervaquest.com/">the Minerva Quest</a> 
-                </p>
-                <p>
+            <h1>Adding Up Student Visa Fees for Minerva's Global Rotation</h1>
+            <p style="text-align: center;"><em>
+            By Emma Stiefel for <a href="https://www.minervaquest.com/">the Minerva Quest</a> 
+            </em></p>
+            <p>
                 All Minerva students have to pay student visa fees in order to complete the global rotation, but the total amount varies significantly depending on nationality. Some rotation countries raise fees for specific nationalities, increasing costs. On the other hand, if a student is a citizen of a rotation country, they save money by not having to apply for a visa. This interactive chart shows how rotation country visa fees for Minerva students add up over the course of the four year program.
                 </p>
-            <h3>Instructions and Disclaimers</h3>
                 <p>
-                For the best experience, please view this interactive data visualization on a laptop, not a mobile device. Hover over a bar to view detailed information about it.
+                For the best experience, please view this interactive data visualization on a laptop, not a mobile device.
                 </p>
                 <p>
-                This chart only shows student visa fee information for nationalities that are currently represented at Minerva. This data is sourced from the most up-to-date government and Minerva documents and is intended to show visa fees for the 2021-2022 academic year. 
+                    Scroll down to reveal the student visa fees information in the chart. Hover over a bar to view detailed information about it.
+                    </p>
+        </section>
+        <section class="step">
+            <h3>Disclaimers</h3>
+            <p>
+                This chart only shows student visa fee information for nationalities that are currently represented at Minerva. This data is sourced from the most up-to-date government and Minerva documents and is intended to show visa fees for the 2021-2022 academic year. Data sources are listed at the bottom of this page, including data for nationalities not currently represented at Minerva.
                 </p>
                 <p>
                 Visa fees and exchange rates are subject to change, so the information shown here is an approximation, not exact prediction, of costs. Moreover, the data shown here does not account for indirect visa application costs, like shipping documents, which make the process more expensive.
                 </p>
+                <p>
+                Finally, fees and indirect costs are only one component of the visa application process. Other bureaucratic complexities and inequities are not the focus of this piece but make the process burdensome for some students, especially those with disadvantaged passports.
+                </p>
         </section>
         <section class="data-step">
             <h3>US F-1</h3>
-            <p>
-            Most students must apply for a US F-1 visa in order to enter San Francisco for their first year at Minerva. The basic F-1 visa costs consist of a <a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html">$160 application fee</a> and a <a href="https://www.ice.gov/sevis/i901">$350 SEVIS (Student and Exchange Visitor Information System) fee</a>, which funds the centralized collection of data about nonimmigrant students in the US. 
-            </p>
-            <p>
-            Other costs, like shipping documents and transportation for interviews, can make applying for an F-1 visa even more expensive for some students. These costs, as well as SEVIS and reciprocity fees, aren’t always communicated clearly to students. “[Paying for student visa fees is] a game changer,” a Kenyan student wrote in Quest’s anonymous survey. “Imagine having to pay over $700 up front yet people only talk about $160.”
-            </p>
+                <p>
+                Most students must apply for a US F-1 visa to enter San Francisco for their first year at Minerva. The basic F-1 visa costs consist of a $160 application fee and a $350 SEVIS (Student and Exchange Visitor Information System) fee, which funds the centralized collection of data about nonimmigrant students in the US. 
+                </p>
+                <p>
+                Other costs, like shipping documents and transportation for interviews, can make applying for an F-1 visa even more expensive for some students. These costs, as well as SEVIS and reciprocity fees, aren’t always communicated clearly to students. “[Paying for student visa fees is] a game changer,” a Kenyan student wrote in Quest’s anonymous survey. “Imagine having to pay over $700 up front yet people only talk about $160.”
+                </p>
+                <p>
+                César Castro (M’22) told the Quest he knew applying for an F-1 visa would be expensive when he enrolled at Minerva. He doesn’t live near the capital city of Honduras, his home country, so he had to pay for transportation to the US embassy there. Castro and his family also had to pay visa fees in US dollars, which further increased their financial burden because of unfavorable exchange rates. Still, Castro and his family decided that even though “there were a bunch of costs we had to pay, we paid them because we knew it was a good decision for me to study at Minerva.”
+                </p>
+                <p>
+                The expensive journey from his hometown to the capital city was one of the reasons why Castro did not return home after his first year at Minerva. It was cheaper and easier for him to apply for a South Korean visa while living in San Francisco, so he opted to stay in the city.
+                </p>
         </section>
         <section class="data-step">
             <h3>US F-1 Reciprocity Fees</h3>
@@ -117,7 +128,7 @@
                 In addition to the F-1 visa application fee and SEVIS fee, some students must also pay an F-1 reciprocity fee. According to <a href="https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html">the US Department of State</a>, “when a foreign government imposes fees on U.S. citizens for certain types of visas, the United States will impose a reciprocal fee on citizens of that country for similar types of visas.” 
                 </p>
                 <p>
-                Of the nationalities currently represented at Minerva, 13 must pay F-1 reciprocity fees. The median reciprocity fee for Minerva students who have to pay it is $220. 
+                Of the nationalities currently represented at Minerva, 13 must pay F-1 reciprocity fees. The median reciprocity fee for Minerva students who have to pay it is $220, but is as high as $1,125 for students from the United Arab Emirates. 
                 </p>
         </section>
         <section class="data-step">
@@ -129,7 +140,7 @@
                 South Korea is one of several rotation countries that require students to submit proof that they can afford to support themselves for the semester. According to <a href="https://hub.minerva.kgi.edu/cities/seoul/legal-financial-info-seoul/visa-seoul/">the Hub (link accessible with minerva.kgi.edu email)</a>, students can submit documents from their personal bank account, their parents’ bank account, or their work-study award. 
                 </p>
                 <p>
-                For some students, required minimum bank balances are a significant obstacle to securing a visa. An anonymous student from a developing country in Asia told the Quest that bank balance requirements prevented her from joining her classmates in Argentina — she was required to have $2,000 in savings, but barely had $1,000. Instead of travelling to Buenos Aires, she had to move in with family members in San Francisco.  
+                For some students, required minimum bank balances are a significant obstacle to securing a visa. An anonymous student from a developing country in Asia <a href="https://www.minervaquest.com/2020/10/08/financial-aid-profiles-anonymous-m19-alum/">told the Quest</a> that bank balance requirements once prevented her from joining her classmates on rotation  — she only had half of the required amount of savings. Instead of travelling to a new city with her peers, she had to move off rotation.  
                 </p>
         </section>
         <section class="data-step">
@@ -139,6 +150,9 @@
                 </p>
                 <p>
                 The Indian student visa fees illustrate that the cost of applying doesn’t necessarily correspond with a student’s likelihood of receiving a visa. Despite paying comparatively low fees to submit an application, most if not all Pakistani students have been prohibited from joining their peers in Hyderabad. Conversely, UK citizens pay higher fees for South Korean and Indian visas but have <a href="https://www.henleypassportindex.com/passport">strong passports</a> and are generally successful applicants. Nigerian citizens pay higher fees to study in the US and India but have <a href="https://www.henleypassportindex.com/passport">weak passports</a> and are sometimes denied visas. 
+                </p>
+                <p>
+                It can also be difficult to tell exactly how much visa fees will add up to before paying for them. Bella Buchanan (M’21) told the Quest that she only had to pay about $5 for her Indian visa because of a trade agreement South Africa, her home country, is a part of. She didn’t know that, however, until she was already in the process of applying. “It isn’t as simple as googling what the price is,” Buchanan said. 
                 </p>
         </section>
         <section class="data-step">
@@ -150,7 +164,10 @@
                 In some cases, a student’s initial application for a visa is rejected - something that can happen for any rotation country, not just Germany. If the student decides to re-apply, they typically must pay all required fees again. This happened to one Pakistani student who responded to the Quest’s anonymous survey. “It’s tough and adds to the financial strain,” they wrote. “Minerva doesn't have a good system for appropriate visa guidance, which leads to us low-income students suffering even more.”
                 </p>
                 <p>
-                Minerva does have a team, led by Student Services Global Director Marianna Panossi, which assists students with securing visas. It is difficult to fully account for the intricacies of global travel regulations, however, and some students have to figure out the details of the application processes on their own.
+                Minerva has a team, led by Director of Global Student Services Marianna Panossi, which assists students with securing visas. Currently, it consists of five work-study students and Erin Erskine, who oversees Prepare page modules. According to Panossi, her team guides students through visa application processes, assists them with obtaining required documents, and coordinates with partner universities in relevant rotation countries. 
+                </p>
+                <p>
+                She also told the Quest that staff “provide substantial individual support to students who experience challenges with various embassies/consulates to assist our students during the processes.” Panossi emphasized that “Minerva has no control over the decision that foreign missions make regarding visas nor the fees that they charge.”
                 </p>
         </section>
         <section class="data-step">
@@ -185,15 +202,24 @@
                 <p>
                 Students whose F-1 visas are valid for shorter periods may also need to re-apply if they choose to return to the US before their fourth year, such as for internships or research programs. Vietnamese and Russian students, for example, receive F-1 visas that are only valid for 12 months and must re-apply every year they want to re-enter the US.
                 </p>
+                <p>
+                Since Buchanan is from South Africa, her F-1 visa expired after her third year at Minerva. She tried to renew her visa over the summer, but couldn’t due to coronavirus-related embassy closures. Worried that she might lose her ability to enter the US, she booked a flight into the country as quickly as possible. 
+                </p>
+                <p>
+                Buchanan needs to be in the US during her final semester at Minerva so that she can apply for <a href="https://www.minervaquest.com/2020/05/27/potential-opt-bans-may-impact-international-students-seeking-u-s-employment/">OPT</a> and find a job in the US after graduation. “If I don't [get paid] in a strong currency, I won’t be able to make minimum repayments on my loans after graduation just because of the strength of currencies,” Buchanan said. “And with my passport I can't work anywhere without a visa except for [South Africa], so OPT is my only pathway other than marriage to work in a country with a strong currency.”
+                </p>
+                <p>
+                Given that the consequences of being unable to re-enter the US and apply for OPT are so high for her, Buchanan wished that the implications of having an expired F-1 visa had been fully explained to her earlier. If she had known the risk, she would have tried to renew her visa in Buenos Aires or another rotation city well in advance. Instead, Buchanan told the Quest, Minerva staff told her early on that it was ok if her F-1 visa expired because she still had her status as a Minerva student, even though she would be unable to enter the US. While that’s true, Buchanan didn’t fully realize the importance of being able to enter the US and secure her post-graduation plans until it was almost too late.
+                </p>
         </section>
         <section class="data-step">
             <h3>US F-1 Reapplication Reciprocity Fees</h3>
                 <p>
                 When applicable, students must also pay the reciprocity fee again if they re-apply for an F-1 visa. Currently, the only nationalities represented at Minerva that must pay a reciprocity fee and re-apply for an F-1 visa are Nigeria and Thailand. 
                 </p>
-        </section>
-        <section class="data-step" id="number-students">
-            <h3>XXXXXX</h3>
+                <p>
+                    Finally, though not required and therefore not included in this chart, many Minerva students like Buchanan apply for OPT so that they can secure high-paying US jobs after graduation and <a href="https://www.minervaquest.com/2020/10/10/shipping-financial-aid-packages-from-a-us-based-university-to-a-global-student-body/">pay back their student loans</a>. The OPT application fee is <a href="https://www.uscis.gov/i-765">currently $410</a>, another significant visa fee many students must pay while attending Minerva. 
+                    </p>
         </section>
         <section class="step">
             <h3>Conclusion</h3>
@@ -204,55 +230,77 @@
                 Most students, however, are not fully aware of these fees when they enroll. Out of 12 students who responded to an anonymous Quest survey, five said they either did not expect to pay for student visa fees or did not have any estimated amount in mind when they enrolled. Eight of the respondents reported paying more for student visa fees than they anticipated. 
                 </p>
                 <p>
-                Minerva’s public-facing <a href="https://www.minerva.kgi.edu/tuition-aid/tuition-fees/">Tuition & Fees page</a> does not explicitly mention student visa fees. Once students enroll, they can access student visa fee information on <a href="https://hub.minerva.kgi.edu/resources/student-finances-and-financial-aid/visa-fees/">the Hub (link accessible with minerva.kgi.edu email)</a>. Currently, however, this page contains out-of-date links for Indian and South Korean visas, provides no fee information for Argentine visas, and does not include re-application and reciprocity fees for US F-1 visas. Visa information on country-specific Hub pages may be more up-to-date, and Minerva typically communicates fee information to students once they are actively applying for a visa. 
+                “We received communications about the US visa [when enrolling], but we were never primed to think about other things,” Castro said. “It would have been important to think about visa fees, which are kind of like hidden costs. Outreach doesn't talk about them and you don't know what to ask about them.”
                 </p>
                 <p>
-                But there is no central source of accurate information for students hoping to proactively account for all student visa costs in their financial plans. For many students, especially those from low-income backgrounds, access to financial information about visa fees and other mandatory expenses is essential for ensuring they can afford a Minerva education. As the previously mentioned anonymous Kenyan student wrote, “I think the list of potential fees should be as thorough as possible, and it should be communicated as soon as we receive our financial aid offer.”
+                Minerva’s public-facing <a href="https://www.minerva.kgi.edu/tuition-aid/tuition-fees/">Tuition & Fees page</a> does not explicitly mention student visa fees. Panossi told the Quest that students commit to the global rotation when they enroll at Minerva and recommends “that students consider all associated fees as early as possible to ensure that they are able to sustain themselves in the program during their tenure.”
+                </p>
+                <p>
+                Once students enroll, they can access student visa fee information on <a href="https://hub.minerva.kgi.edu/resources/student-finances-and-financial-aid/visa-fees/">the Hub (link accessible with minerva.kgi.edu email)</a>, which Panossi’s Global Student Services team created. Currently, however, this page contains out-of-date links for Indian and South Korean visas, provides no fee information for Argentine visas, and does not include re-application and reciprocity fees for US F-1 visas. Visa information on country-specific Hub pages is more up-to-date, and Minerva typically communicates fee information to students once they are actively applying for a visa. Panossi told the Quest that the Hub’s country-specific pages contain the most recent information about visas.
+                </p>
+                <p>
+                “Our [student visa fees] page was created as an initial guide to provide students with general information about fees,” Panossi said. “Visa fees vary from country to country and in some cases can even be waived if the student can prove that they are on financial aid. It is the student’s responsibility to research and plan for the fees.”
+                </p>
+                <p>
+                Currently, there is no centralized source of accurate information for students hoping to proactively account for all student visa costs in their financial plans. For many students, especially those from low-income backgrounds, access to financial information about visa fees and other mandatory expenses is essential for ensuring they can afford a Minerva education. As the previously mentioned anonymous Kenyan student wrote, “I think the list of potential fees should be as thorough as possible, and it should be communicated as soon as we receive our financial aid offer.”
+                </p>
+        </section>
+        <section class="step" style="margin-bottom: 0;">
+            <h3>Data Sources</h3>
+                <p>
+                The data used to generate the above chart is <a href="https://gist.github.com/emmastiefel/c891ff0910a253b1343259c5f27510bd">available here</a>. The same data for 195 countries is <a href="https://gist.github.com/emmastiefel/fe612f30077edb7f6e7b02090ed265e7">available here</a>. The anonymous Quest survey used to collect student experiences with visa fees is <a href="https://forms.gle/8Y5m2cuvTnM1bYuz8">available here</a>; the raw survey data is confidential.
+                </p>
+                <p>
+                Data about the nationalities of Minerva students was provided by Teri Cannon, Minerva’s Chief Student Affairs and Operations Officer. This data lists birth countries and therefore may not accurately reflect the legal status of all students, such as those with more than one passport. Of the 605 Minerva students in this data, nine did not have a birth country listed. 
+                </p>
+                <p>
+                US F-1 visa fee application information was obtained from <a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html: application fee">the US Department of State website</a>. SEVIS fee information is from <a href="https://www.ice.gov/sevis">the Immigrations and Customs Enforcement website</a>. F-1 reciprocity fee and validity period information was obtained from <a href="https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html">the US Department of state website</a>; here is <a href="https://gist.github.com/emmastiefel/71316da6ea59cfda6c646c016471527f">the code used to scrape it</a>. 
+                </p>
+                <p>
+                South Korean student visa fee information is from <a href="https://hub.minerva.kgi.edu/cities/seoul/legal-financial-info-seoul/visa-seoul/">the Minerva Hub (link accessible with minerva.kgi.edu email)</a>. These costs were shared with students applying for visas in 2019.
+                </p>
+                <p>
+                Indian student visa fee information is from <a href="https://www.vfsglobal.com/india/southkorea/pdf/India-Visa-Fee.pdf">this pdf</a> published by VFS, the organization that facilitates Indian visa applications for students in Seoul. This cost also includes the 7,000 KRW students paid to ship their passports in 2018. Prices were converted from Korean won to US dollars using a 0.00084 exchange rate (USD = KRW*0.00084). 
+                </p>
+                <p>
+                German student visa fee information is from <a href="https://www.germany-visa.org/student-visa/">this website</a>, linked to by <a href="https://hub.minerva.kgi.edu/resources/student-finances-and-financial-aid/visa-fees/">the Minerva Hub (link accessible with minerva.kgi.edu email)</a>. Argentine student visa fee information is from <a href="https://docs.google.com/document/d/1NCrViHEC7EMf3axvdzG47s9nT9G7xKlCFGXbjsbgbz4/edit">this document</a> (link accessible with minerva.kgi.edu email) shared with M’21 students applying from Berlin in 2019. Both fees were converted from euros to US dollars using a 1.18 exchange rate (USD = EUR*1.18).  
+                </p>
+                <p>
+                UK student visa fee information is from <a href="https://www.gov.uk/study-visit-visa">the UK government website</a>. Fees were converted from pounds to US dollars using a 1.28 exchange rate (USD = GBP*1.28). 
+                </p>
+                <p>
+                Taiwanese student visa fee information is from <a href="https://www.boca.gov.tw/cp-161-264-cdb6a-2.html">the Taiwan Bureau of Consular Affairs website</a>.  
+                </p>
+                <p>
+                <em>This data journalism article is a Minerva Quest Report. It was reviewed to ensure that it adheres to our<a href="https://www.minervaquest.com/content-guidelines/"> content guidelines</a> and<a href="https://www.minervaquest.com/category-definitions/"> category definitions</a>. If you believe that it has violated a content guideline, please reach out by <a href="https://docs.google.com/forms/d/e/1FAIpQLSd__5QTJFngEWk5FDKQiSqY_zmvP-3e0zUX2Ak8PTesfXspaA/viewform?usp=sf_link">completing this form</a>. If you have any other feedback, please get in touch by emailing <a href="mailto:theminervaquest@gmail.com">theminervaquest@gmail.com</a>. </em>
                 </p>
         </section>
         
     </div>
-    
     <div class="plot-container">
+        <svg></svg>
+        <div class="header">
+            <div class="all-buttons">
+                <div class="button">
+                    <label for="male">Select how bar width is determined:</label>
+                    <input id="per-nationality" type="radio" name="view" value="per-nationality"> Equal width (default)
+                    <input id="per-student" type="radio" name="view" value="per-student"> Width corresponds to number of students with that nationality
+                </div>
+                <div class="button">
+                    <label for="male">Highlight a nationality:</label>
+                    <select id="select-nationality">
+                        <option value="none" >Search for a nationality</option>
+                      </select>
+                </div>
+            </div>
+        </div>
+    
     </div>
-    <div class="sources">
-        <h3>Data Sources</h3>
-        <div class = "sources-text">
-            <p>
-            The data used to generate the above chart is <a href="https://gist.github.com/emmastiefel/676b192fb2040b82aaa180ceea70875c">available here</a>. The same data for 195 countries is <a href="https://gist.github.com/emmastiefel/4d5ab483744f22e79b137985f8717983">available here</a>. The anonymous Quest survey used to collect student experiences with visa fees is <a href="https://forms.gle/8Y5m2cuvTnM1bYuz8">available here</a>; the raw survey data is confidential.
-            </p>
-            <p>
-            Data about the nationalities of Minerva students was provided by Teri Cannon, Minerva’s Chief Student Affairs and Operations Officer. This data lists birth countries and therefore may not accurately reflect the legal status of all students, such as those with more than one passport. Of the 605 Minerva students in this data, nine did not have a birth country listed. 
-            </p>
-            <p>
-            US F-1 visa fee application information was obtained from <a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/fees/fees-visa-services.html: application fee">the US Department of State website</a>. SEVIS fee information is from <a href="https://www.ice.gov/sevis">the Immigrations and Customs Enforcement website</a>. F-1 reciprocity fee and validity period information was obtained from <a href="https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html">the US Department of state website</a>; here is <a href="https://gist.github.com/emmastiefel/71316da6ea59cfda6c646c016471527f">the code used to scrape it</a>. 
-            </p>
-            <p>
-            South Korean student visa fee information is from <a href="https://hub.minerva.kgi.edu/cities/seoul/legal-financial-info-seoul/visa-seoul/">the Minerva Hub (link accessible with minerva.kgi.edu email)</a>. These costs were shared with students applying for visas in 2019.
-            </p>
-            <p>
-            Indian student visa fee information is from <a href="https://www.vfsglobal.com/india/southkorea/pdf/India-Visa-Fee.pdf">this pdf</a> published by VFS, the organization that facilitates Indian visa applications for students in Seoul. This cost also includes the 7,000 KRW students paid to ship their passports in 2018. Prices were converted from Korean won to US dollars using a 0.00084 exchange rate (USD = KRW*0.00084). 
-            </p>
-            <p>
-            German student visa fee information is from <a href="https://www.germany-visa.org/student-visa/">this website</a>, linked to by <a href="https://hub.minerva.kgi.edu/cities/seoul/legal-financial-info-seoul/visa-seoul/">the Minerva Hub (link accessible with minerva.kgi.edu email)</a> on student visa fees. Argentine student visa fee information is from <a href="https://docs.google.com/document/d/1NCrViHEC7EMf3axvdzG47s9nT9G7xKlCFGXbjsbgbz4/edit">this document</a> (link accessible with minerva.kgi.edu email) shared with M’21 students applying from Berlin in 2019. Both fees were converted from euros to US dollars using a 1.18 exchange rate (USD = EUR*1.18).  
-            </p>
-            <p>
-            UK student visa fee information is from <a href="https://www.gov.uk/study-visit-visa">the UK government website</a>. Fees were converted from pounds to US dollars using a 1.28 exchange rate (USD = GBP*1.28). 
-            </p>
-            <p>
-            Taiwanese student visa fee information is from <a href="https://www.boca.gov.tw/cp-161-264-cdb6a-2.html">the Taiwan Bureau of Consular Affairs website</a>.  
-            </p>
-            <p>
-            <em>This data journalism article is a Minerva Quest report. It was reviewed to ensure that it adheres to our<a href="https://www.minervaquest.com/content-guidelines/"> content guidelines</a> and<a href="https://www.minervaquest.com/category-definitions/"> category definitions</a>. If you believe that it has violated a content guideline, please reach out by <a href="https://docs.google.com/forms/d/e/1FAIpQLSd__5QTJFngEWk5FDKQiSqY_zmvP-3e0zUX2Ak8PTesfXspaA/viewform?usp=sf_link">completing this form</a>. If you have any other feedback, please get in touch by emailing <a href="mailto:theminervaquest@gmail.com">theminervaquest@gmail.com</a>. </em>
-            <p><br><br></p>
-        
-        </p>
-    </div></div>
     <script type="text/javascript">
         var dataset;
         //LOAD DATA
         // now have reciprocity fees :)
-        d3.csv("FINAL Minerva Student Visa Fees Data - FINAL Minerva Student Visa Fees Data - corrected - minerva_students_visa_fees - minerva_students_visa_fees.csv", d3.autoType).then(function(data){
+        d3.csv("PUBLISHED Minerva Student Visa Fees Data - 1.csv", d3.autoType).then(function(data){
             //store data as var:
             dataset = data;
 
@@ -260,9 +308,9 @@
         dataset.sort(function (a,b) {return d3.descending(a["Approximate_Total"], b["Approximate_Total"]);});
         
         //OVERALL SETUP
-        var steps = ["USA", "USA Reciprocity Fee", "South Korea","India","Germany","Argentina","UK","Taiwan", "USA Reapply", "USA Reapply Reciprocity"]
+        var steps = ["USA", "USA Reciprocity", "South Korea","India","Germany","Argentina","UK","Taiwan", "USA Reapply", "USA Reapply Reciprocity"]
         var step_colors = {"USA": "#EF4554", 
-                              "USA Reciprocity Fee": "#EF4554",
+                              "USA Reciprocity": "#EF4554",
                               "South Korea": "#313F99", 
                               "India": "#0C9146", 
                               "Germany": "#F36F3B", 
@@ -279,8 +327,8 @@
         var h = 450;
         //generate svg container
         var plot_svg = d3.select(".plot-container")
-                         .append("svg")
-                         .attr("viewBox", '0 0 ' + w +' ' + h+p_h); // make it responsive, hopefully
+                         .select("svg")
+                         .attr("viewBox", '0 0 ' + w +' ' + 500); // make it responsive, hopefully
 
         //CREATE TOOLTIP
         // Setup the tool tip.  Note that this is just one example, and that many styling options are available.
@@ -289,7 +337,7 @@
             .attr("class", "d3-tip")
             .offset([0, 0])
             .html(function(d){return "<b style='color:" + step_colors[d[0]] + "''>" + 
-            d[0] + "</b>" + " visa fee for " + "<b>" + d[1] + "</b>" + " students: " + "approximately " + "<b>" + "$"+ d[2] + "</b>";});
+            d[0] + "</b>" + " visa fee for students from " + "<b>" + d[1] + ":</b>" + " approximately " + "<b>" + "$"+ d[2] + "</b>";});
         plot_svg.call(tool_tip);
 
         //SCALES
@@ -316,9 +364,11 @@
                                .range([0, h-p_h]);
 
         var formatAsCurrency = d3.format("$1,")
+        //var yAxis = d3.axisLeft()
         var yAxis = d3.axisLeft()
                              .scale(fee_axis_scale)
                              .ticks(5)
+                             .tickSize(3)
                              .tickFormat(formatAsCurrency);
             plot_svg.append("g")
                     .attr("class", "y-axis")
@@ -327,7 +377,7 @@
                     .call(yAxis);
         // add y-axis label
         plot_svg.append("text")
-                .attr("class", "axis-label")
+                .attr("class", "y-axis-label")
                 .attr("transform", "rotate(-90)")
                 .attr("y", 4)
                 .attr("x", 0 - (h / 2))
@@ -340,14 +390,16 @@
         var xAxis = d3.axisBottom()
                       .tickSize(0)
                       .scale(bar_percent_scale);
+            
             plot_svg.append("g")
                     .attr("class", "x-axis")
                     .attr("transform", "translate( 0, " + (h - p_h)+ ")")
                     .call(xAxis);   
-        // add yx-axis label
+            d3.select(".x-axis").select('path').style("stroke", "none");
+        // add x-axis label
         plot_svg.append("text")
-                .attr("class", "axis-label")
-                .attr("y", h + 4)
+                .attr("class", "x-axis-label")
+                .attr("y", h + 10)
                 .attr("x",  (w / 2))
                 .attr("dy", "10px")
                 .style("text-anchor", "middle")
@@ -355,7 +407,7 @@
                 .text("Student Nationality"); 
 
         //SCALE BY # OF STUDENTS WITH NATIONALITY
-        var offset = 2;
+        var offset = 1.5;
         var students_total = d3.sum(dataset.map(d => d["Total Students"]));
         var bar_students_scale = d3.scaleLinear()
                                   .domain([0, students_total])
@@ -397,6 +449,86 @@
                     .style("font-size", 12)
                     .style("text-anchor", "end");
 
+        //CONFIGURE # OF STUDENTS VS. NATIONALITIES VIEW BUTTONS/TOGGLE
+        //define function to change the view
+        function students_view() {
+            dataset.sort(function (a,b) {return d3.descending(a["Approximate_Total"], b["Approximate_Total"]);})
+            var x_positions = []
+                plot_svg.selectAll(".fee-bar").selectAll("rect")
+                    .attr("width", function(d){
+                                //console.log(d[1], bar_students_scale(d[3]), d[3], students_total);
+                                return bar_students_scale(d[3]);
+                            })
+                    .attr("x", function(d){
+                            //store x-position of rectangle once to use for making updated x-axis
+                            if (d[0] == "USA"){
+                                x_positions.push(calculate_xpos(d[1]) + offset*2);
+                            };
+                            return calculate_xpos(d[1]);
+                        });
+                //update x-axis to show number of students instead of flags
+                //linear scale for number of students
+                total_students = d3.sum(dataset.map(d => d["Total Students"]));
+                var students_xAxis_scale = d3.scaleLinear().domain([0, total_students]).range([p_w, w]);
+                students_xAxis = d3.axisBottom()
+                            .tickSize(3)
+                            .ticks(20)
+                            .scale(students_xAxis_scale);
+                plot_svg.select(".x-axis")
+                    .call(students_xAxis);    
+                //update label
+                d3.select(".x-axis-label").text("Total Number of Students");
+        };
+        //change view when button is selected
+        d3.select("#per-student").on("change", function(d){
+            students_view();
+        });
+
+        //define function to reset to normal view
+        function default_view(){
+                //update bars x position and width
+                plot_svg.selectAll(".fee-bar").selectAll("rect")
+                        .attr("x", function(d){
+                            //calculate x using parent div nationality
+                            parent_d = d3.select(this.parentNode).datum();
+                            return bar_percent_scale(parent_d["Emojis"]);
+                        })
+                        //set width using bar scale
+                        .attr("width", bar_percent_scale.bandwidth())
+                
+                //call old axis
+                plot_svg.select(".x-axis")
+                    .attr("class", "x-axis")
+                    .call(xAxis);  
+                d3.select(".x-axis-label").text("Student Nationality");
+        };
+        //change view when button is selected
+        d3.select("#per-nationality").on("change", function(d){
+            default_view();
+        });
+        
+        //CONFIGURE NATIONALITY DROPDOWN SELECTOR
+        //sort data alphabetically
+        d3.select("#select-nationality")
+            .selectAll('myOptions') // Next 4 lines add 6 options = 6 colors
+            .data(function(){
+                alphabetical_data = dataset.sort(function (a,b) {return d3.ascending(a["Nationality"], b["Nationality"]);});
+                return alphabetical_data;
+            })
+            .enter()
+            .append('option')
+            .text(function (d) { return d["Nationality"] + d["Emojis"]; }) // text shown in the menu
+            .attr("value", function (d) { return d["Nationality"].replaceAll(" ", "-"); });
+        d3.select("#select-nationality")
+            .on("change", function(d){
+                //reset all highlights
+                d3.selectAll(".fee-bar").selectAll("rect").style("opacity", 1);
+                //highlight selected bar (select by nationality id)
+                d3.select("#"+d3.select(this).property('value')).selectAll("rect")
+                    .style("opacity", 0.6);
+                });
+
+
         //DRAW BARS
         //function to calculate cumulative fee/y-value
         function calculate_total(d, filter){
@@ -419,25 +551,11 @@
         
         //function to update data each time filter is called
         function update_flags(filter){
-            if (filter == 'number-students') {
-                console.log(":P")
-                plot_svg.selectAll(".fee-bar").selectAll("rect")
-                    .attr("width", function(d){
-                                //console.log(d[1], bar_students_scale(d[3]), d[3], students_total);
-                                return bar_students_scale(d[3]);
-                            })
-                    .attr("x", function(d){
-                            return calculate_xpos(d[1]);
-                        });
-            } else {
-                //select + show bars for this filter
-                plot_svg.selectAll("."+filter.replaceAll(" ", "-"))
+            //select + show bars for this filter
+            plot_svg.selectAll("."+filter.replaceAll(" ", "-"))
                     .classed("hidden", false)
-                plot_svg.selectAll(".fee-bar")
-                        .attr("filter", filter);
-                console.log(d3.median(data, function(d) { 
-                    return d[filter]; }))
-            }
+            plot_svg.selectAll(".fee-bar")
+                    .attr("filter", filter);
         };
 
         //INITIALIZE BARS
@@ -447,7 +565,7 @@
                     .enter()
                     .append("g")
                     .attr("id", function(d){
-                        return d["Nationality"];
+                        return d["Nationality"].replaceAll(" ", "-");
                     })
                     .attr("class", "fee-bar")
                         //create rect for each fee :D
@@ -477,6 +595,7 @@
                         //y given by current total for this step
                         .attr("y", function(d){
                             parent_d = d3.select(this.parentNode).datum();
+                            console.log(parent_d);
                             return h - fee_percent_scale(calculate_total(parent_d, d[0]))- p_h;
                         })
                         //height given by scale for this step
