@@ -11,11 +11,14 @@
         <script src='https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.js'></script>
 
         <style>
+            .plot-container {
+                position: relative;
+            }
             #slider {
                 position: absolute;
                 width: 7.5%;
                 left: 2.5%;
-                top: 60%;
+                top: 25%;
             }
             #slider-input {
                 appearance: none;
@@ -37,12 +40,75 @@
                 height: 10px;
                 background: black;
                 }
+            .article-text {
+                margin: 50px;
+                margin-left: 30%;
+                width: 40%;
+            }
             
         </style>
     </head>
 
 <body>
 
+    <div class="article-text">
+        <h1>Exploring The New New York Times</h1>
+
+
+<p>
+<em>By Emma Stiefel</em>
+</p>
+<p>
+<a href="https://twitter.com/NYT_first_said">The New New York Times bot</a> is a beloved part of Twitter, at least for those interested in language and media. Since digital artist <a href="https://twitter.com/maxbittker">Max Bittker</a> created it in 2017, the account has been tweeting out every <a href="https://maxbittker.github.io/clear-pipes/">(lower case, punctuation-free)</a> word that appears in the New York Times for the first time. The result is a steady stream of words that includes internet slang, scientific jargon, non-English terms, creative expressions, and, <a href="https://www.nytimes.com/2019/07/07/reader-center/nyt-first-said-words-twitter-bot.html">as the New York Times itself admitted</a>, “the occasional typo.” 
+</p>
+<p>
+Over 100,000 people have decided that this seemingly random outpouring of words is exactly the type of content they want to see on their Twitter timelines every day. Why is the bot so popular? If we look at the most viral tweets from @NYT_first_said, the most obvious answer is that it highlights swear words and edgy slang that appear delightfully subversive against the backdrop of the paper’s serious reputation. 
+</p>
+<p>
+One of its first hit tweets was “shithole”, a word <a href="https://www.nytimes.com/2019/07/07/reader-center/nyt-first-said-words-twitter-bot.html">introduced to the paper</a> by Donald Trump’s vulgar comments about some African countries. Another popular tweet, and the one currently pinned to the bot’s Twitter bio, was “<a href="https://twitter.com/NYT_first_said/status/1111265789225635840">deadass</a>”, from a 2019 article about Billie Eilish. The bot’s most recent hit, and the one that has received the most likes to date, was “<a href="https://twitter.com/NYT_first_said/status/1267466507300241408">acab</a>”, an acronym for “all cops are bastards,” which appeared in the paper for the first time during the June Black Lives Matter protests. 
+</p>
+<p>
+“There’s a lot of scatological things that will be popular, and they’re never my favorites, because I don’t want it to just be a swear bot that’s funny because it swears,” Bittker told The New York Times for an article about the bot. But these attention-grabbing examples hint at what makes the bot interesting at a deeper level: it hints at how mainstream US-English discourse is evolving by incorporating words from niche communities or other languages and creating new ones. Regardless of how many favorites and retweets they receive on Twitter, each word (with the exception of typos) shared by @NYT_first_said is a fascinating indication of how the world reflected in The Times’ articles is expanding.
+</p>
+<p>
+Drawing meaningful conclusions about the words that have recently appeared in The New York Times for the first time, however, requires more context about what each word is and how it was used in the paper.  Some context is provided by @NYT_first_said’s two sibling bots, which reply to many of its tweets with more information about the word: <a href="https://twitter.com/NYT_said_where">@NYT_said_where</a>, which shares the article and sentence the word appeared in, and <a href="https://twitter.com/NYT_finally/with_replies">@NYT_finally</a>, which uses <a href="https://books.google.com/ngrams">Google’s Ngram tool</a> to count how many books a word has appeared in before it shows up in The Times. There’s also <a href="https://twitter.com/seen_it_news/with_replies">@seen_it_news</a>, which identifies other newspapers that used a word before The New York Times. 
+</p>
+<p>
+There are so many questions we could ask about the words tweeted by @NYT_first_said and what they suggest about the US media ecosystem. Where do these words come from? What writers and bylines introduce them into the paper? How often do words appear in The Times again after they are first introduced? 
+</p>
+<p>
+The interactive data visualization below attempts to begin answering some of these questions by visualizing all of the words that have been tweeted by @NYT_first_said. It also shows where else these words exist on the internet — for now, that’s limited to identifying if they also appear in Wikipedia, Urban Dictionary, or other languages (as detected by Google Translate) — as well as what New York Times desk published them. You can filter the words by when they were published in The New York Times using the slider on the left-hand side of the page; all of the words that move into The New York Times had been published by or on that day.
+</p>
+<p>
+In its current form, this data visualization doesn’t offer many interesting conclusions. If we attempt to analyze where words appear outside of The New York Times, for example, we find that most aren’t included in any of the three websites examined here. That might suggest that new New York Times words are mostly its own authors’ neologisms, which would be an important distinction from journalists simply introducing niche jargon into the mainstream, but it’s more likely that many of these words were already in use but aren’t reflected in the three sites this data is sourced from. 
+</p>
+<p>
+Another potentially meaningful trend is how many more words apparently come from other languages compared to Wikipedia and Urban Dictionary. This might suggest that The Times has published more foreign words than technical terms or slang, but the disparity also might simply be a relic of Google Translate’s detection algorithm falsely classifying context-less, unusual English words as belonging to other languages.
+</p>
+<p>
+Soon, this data visualization will be updated with more information and better ways of visualizing it. Until then, however, enjoy sifting through the words and coming up with hypotheses about what they might suggest about The New York Times and popular discourse. Just keep in mind the limitations discussed above and the methodological details shared below. 
+</p>
+<h3>Methodology:</h3>
+
+
+<p>
+<em>Words that have appeared in The New York Times for the first time, as <a href="https://maxbittker.github.io/clear-pipes/">defined and tweeted out by @NYT_first_said</a>, were retrieved from <a href="https://github.com/MaxBittker/nyt-first-said/blob/master/archive/nyt_first_said.json">the bot’s archive</a>. More recent words not included in the archive were scraped directly from Twitter. </em>
+</p>
+<p>
+<em>I determined whether a word appeared in Wikipedia or Urban Dictionary by attempting to access the page for that word with a web scraper - if the page was located successfully, the word was recorded as existing in that source. The Google Translate API was used to detect whether or not words were in a language other than English — only words that the algorithm determined were 100% likely to belong to another language were counted. </em>
+</p>
+<p>
+<em>Information about the article each word first appeared in was accessed using The New York Times’ Article Search API. Almost all (94%) of the searches for a word successfully returned at least one article. The metadata for the first article returned by the search was then recorded for that word.</em>
+</p>
+<p>
+<em>You can view all of the code used to generate this data in <a href="https://github.com/emmastiefel/NNYT-Data">this Github repository</a>.</em>
+</p>
+<hr>
+    </div>
+    
+    <div class="plot-container">
+        <div id="slider" ></div>
+    </div>
     
         
     <script type="text/javascript">
@@ -59,7 +125,7 @@
             var p_w = 30
 
             //create responsive svg
-            var svg = d3.select("body").append("svg").attr("viewBox", '0 0 ' + w +' ' + h);
+            var svg = d3.select(".plot-container").append("svg").attr("viewBox", '0 0 ' + w +' ' + h);
 
             //scale for dates
             var date_min= (d3.min(dataset, function(d){
@@ -349,7 +415,6 @@
 
             //Date slider
             //<label for="points">Points (between 0 and 10):</label>
-            d3.select('body').append('div').attr('id', 'slider');
             d3.select('#slider').append('label')
                              .attr('for', 'date-slider')
                              .text('Select a date to display:')
@@ -381,6 +446,8 @@
                                     word_transition(this_date) }
                             });
 
-
+            //make all links open in new page
+            d3.selectAll("a")
+                .attr("target", "_blank")
         });</script>
 </body>
