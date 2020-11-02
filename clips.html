@@ -81,6 +81,13 @@
                 position: absolute;
                 left: 0%;
                 width: 100%
+                }
+            }
+
+            @media (hover: none) { 
+                #d3-tip {
+                    display: none;
+                }
             }
 
         </style>
@@ -128,13 +135,21 @@
 
             dataset = data;
             console.log(dataset)
-            w = 500
-            h = 200
+
+            //make easier to see on tiny screens hopefully
+            var device_width = window.innerWidth
+            console.log(device_width)
+            if (device_width < 500) {
+                w = 200
+                h = 300
+            } else{
+                w = 500
+                h = 200
+            }
             p_h = 50
             p_w = 20
             svg = d3.select("#svg").attr("viewBox", '0 0 ' + w +' ' + h);
-            console.log(window.screen.availWidth)
-            console.log(window.screen.width * window.devicePixelRatio)
+
 
             //date scale
             //scale for dates
@@ -165,9 +180,14 @@
                 svg.call(tool_tip);
 
 
+            if (device_width < 500) {
+                r_scale = 30;
+            } else{
+                r_scale = 15;
+            }
             var simulation = d3.forceSimulation(dataset)
                 .force('collision', d3.forceCollide().radius(function(d) {
-                    return Math.sqrt(d.Importance * 15);
+                    return Math.sqrt(d.Importance * r_scale);
                     }))
                 .force('x', d3.forceX().x(function(d) {   return date_scale(d.Date);     }).strength(5))
                 .force('y', d3.forceY().y(function(d) {
@@ -184,7 +204,7 @@
                 .append('circle')
                 .attr('cx', function(d){ return d.x})
                 .attr('cy', function(d){ return d.y})
-                .attr('r', function(d) { return Math.sqrt(d.Importance * 15)})
+                .attr('r', function(d) { return Math.sqrt(d.Importance * r_scale)})
                 .style("fill", function(d){
                     if (d.data == 1){
                         return 'blue';
