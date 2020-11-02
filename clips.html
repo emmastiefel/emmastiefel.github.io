@@ -5,6 +5,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Emma Stiefel's Portfolio - Clips</title>
         <script src="https://d3js.org/d3.v5.min.js"></script>
         <script src="d3-tip.js"></script>
@@ -30,8 +31,7 @@
                 top: 10%;
                 left: 25%;
                 width: 50%;
-                min-width: 30em;
-
+                max-width: 100%;
             }
             #about {
                 background-color: var(--main-bg-color);
@@ -74,6 +74,13 @@
                 width: 250px;
                 border-radius: 10px;
                 z-index: 90;
+            }
+
+            @media (max-width: 800px) {
+                #main {
+                position: absolute;
+                left: 0%;
+                width: 100%
             }
 
         </style>
