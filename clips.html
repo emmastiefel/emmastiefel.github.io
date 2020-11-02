@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<!-- 
+     python -m http.server 8888 &.
+-->
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Emma Stiefel's Portfolio - Clips</title>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="d3-tip.js"></script>
+        <base target="_blank">
+        <style>
+            :root {
+            --main-bg-color: #FFB7B2;
+            --main-link-color: yellow;
+            --main-visited-color: yellow;
+            --main-border-color: blue;
+            }
+            body {
+                background-size: 100%;
+                background-image: url("warp grid-01.png");
+                background-color: #FF9AA2;
+                background-attachment: fixed;
+                font-family: "Courier New", monospace;
+                color: white;
+
+            }
+            #main {
+                position: absolute;
+                top: 10%;
+                left: 25%;
+                width: 50%;
+
+            }
+            #about {
+                background-color: var(--main-bg-color);
+                color: white;
+                padding: 20px;
+
+                border-radius: 20px;
+                border-style: solid;
+                border-width: thick;
+                border-color: var(--main-border-color);
+            }
+            #story-details {
+                background-color: var(--main-bg-color);
+                padding: 20px;
+                margin-bottom: 100px;
+
+                border-radius: 20px;
+                border-style: solid;
+                border-width: thick;
+                border-color: yellow;
+            }
+            a {
+                color: var(--main-link-color);
+                font-weight: bold;
+                text-decoration: none;
+            }
+            a:visited {
+                color: var(--main-visited-color);
+            }
+            .buttons {
+                display: inline;
+            }
+
+            #d3-tip {
+                line-height: 1;
+                padding: 6px;
+                background: var(--main-bg-color);
+                border-color: yellow;
+                border-style: solid;
+                width: 250px;
+                border-radius: 10px;
+                z-index: 90;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div id="main">  
+        <div id="about">
+            <h1>Explore my work:</h1>
+            <p>Each of the circles below represents one of my stories, arranged in the order they were published.</p>
+            <p>The <mark style="background-color: blue; color: white;">blue</mark> circles are data journalism and computer science projects. </p>
+            <p>The size of the circle corresponds with how proud I am of the piece - the tiny circles are articles I've mostly forgotten about, the bigger circles are projects that have defined my skill set and world view.</p>
+            <h3 class="buttons"><a href="/" target="_self"> <~ About me</a></h3>
+        </div>
+        <div id="plot">
+            <svg id="svg"></svg>
+            <div id="story-details">
+                <h2 id="story-title">Click on a circle to see more details about that clip.</h2>
+                <p id="story-publication"></p>
+                <p id="story-date"></p>
+                <p id="story-role"></p>
+                <p id="story-description"></p>
+                <p id="story-link"><a></a></p>
+            </div>
+
+        </div></div>
+        <script>
+            d3.csv("Clips List - rated - Sheet1.csv", function(d){
+                //function to parse time
+                tParser = d3.timeParse("%m/%d/%Y");
+            //process data columns
+            return {
+                Link: d["Link"],
+                Title: d["Title"],
+                Importance: d["Importance"],
+                Description: d["Description"],
+                Date: tParser(d["Date Published"]),
+                Publication: d["Publication"],
+                data: d["data"],
+                design: d["design"],
+                news: d["news"],
+                Role: d["Role"]
+            };
+        }).then(function(data){ 
+
+            dataset = data;
+            console.log(dataset)
+            w = 500
+            h = 200
+            p_h = 50
+            p_w = 20
+            svg = d3.select("#svg").attr("viewBox", '0 0 ' + w +' ' + h);
+            console.log(window.screen.availWidth)
+            console.log(window.screen.width * window.devicePixelRatio)
+
+            //date scale
+            //scale for dates
+            var date_min= (d3.min(dataset, function(d){
+                return d["Date"];
+            }));
+            var date_max= (d3.max(dataset, function(d){
+                return d["Date"];
+            }));
+            var date_scale = d3.scaleLinear()
+                                .domain([date_min, date_max])
+                                .range([p_w, w-p_w*1.5]);
+            format_time = d3.timeFormat("%B %d, %Y");
+
+            //axis for dates
+            var yAxis = d3.axisBottom()
+                                .scale(date_scale)
+                                .ticks(5)
+                                .tickSize(3)
+                                .tickFormat(d3.timeFormat("%B %Y"));
+           // svg.append("g").attr("class", "y-axis").call(yAxis);
+
+           //try to setup tooltips
+           var tool_tip = d3.tip()
+                        .attr("id", "d3-tip")
+                        .offset([-5, 0])
+                        .html(function(d){  return d.Title;});
+                svg.call(tool_tip);
+
+
+            var simulation = d3.forceSimulation(dataset)
+                .force('collision', d3.forceCollide().radius(function(d) {
+                    return Math.sqrt(d.Importance * 15);
+                    }))
+                .force('x', d3.forceX().x(function(d) {   return date_scale(d.Date);     }).strength(5))
+                .force('y', d3.forceY().y(function(d) {
+                    return h/2;
+                    }));
+
+            for (i=0; i < 300; i ++) {
+                simulation.tick()
+            }
+                
+            svg.selectAll('.clip')
+                .data(dataset)
+                .enter()
+                .append('circle')
+                .attr('cx', function(d){ return d.x})
+                .attr('cy', function(d){ return d.y})
+                .attr('r', function(d) { return Math.sqrt(d.Importance * 15)})
+                .style("fill", function(d){
+                    if (d.data == 1){
+                        return 'blue';
+                    } else {
+                        return "white";
+                    }
+                })
+                .on("mouseover", function(d){
+                    tool_tip.show(d);
+                    d3.select(this).style('fill', 'yellow');
+                })
+                .on("mouseout", function(d){
+                    tool_tip.hide();
+                    d3.select(this).style("fill", function(d){
+                    if (d.data == 1){
+                        return 'blue';
+                    } else {
+                        return "white";
+                    }
+                })
+                })
+                .on("click", function(d){
+                    
+                    d3.select("#story-details").style("display", "block)")
+                    d3.select("#story-title").text(d.Title);
+                    d3.select("#story-description").text(d.Description);
+                    d3.select("#story-publication").text("Published in: " + d.Publication);
+                    d3.select("#story-date").text("Date Published: " + format_time(d.Date));
+                    d3.select("#story-role").text("Role: " + d.Role);
+                    d3.select("#story-link")
+                        .select("a")
+                        .attr("href", d.Link)
+                        .text("View the complete piece.")
+                });
+
+
+            });
+        </script>
+    </body>
