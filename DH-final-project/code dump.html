@@ -1,0 +1,23 @@
+<body>
+    <script>
+        //force layout circles
+        var simulation = d3.forceSimulation(data)
+                .force('collision', d3.forceCollide().radius(10))
+                .force('x', d3.forceX().x(function(d) { 
+                    var album = String(d["Album"])
+                    console.log(album_info[album])  
+                    if (album_info[album]['type'] == 'official'){
+                        return w*.25
+                    } else {
+                        return w*.75; 
+                    }
+                        }))
+                .force('y', d3.forceY().y(function(d) {
+                    console.log(typeof d["Date"])
+                    return date_scale(d["Date"]);
+                    }));
+            for (i=0; i < 300; i ++) {
+                simulation.tick()
+            }
+    </script>
+</body>

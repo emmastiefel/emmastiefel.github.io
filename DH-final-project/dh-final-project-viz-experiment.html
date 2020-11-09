@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<!-- 
+     python -m http.server 8886 &.
+-->
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Data Viz Experiment</title>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="d3-tip/d3-tip.js"></script>
+
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+            #d3-tip {
+                line-height: 1;
+                padding: 6px;
+                background: white;
+                max-width: 250px;
+                text-align: center;
+                z-index: 90;
+            }
+            .about {
+                width: 30%;
+                margin: 20px;
+            }
+            
+        </style>
+    </head>
+    <body>
+
+        <div class="about">
+            <p>
+                This data visualization work in progress attempts to show how much space for interpretation is available to listeners at different levels of engagement with BTS songs. It is supposed to resemble a city, though currently does so only in a very abstract way. 
+                </p>
+                <p>
+                Each rectangle represents one BTS song; each row of rectangles is an album. Hovering over a rectangle will display the title of that song.
+                </p>
+                <p>
+                The y-axis position of each rectangle represents the release date of the song — newer songs are at the bottom of the page, older songs are at the top. Songs from official BTS albums are located on the left-hand side of the gap about ⅔ across the page, and other tracks (solo projects, collaborations, and singles) are on the right-hand side. Otherwise, the x-axis position of a song is currently arbitrary.  
+                </p>
+                <p>
+                The height of the rectangle currently codes for the number of unique words in the song’s lyrics, a proxy for how much meaningful content it contains (a final version of this data visualization, however, would likely use the number of unique words to scale the width of the rectangle and scale the height of the rectangle by its popularity as measured by YouTube views). 
+                </p>
+                <p>
+                Beyond this basic visualization, there are currently three layers of information you can view for each song by clicking on the buttons at the top of the page. The first are the most common words that were originally in English for the song. A maximum of five words are displayed for each song, with the number of words displayed corresponding to the percentage of the song’s unique words that were originally in English. The most common words translated from Korean are displayed in the same way. Finally, references between songs are displayed as lines between their respective rectangles. Hovering over a line will display a poorly positioned tool-tip with the name of the song that makes the reference.
+                </p>
+                <p>
+                <a href="https://github.com/emmastiefel/emmastiefel.github.io">You can view the data and code used to create this visualization on my Github account.</a>
+                </p>
+
+        </div>
+        <p>Select the information you want to view:</p>
+        <input type="radio" id="view" name="view" value="default">
+        <label for="default">Default</label>
+        <input type="radio" id="view" name="view" value="english">
+        <label for="english">Most Common English Words</label>
+        <input type="radio" id="view" name="view" value="translated">
+        <label for="translated">Most Common Translated Words</label>
+        <input type="radio" id="view" name="view" value="references">
+        <label for="references">References Between Songs</label>
+
+        <div class='plot-container'>
+            <svg></svg>
+        </div>
+
+    <script>
+        //LOAD DATA
+        d3.csv("analyzed-lyrics-v1.csv", d3.autoType).then(function(data){
+
+            //convert csv string arrays to actual array objects :/ CAN I DO THIS BETTER??? I HOPE
+            function make_array(s) { //takes string array as input
+                if (typeof s == "string"){
+                    //slices out brackets, splits along commas
+                    var temp = s.slice(1, (s.length - 1)).split(",");
+                    //if resulting string is empty, return empty array
+                    if (temp[0].length === 0){
+                        return [];
+                    }
+                    //otherwise, return the split string :)
+                    else {
+                        return temp;
+                    }
+                } else {
+                    return [];
+                }
+
+            };
+
+            var album_info = {
+                'Map of the Soul : 7': {
+                    'type': 'official'
+                }, 
+                'Map of the Soul: Persona': {
+                    'type': 'official'
+                },
+                'Love Yourself 結 ‘Answer’': {
+                    'type': 'official'
+                }, 
+                'Love Yourself 轉 ‘Tear’': {
+                    'type': 'official'
+                },
+                'Love Yourself 承 ‘Her’': {
+                    'type': 'official'
+                }, 
+                'Wings: You Never Walk Alone': {
+                    'type': 'official'
+                },
+                'The Most Beautiful Moment in Life: Young Forever': {
+                    'type': 'official'
+                },
+                'Dark & Wild': {
+                    'type': 'official'
+                },
+                'Skool Luv Affair': {
+                    'type': 'official'
+                }, 
+                'O!RUL8,2?': {
+                    'type': 'official'
+                }, 
+                '2 Cool 4 Skool': {
+                    'type': 'official'
+                }, 
+                'D-2': {
+                    'type': 'other'
+                }, 
+                'mono': {
+                    'type': 'other'
+                },
+                'Hope World': {
+                    'type': 'other'
+                }, 
+                'Agust D': {
+                    'type': 'other'
+                }, 
+                'RM': {
+                    'type': 'other'
+                }, 
+                'SoundCloud': {
+                    'type': 'other'
+                }, 
+                'Miscellaneous': {
+                    'type': 'other'
+                }
+            }
+
+            console.log(data)
+
+            //CREATE SVG
+            var p_w = 10
+            var p_h = 50
+            var w = 700;
+            var h = 370;
+            var svg = d3.select('.plot-container').select('svg')
+                        .attr("viewBox", '0 0 ' + w +' ' + h);
+
+            //CREATE Y-Axis SCALE FOR DATES
+            var date_min = d3.min(data, function(d){
+                return d["Date"];
+            })
+            var date_max = d3.max(data, function(d){
+                return d["Date"];
+            })
+            var date_scale = d3.scaleLinear()
+                               .domain([date_min, date_max])
+                               .range([p_h, h-p_h]);
+
+            //CREATE X-Axis SCALE FOR POSITION
+            var position_max = d3.max(data, function(d){
+                return d["Track Number"];
+            })
+            var position_scale = d3.scaleBand()
+                               .domain(d3.range(position_max))
+                               .range([p_w, (w/2) - p_w]);
+
+            //CREATE HEIGHT SCALE FOR # UNIQUE WORDS IN SONG :D
+            var unique_min = d3.min(data, function(d){
+                return d["Unique Word Count"];
+            })
+            var unique_max = d3.max(data, function(d){
+                return d["Unique Word Count"];
+            })
+            var height_scale = d3.scaleLinear()
+                               .domain([unique_min, unique_max])
+                               .range([10, 50]);
+
+
+            //SET UP GS TO HOLD ALL SONG ELEMENTS
+            var songs = svg.selectAll('.song')
+                                  .data(data)
+                                  .enter()
+                                  .append('g')
+                                  .attr('class', 'song');
+
+            //try to setup tooltips for song titles
+            var tool_tip = d3.tip()
+                        .attr("id", "d3-tip")
+                        .offset([-5, 0])
+                        .html(function(d){  return d["Title"];});
+                svg.call(tool_tip);
+
+            //ADD BASIC rects + TOOLTIPS TO EACH SONG
+            var rect_width = 20
+            var rect_space = 2
+            var road_width = 30
+            songs.append('rect')
+                .attr('id', function(d){
+                    return 'i-' + String(d["Reference URL"]).replaceAll(" ", "")
+                })
+                .attr('x', function(d) { 
+                    var album = String(d["Album"])
+                    position = d["Track Number"]
+                    if (album_info[album]['type'] == 'official'){
+                        return (w*.63 - road_width/2) -  position * (rect_width + rect_space)
+                    } else {
+                        return (w*.63 + road_width/2) + position * (rect_width + rect_space)
+                    }})
+                .attr('y', function(d) { 
+                    return date_scale(d["Date"]) - height_scale(d["Unique Word Count"])})
+                .attr('width', rect_width)
+                .attr('height', function(d) {
+                    return height_scale(d["Unique Word Count"]);
+                })
+                .style('fill', 'grey')
+                .style('stroke', 'black')
+                .on('mouseover', function(d){
+                    tool_tip.show(d);
+                })
+                .on('mouseout', function(d){
+                    tool_tip.hide();
+                });
+
+            //FUNCTION TO UPDATE VIEW
+            function update_view(this_view) {
+                //remove all old text elements
+                songs.selectAll('.most-common-words').remove();
+                //remove connection lines
+                songs.selectAll('line').remove();
+
+                //GENERATE MOST COMMON WORDS - ENGLISH/TRANSLATED 
+                if (this_view == 'english' || this_view == 'translated') {
+                    //draw on neew ones
+                    songs.append('text')
+                        .attr('class', 'most-common-words')
+                        .selectAll('tspan')
+                        //CREATE SPAN FOR EACH MOST COMMON ENGLISH/TRANSLATED WORD (TOP 5)
+                        .data(function(d){
+                            if (this_view == 'english'){
+                                return make_array(d["Most Common English"])
+                            } else {
+                                return make_array(d["Most Common Translated"])
+                            }
+                        })
+                        .enter()
+                        .append('tspan')
+                        .attr('x', function(){
+                            d = d3.select(this.parentNode).datum()
+                            var album = String(d["Album"])
+                            position = d["Track Number"]
+                            if (album_info[album]['type'] == 'official'){
+                                return (w*.63 - road_width/2) -  position * (rect_width + rect_space)
+                            } else {
+                                return (w*.63 + road_width/2) + position * (rect_width + rect_space)
+                            }
+                        })
+                        .attr('y', function(da, i) { 
+                            d = d3.select(this.parentNode).datum()
+                            return date_scale(d["Date"]) - 1 - i*7;})
+                        //only fill in text for percentage of words that = percentage of unique words in english
+                        .text(function(d, i){
+                            da = d3.select(this.parentNode).datum()
+                            if (this_view == 'english'){
+                                n_language = Math.floor(da['Percent English Unique'] * 5)
+                            } else { //if not english inverse number of floors is filled
+                                n_language = 5 - Math.floor(da['Percent English Unique'] * 5)
+                            }
+                            if (i <= n_language){
+                                return d.replaceAll("'", "");
+                            } else {
+                                return ""
+                            }
+                            
+                        })
+                        .style('font-size', 4)
+                        //don't display words that go outside the bounds of the box
+                        .style('display', function(d){
+                            //check if it is outside the box or not ??????
+                            da = d3.select(this.parentNode).datum()
+                            rect_y = date_scale(da["Date"]) - height_scale(da["Unique Word Count"])
+                            bb = d3.select(this).node().getBBox();
+                            if ((bb['y']) > (rect_y)){
+                                return 'block'
+                            } else { 
+                                return 'none'
+                            } });
+                } else if (this_view == 'references') {
+                    //DRAW LINKS BETWEEN SONGS 
+                    songs.selectAll('line')
+                        //data is the list of reference urls, each gets a path that will show the reference
+                        .data(function(d){
+                            return make_array(d["Link References"])
+                            })
+                        .enter()
+                        .append('line')
+                        .attr('x1', function(){
+                            bb = d3.select(this.parentNode).select('rect').node().getBBox();
+                            return bb['x'];
+                        })
+                        .attr('y1', function(){
+                            bb = d3.select(this.parentNode).select('rect').node().getBBox();
+                            return bb['y'];
+                        })
+                        .attr('x2', function(d){
+                            //find rect of link/reference song by searching by id
+                            ref = d.replaceAll("'", "")
+                            this_id = '#i-' + String(ref).replaceAll(" ", "")
+                            bb = d3.select(this_id).node().getBBox();
+                            return bb['x']
+                        })
+                        .attr('y2', function(d){
+                            //find rect of link/reference song by searching by id
+                            ref = d.replaceAll("'", "")
+                            this_id = '#i-' + String(ref).replaceAll(" ", "")
+                            bb = d3.select(this_id).node().getBBox();
+                            return bb['y']
+                        })
+                        .style('stroke', 'black')
+                        .on('mouseover', function(d){
+                            //try to make it so it shows toolltips for each song on hover
+                            parent = d3.select(this.parentNode).datum()
+                            tool_tip.show(parent);
+                            d3.select(this).style('stroke', 'blue');
+                        })
+                        .on('mouseout', function(d){
+                            parent = d3.select(this.parentNode).datum()
+                            tool_tip.hide(parent);
+                            d3.select(this).style('stroke', 'black');
+                        });
+                }
+            }
+            
+                 
+
+
+            
+
+        
+        var view = 'default'
+        //SET VIEW OF DATA ACCORDING TO USER INPUT
+        d3.selectAll("#view").on("change", function(d){
+            view = d3.select(this).attr('value')
+            console.log(view)
+            update_view(view)
+            });
+        });</script>
+
+    </body>
