@@ -1,6 +1,6 @@
-'Title': The title of the song. Determined by extracting text with the 'entry-title' class from each doolset lyrics song page. \n
-'Album': The album the song first appeared in, or its designation as a Soundcloud or miscellaneous song. Determined by extracting text with the 'entry-title' class from each doolset lyrics album page.
-'Date': The date the album the song appeared in was released, if relevant, or the date it was released on Soundcloud or YouTube.
+'Title': The title of the song. Determined by extracting text with the 'entry-title' class from each doolset lyrics song page. <br/>
+'Album': The album the song first appeared in, or its designation as a Soundcloud or miscellaneous song. Determined by extracting text with the 'entry-title' class from each doolset lyrics album page.<br/>
+'Date': The date the album the song appeared in was released, if relevant, or the date it was released on Soundcloud or YouTube.<br/>
 'Track Number': A numerical label for songs in each album, starting at 0. Primarily used for positioning visualizations of songs in D3.js, does not reflect actual track order. 
 'Unique Word Count': Number of unique words in the bag of words representation of the complete translated lyrics of the song. Does not include stopwords and punctuation.
 'Notes to Lyrics Ratio Original': Length of the string of all notes extracted for a song divided by the length of the string of all lyrics extracted for a song. Does not use the bag of words representation so it contains all words scraped from the site.
