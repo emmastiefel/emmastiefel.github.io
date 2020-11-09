@@ -1,4 +1,4 @@
-'Title': The title of the song. Determined by extracting text with the 'entry-title' class from each doolset lyrics song page.
+'Title': The title of the song. Determined by extracting text with the 'entry-title' class from each doolset lyrics song page. \n
 'Album': The album the song first appeared in, or its designation as a Soundcloud or miscellaneous song. Determined by extracting text with the 'entry-title' class from each doolset lyrics album page.
 'Date': The date the album the song appeared in was released, if relevant, or the date it was released on Soundcloud or YouTube.
 'Track Number': A numerical label for songs in each album, starting at 0. Primarily used for positioning visualizations of songs in D3.js, does not reflect actual track order. 
