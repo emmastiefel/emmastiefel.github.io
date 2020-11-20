@@ -11,18 +11,18 @@
         <script src="d3-tip.js"></script>
         <base target="_blank">
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
             :root {
-            --main-bg-color: #FFB7B2;
-            --main-link-color: yellow;
-            --main-visited-color: yellow;
-            --main-border-color: blue;
+            --main-bg-color: #F5ECD3; /*FF0BAB*/
+            --color-one: black;
+            --color-two: black;
+            --color-three: black;
+            --clip-display: none;
             }
             body {
-                background-size: 100%;
-                background-image: url("warp grid-01.png");
-                background-color: #FF9AA2;
-                background-attachment: fixed;
-                font-family: "Courier New", monospace;
+                background-color: var(--main-bg-color);
+                font-family: 'Playfair Display', serif;
             }
             #main {
                 position: absolute;
@@ -30,41 +30,55 @@
                 left: 25%;
                 width: 50%;
                 max-width: 100%;
-
             }
             #about {
-                background-color: var(--main-bg-color);
-                color: white;
-                padding: 20px;
-
-                border-radius: 20px;
-                border-style: solid;
-                border-width: thick;
-                border-color: var(--main-border-color);
-
-                margin-bottom: 100px;
+                margin-bottom: 75px;
             }
-            .social-icon {
-                fill: var(--main-link-color);
-                width: 25px;
+            #work {
+                margin-bottom: 200px;
             }
-            .social-icon:hover {
-                fill: var(--main-visited-color);
-            }
-            a {
-                color: var(--main-link-color);
-            }
-            a:visited {
-                color: var(--main-visited-color)
-            }
-            .buttons {
+            .contact-item {
                 display: inline;
             }
-            #explore-work {
-                margin-left: 30px;
-                text-decoration: none;
+            .social-icon {
+                fill: var(--color-three);
+                width: 25px;
             }
-
+            a {
+                color: var(--color-one);
+            }
+            a:visited {
+                color: var(--color-one)
+            }
+            .contact {
+                display: inline;
+            }
+            .clip-rule {
+                border-top: 2px solid var(--color-two);
+                margin-top: 20px;
+            }
+            .best-clip {
+                display: block;
+            }
+            .clip {
+                display: var(--clip-display);
+            }
+            button {
+                background: none;
+                border-style: solid;
+                border-width: 2px;
+                border-color: var(--color-three);
+                color: var(--color-three);
+                padding: 5px;
+                border-radius: 5px;
+                font-size: 12pt;
+                font-family: 'Playfair Display', serif;
+                cursor: pointer;
+            }
+            .description {
+                display: none;
+                overflow: hidden;
+            }
             @media (max-width: 800px) {
                 #main {
                 position: absolute;
@@ -74,7 +88,6 @@
             #explore-work {
                 display: block;
                 margin-left: 0px;
-
             }
                 
             }
@@ -94,14 +107,29 @@
             <p>
                 Currently, I’m a technical contractor for <a href="https://www.metricsfornews.com/">Metrics for News</a> and editor-in-chief of <a href="https://www.minervaquest.com/">the Minerva Quest</a>, my college news publication. In the past, I’ve been an editorial intern at <a href="https://www.citybeat.com/">Cincinnati CityBeat</a>, a tech support intern for <a href="https://www.minervaproject.com/">Minerva Project</a>, a content development intern at <a href="https://www.minerva.kgi.edu/">Minerva Schools at KGI</a>, and a reporting intern at the <a href="https://www.journal-news.com/">Hamilton Journal-News</a>. I’ve also participated in <a href="https://www.wsj.com/articles/meet-the-wsj-noted-advisers-11593628429">WSJ Noted.’s advisers program</a> and <a href="https://voices.aaja.org/alumni">AAJA’s Voices fellowship</a>. 
             </p>
-            <div id="buttons">
+            <div class='contact'>
+                <h2 class = 'contact-item'>Contact me: &nbsp;</h2>
+                <a href='mailto:emma.stiefel@minerva.kgi.edu'>
+                    <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In  -->
+                    <svg class="social-icon contact-item" id="gmail" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" 
+                     viewBox="0 0 99.76 72.74" style="overflow:hidden;enable-background:new 0 0 99.76 72.74;"
+                    xml:space="preserve">
+                    <title>Email link.</title>
+                    <style type="text/css">
+                    .st0{fill:none;stroke:#000000;stroke-width:7}
+                    </style>
+                    <path class="st0" d="M90.42,69.24H9.34c-3.23,0-5.84-2.61-5.84-5.84V9.34c0-3.23,2.61-5.84,5.84-5.84h81.09
+                    c3.23,0,5.84,2.61,5.84,5.84V63.4C96.26,66.62,93.65,69.24,90.42,69.24z"/>
+                    <path class="st0" d="M3.5,9.34c0,0,35.86,29.76,37.63,31.55c3.26,3.29,9.45,7.25,18.39-0.86l36.74-30.7"/>
+                    <line class="st0" x1="65.05" y1="35.42" x2="96.16" y2="64.49"/>
+                    <line class="st0" x1="3.5" y1="64.49" x2="34.76" y2="35.42"/>
+                    </svg>
+                </a>
                 <a href="https://github.com/emmastiefel">
                 <!-- GITHUB Generator: Adobe Illustrator 24.3.0, SVG Export Plug-In  
-                    onmouseover="this.setAttribute('fill', '#69CADB');" onmouseout="this.setAttribute('fill', 'black');" 
                 -->
-                <svg class="social-icon" id="github" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 81.5 79.5" style="overflow:visible;enable-background:new 0 0 81.5 79.5;" xml:space="preserve">
-                <defs>
-                </defs>
+                <svg class="social-icon contact-item" id="github" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 81.5 79.5" style="overflow:visible;enable-background:new 0 0 81.5 79.5;" xml:space="preserve">
+                <title>Github link.</title>
                 <path d="M27.55,79.31c0,0,2.52,0.21,3.28-1.4v-7.49c0-0.45-0.39-0.8-0.84-0.75c-2.46,0.31-9.56,0.9-11.59-2.3
                 c0,0-3.61-7.31-6.17-8.73c0,0-3.8-2.09,0.38-1.99c0,0,4.71,0.32,6.74,4.25c0.93,1.81,2.45,3.31,4.42,3.81
                 c1.52,0.39,3.54,0.44,6.14-0.35c0.54-0.16,0.95-0.62,1.03-1.18c0.17-1.16,0.62-3.18,1.7-4.16c0.17-0.15,0.07-0.43-0.16-0.46
@@ -114,10 +142,9 @@
 
                 <a href="https://twitter.com/emma_stiefel">
                 <!-- TWITTER Generator: Adobe Illustrator 24.3.0, SVG Export Plug-In  -->
-                <svg class="social-icon" id="twitter" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 96.54 79.68" style="overflow:visible;enable-background:new 0 0 96.54 79.68;"
+                <svg class="social-icon contact-item" id="twitter" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 96.54 79.68" style="overflow:visible;enable-background:new 0 0 96.54 79.68;"
                 xml:space="preserve">
-                <defs>
-                </defs>
+                <title>Twitter link.</title>
                 <path d="M47.81,24.82c0,0-29.94-1.45-42.01-21.25
                 c0,0-9.42,11.83,6.04,26.56c0,0-3.75,2.41-8.88-1.93c0,0-0.06,15.21,15.64,19.32c0,0,0.48,2.17-8.45,1.45
                 c0,0,5.07,12.31,18.35,13.28c0,0-5.55,9.66-28.49,8.93c0,0,19.56,16.42,54.33,3.62c31.06-11.43,33.03-46.38,33.09-53.7
@@ -128,22 +155,113 @@
                 
                 <a href="https://www.linkedin.com/in/emma-stiefel-5b762313b/">
                 <!-- LINKEDIN Generator: Adobe Illustrator 24.3.0, SVG Export Plug-In  -->
-                <svg class="social-icon" id="linkedin" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 79.3 79.3" style="overflow:visible;enable-background:new 0 0 79.3 79.3;" xml:space="preserve">
-                <defs>
-                </defs>
+                <svg class="social-icon contact-item" id="linkedin" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 79.3 79.3" style="overflow:visible;enable-background:new 0 0 79.3 79.3;" xml:space="preserve">
+                <title>LinkedIn link.</title>
                 <path d="M67.25,0h-55.2C5.39,0,0,5.39,0,12.05v55.2C0,73.9,5.39,79.3,12.05,79.3h55.2c6.65,0,12.05-5.39,12.05-12.05v-55.2
                 C79.3,5.39,73.9,0,67.25,0z M25.44,66.65H13.35V30.51h12.09V66.65z M19.33,25.87c-3.72,0-6.73-2.85-6.73-6.36
                 c0-3.51,3.01-6.36,6.73-6.36s6.73,2.85,6.73,6.36C26.06,23.02,23.04,25.87,19.33,25.87z M68.61,45.7v20.95H56.52
                 c0,0,0.42-12.66,0-20.11c-0.42-7.45-5.48-7.59-5.48-7.59c-2.81-0.16-4.75,1.88-5.9,3.66c-0.84,1.3-1.27,2.82-1.27,4.37v19.67H32.05
                 V30.51h11.81v5.4c0,0.06,0.08,0.07,0.1,0.02c1.04-3.03,6.73-8.26,15.93-5.42C69.46,33.46,68.61,45.7,68.61,45.7z"/>
                 </svg></a>
-                <h1 class="buttons" id="explore-work"><a href="/clips.html" target="_self" style="text-decoration: none">My work ~></a></h1>
 
+            </div></div>
+            <div id="work">
+                <h1>
+                    My best work:
+                </h1>
+                <button class='show-clips'>Click to see all of my work.</button>                
+                <script>
+                    d3.csv("Clips List.csv", function(d){
+                        //function to parse time
+                        tParser = d3.timeParse("%m/%d/%Y");
+                    //process data columns
+                    return {
+                        Link: d["Link"],
+                        Title: d["Title"],
+                        Importance: parseInt(d["Importance"]),
+                        Description: d["Description"],
+                        Date: tParser(d["Date Published"]),
+                        Publication: d["Publication"],
+                        data: d["data"],
+                        design: d["design"],
+                        news: d["news"],
+                        Role: d["Role"]
+                    };
+                }).then(function(data){ 
+        
+                    dataset = data;
+                    console.log(dataset)
+                    dataset.sort((a,b) => d3.ascending(a.Importance, b.Importance))
+                    var clips = d3.select('#work')
+                        .selectAll('.clip')
+                        .data(dataset)
+                        .enter()
+                        .append('div')
+                        //assign class based on rank, only show top 3
+                        .attr('class', function(d){
+                            if (d.Importance <= 3) {
+                                return 'best-clip'
+                            } else {
+                                return 'clip'
+                            }
+                        });
+                    //add horizontal rule to separate clips
+                    clips.append('hr')
+                         .attr('class', 'clip-rule')
+                    //print date, time, publication
+                    clips.append('h2')
+                        .append('a')
+                        .text(function(d) { return d.Title})
+                        .attr("href", function(d) { return d.Link});
+                    format_time = d3.timeFormat("%B %d, %Y");
+                    clips.append('p')
+                        .text(function(d) { return format_time(d.Date) +  ' | ' }) 
+                        .append('em')
+                        .text(function(d) { return d.Publication});
+                    //add text
+                    clips.append('p')
+                          .attr('class', 'description')
+                          .attr('id', function(d, i){ return 'description-' + i})
+                          .attr('title', 'Click to show the description of this piece.')
+                          .text(function(d){ return d.Description})
+        
+                    //expandable description button
+                    //<button type="button" class="collapsible">Open Collapsible</button>
+                    clips.append('button')
+                        .attr('class', 'collapsible')
+                        .text('Description +')
+                        .on('click', function(d, i){
+                            var content = this.previousElementSibling;
+                            if (content.style.display === "block") {
+                                content.style.display = "none";
+                                d3.select(this).text('Description +')
+                                .attr('title', 'Click to show the description of this piece.');;
+                            } else {
+                                content.style.display = "block";
+                                d3.select(this).text('Description -')
+                                .attr('title', 'Click to hide the description of this piece.');
+                            }
+                        });
+                    //button to show more clips
+                    d3.select('.show-clips')
+                        .on('click', function(d){
+                                let root = document.documentElement;
+                                
+                                if (root.style.getPropertyValue('--clip-display') === "block") {
+                                    root.style.setProperty('--clip-display', 'none');
+                                    d3.select(this).text('Click to see all of my work.');
+                                } else {
+                                    root.style.setProperty('--clip-display', 'block');
+                                    d3.select(this).text('Click to see only my best work.');
+                                }
+                            });
+        
+                    });
+                </script>
             </div>
-            
         </div>
         
 
-        </div></div>
+       
        
     </body>
