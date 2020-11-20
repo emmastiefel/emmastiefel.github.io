@@ -178,6 +178,7 @@
                     return {
                         Link: d["Link"],
                         Title: d["Title"],
+                        Skills: d["Skills"],
                         Importance: parseInt(d["Importance"]),
                         Description: d["Description"],
                         Date: tParser(d["Date Published"]),
@@ -218,6 +219,15 @@
                         .text(function(d) { return format_time(d.Date) +  ' | ' }) 
                         .append('em')
                         .text(function(d) { return d.Publication});
+                    //print skills
+                    clips.append('p')
+                        .text(function(d) { 
+                            if (d.Skills.length > 1){
+                                return 'Skills used: ' + d.Skills;
+                            } else {
+                                return '';
+                            }});
+                            
                     //add text
                     clips.append('p')
                           .attr('class', 'description')
