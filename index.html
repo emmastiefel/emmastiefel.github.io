@@ -68,6 +68,10 @@
             .clip {
                 display: var(--clip-display);
             }
+            .clip__img {
+                display: block;
+                width: 100%;
+            }
             button {
                 background: none;
                 border-style: solid;
@@ -241,6 +245,29 @@
                             } else {
                                 return '';
                             }});
+                    //add visuals, static image by default
+                    clips.append('img')
+                         .attr('class', 'clip__img')
+                         .attr('id', 'static')
+                         .attr('src', 'visa-fees-static.png');
+                    //show gif on hover
+                    clips.on('mouseover', function(){
+                        current_visual = d3.select(this).select('img').attr('id');
+                        if (current_visual == 'static') {
+                            console.log(current_visual)
+                            d3.select(this).select('img')
+                                .attr('id', 'gif')
+                                .attr('src', 'visa-fees-visual.gif');
+                        }
+                    }).on('mouseout', function(){
+                        current_visual = d3.select(this).select('img').attr('id');
+                        if (current_visual == 'gif'){
+                            console.log(current_visual)
+                            //reset to static image on mouseout
+                            d3.select(this).select('img')
+                                .attr('id', 'static')
+                                .attr('src', 'visa-fees-static.png');}
+                    })
                             
                     //add text
                     clips.append('p')
