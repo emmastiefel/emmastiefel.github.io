@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<!-- 
+     python -m http.server 8888 &.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>How hard is it for international students to afford a US higher education?</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="d3-tip/d3-tip.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.js'></script>
+
+    <style>
+        .story_content {
+            width: 40%;
+            margin-left: 30%;
+        }
+        .map {
+            margin-left: 12.5%;
+            width: 75%;
+        }
+        .map_legend {
+            font-size: 6pt;
+        }
+        .tool_tip {
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+   
+<div class='story_content'>
+    <h1>How hard is it for international students to afford a US higher education?</h1>
+    <p>By <a href="https://emmastiefel.github.io/">Emma Stiefel</a></p>
+    <p>
+    With the election of Joe Biden to the presidency, <a href="https://www.nytimes.com/2020/12/10/us/politics/biden-student-loans.html">potential legislation to cancel student debt</a> is being debated once again in the US. Yet the staggering student debt weighing down graduates of US colleges is only <a href="https://www.nytimes.com/2020/11/18/upshot/student-debt-forgiveness-biden.html?action=click&module=RelatedLinks&pgtype=Article">a symptom of a deeper problem</a>: a US higher education is becoming increasingly unaffordable. 
+    </p>
+    <p>
+    Discussions about federal student debt necessarily focus on federal student loan debt. As a result, they largely neglect international students, who <a href="https://studentaid.gov/understand-aid/eligibility/requirements">aren’t eligible</a> for federal student loans. 
+    </p>
+    <p>
+    But international students are a significant part of the US higher education system. There are over 500,000 international undergraduate students in the US, according to the most recent institution data from the <a href="https://collegescorecard.ed.gov/data/">Department of Education’s College Scorecard system</a>. Overall, they account for about 3.5 percent of the country’s undergraduate students.
+    </p>
+    <p>
+    There’s a stereotype, which was <a href="https://twitter.com/bengalitrash/status/980502157341417472">immortalized in a viral meme</a> a few years ago, that most of these students come from wealthy families. Otherwise, how would they be able to pay the enormous price of a US bachelor’s degree largely without student loans or financial aid? There are obviously many students, both abroad and in the US, who would benefit from studying at a US university but can’t afford it at all. But for those who do enroll in US colleges, how difficult is it to afford attendance?
+    </p>
+</div>
+
+
+    <div class='map'>
+        <div class='map_container'></div>
+        <div class='map_legend_container'></div>
+    </div>  
+
+<div class='story_content'>
+<p>
+<em>The size of the circle corresponds to the number of international students attending that school. The color of the circle corresponds to the average annual cost of attendance. Hover over a circle to see details for that school. Source: <a href="https://collegescorecard.ed.gov/data/documentation/">US Department of Education College Scorecard Most Recent Institution-Level Data</a>. Enrollment data is reported for the Fall 2018 semester. Average annual cost of attendance is reported for students who receive Title IV aid for the 2018-19 academic year. </em>
+</p>
+<p>
+As the above map shows, international students are spread out across the country, though there are some schools that are clearly hubs for these students. 
+</p>
+<p>
+The data suggest that international students are more likely to attend pricier schools than domestic students. The College Scorecard data shows that, on average, international students attend schools that cost approximately $31,500 per year. The average cost of attendance for students overall is approximately $23,500, about $8,000 dollars less than the international student average.  
+</p>
+<p>
+But these averages don’t show the significant variation between schools that enroll international students. Some of the schools with the highest numbers of international students are expensive universities, such as the University of California system and New York University. But less expensive colleges in regions with lower costs of living also attract large numbers of international students.
+</p>
+<p>
+In fact, the school with the most international students is Houston Community College, which has an average cost of attendance of approximately $11,000. On <a href="https://www.hccs.edu/support-services/international-students/international-student-activities/">the college’s website</a>, two its “International Student Ambassadors” — a computer science major from Mozambique and another computer science major from Turkmenistan — mention that they enrolled at Houston Community College because it was more affordable. 
+</p>
+<p>
+That said, the average cost of attendance at schools international students attend doesn’t directly reflect how hard it is for them to afford to study there. Students from wealthy families can enroll at cheaper colleges, and students from low-income backgrounds can still try to pay tuition at expensive schools. How many students fall into each category?
+</p>
+<p>
+The College Scorecard data only includes information about institutions, not specific students. Data about the financial backgrounds of students is generally not available because, even when it is anonymized, it may be used to reveal sensitive information about individual students. The best data for answering more complicated student-oriented questions like the one above is the National Postsecondary Student Aid Study (NPSAS), which was last collected in 2016. It allows for somewhat more complicated analysis of student backgrounds, though it still limits the level of detail. 
+</p>
+<p>
+The NSPAS data confirms that international students tend to be wealthier than their peers, though not by much. Less than one in five international students come from families with annual incomes under $27,900, compared to one in four US citizen college students who fall into the same category.  
+</p>
+<p>
+Once again, however, this overall trend hides significant variation between students. If international students are grouped by their reported race, the distribution of incomes shifts accordingly. Asian students, who make up over half of all international students, tend to have middle-to-higher incomes. The one in five international students who are white are much more likely to be from upper-class families — about two in five have incomes over $113,500. Latinx international students are more likely to come from a low-income background — about one in three make less than $27,900 a year. Black students, who account for less than one in ten of all international students, are most likely to come from upper-middle-class families who make between $63,000-113,499.
+</p>
+<p>
+International students are also less likely to receive any form of financial aid, including loans and work-study, than their domestic peers. Only two out of every five international students receive some sort of aid, whereas four out of five domestic students receive at least some help with paying for college. This makes sense given that international students are ineligible for most US student loans, scholarships, and jobs (due to visa restrictions). As a result, these students and their families would have to carefully consider which colleges they can afford to pay the full price for. 
+</p>
+<p>
+Ultimately, the data suggest that international students are indeed more likely to come from wealthier backgrounds that allow them to avoid taking on excessive student loan debt. Yet many international students do come from lower income families and choose US schools, like Houston Community College, based on how affordable they are. 
+</p>
+<p>
+What this analysis hasn’t addressed is why international students choose to study in the US and whether the degrees they receive are worth their families’ investment. If a student comes to the US in hopes of receiving higher-paying jobs after graduation, for example, how likely are they to receive the lucrative positions they want? A subsequent article will investigate this question and more.
+</p>
+</div>
+
+    <script>
+        //draw map
+        d3.csv("filtered-scorecard-data-V1.csv", d3.autoType).then(function(data){
+            console.log(data)
+
+            //create svg
+            var w = 500
+            var h = 250
+            var p_h = 40
+            var p_w = 60
+            var svg = d3.select('.map_container')
+                        .append('svg')
+                        .attr("viewBox", '0 0 ' + w +' ' + h);
+            
+            var size_max = d3.max(data.map(d => d.INTCOUNT))
+            var size_scale = d3.scaleLinear()
+                                .domain([1, size_max])
+                                .range([1, 10])
+            var cost_colors = [];
+            const sequential_colors = d3.interpolateLab("#f7fcb9", "#31a354");
+            for (i = 0; i < 10; i ++) {
+                cost_colors.push(sequential_colors(i/10))
+            }
+            var cost_min = d3.min(data.map(d => d.COSTT4_A))
+            var cost_max = d3.max(data.map(d => d.COSTT4_A))
+            var cost_scale = d3.scaleQuantize()
+                                .domain([cost_min, cost_max])
+                                .range(cost_colors);
+            console.log(cost_min, cost_max)
+
+            //DRAW LEGEND
+            //adapted from https://bl.ocks.org/HarryStevens/6eb89487fc99ad016723b901cbd57fde
+            var gradient_data = [{"color":"#f7fcb9","value":0},{"color":"#31a354","value":1}];
+            var extent = d3.extent(gradient_data, d => d.value);
+            var defs = svg.append("defs");
+            var linearGradient = defs.append("linearGradient").attr("id", "myGradient");
+            linearGradient.selectAll("stop")
+                .data(gradient_data)
+                .enter()
+                .append("stop")
+                .attr("offset", d => ((d.value - extent[0]) / (extent[1] - extent[0]) * 100) + "%")
+                .attr("stop-color", d => d.color);
+
+            var legend_svg = d3.select('.map_legend_container')
+                        .append('svg')
+                        .attr("viewBox", '0 0 ' + w +' ' + 40);
+            var legend = legend_svg.append('g')
+                    .attr('class', 'map_legend')
+                    .attr("transform", "translate(" + (w/2 - 50)+ ", "+ 20 + ")");
+            legend.append("rect")
+                .attr("width", 75)
+                .attr("height", 10)
+                .style("fill", "url(#myGradient)");
+            legend.append('text')
+                  .attr('class', 'map_legend')
+                  .text('Average annual cost of attendance:')
+                  .attr('transform', "translate(" + (-20) + ", " + (-5) + ")");
+            legend.append('text')
+            .attr('class', 'map_legend')
+                  .text('Lowest: $' + cost_min)
+                  .attr("transform", function() {
+                      width = d3.select(this).node().getBBox()['width']
+                      height = d3.select(this).node().getBBox()['height']
+                      return "translate(" + (-width - 5) + ", " + (height/2 + 2) + ")"
+                    });
+            legend.append('text')
+            .attr('class', 'map_legend')
+                  .text('Highest: $' + cost_max)
+                  .attr("transform", function() {
+                      height = d3.select(this).node().getBBox()['height']
+                      return "translate(" + (80) + ", " + (height/2 + 2) + ")"
+                    });
+
+            //setup tooltip to hover over colleges
+            var tool_tip = d3.tip()
+                        .attr("class", "tool_tip")
+                        .offset([-5, 0])
+                        .html(function(d){ return '<b>'+d.INSTNM + '</b>:<br><b>' + d.INTCOUNT + '</b> international students.<br><b>$' + d.COSTT4_A + '</b> average annual cost of attendance.';});
+            svg.call(tool_tip);
+        
+            //geo setup code adapted from http://bl.ocks.org/michellechandra/0b2ce4923dc9b5809922
+            //set up projection for the us, set to center of screen and scale
+            var projection = d3.geoAlbersUsa()
+				   .translate([w/2, h/2])    
+                   .scale([500]);          
+            // Define path generator, use projection to convert json features to paths
+            var path = d3.geoPath()               
+                 .projection(projection);  
+                 
+            //load state geojson data and draw map
+            //file from: https://eric.clst.org/tech/usgeojson/
+            d3.json("gz_2010_us_040_00_20m.json").then(function(json) {
+                console.log(json.features)
+
+                //draw one path for each feature in json file
+                var map = svg.selectAll("path")
+                    .data(json.features)
+                    .enter()
+                    .append("path")
+                    .attr("d", path)
+                    .style("stroke", "black")
+                    .style("stroke-width", 0.1)
+                    .style('opacity', '0.5')
+                    .style('fill', 'none');
+
+                //draw circles for each college
+                svg.selectAll('circle')
+                   .data(data.filter(function(d){ return d.INTCOUNT > 0}))
+                   .enter()
+                   .append('circle')
+                   .attr("cx", function(d) {  return projection([d.LONGITUDE, d.LATITUDE])[0]; })
+                   .attr("cy", function(d) { return projection([d.LONGITUDE, d.LATITUDE])[1]; })
+                   .attr('r', function(d){ return size_scale(d.INTCOUNT)})
+                   .style('fill', function(d){ return cost_scale(d.COSTT4_A)})
+                   .on('mouseover', function(d){
+                       d3.select(this).style('stroke', 'black');
+                       tool_tip.show(d);
+                    })
+                    .on('mouseout', function(d){
+                        d3.select(this).style('stroke', 'none');
+                        tool_tip.hide();
+                    });
+            });
+
+        
+        })</script>
+</body>
