@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<!-- 
+     python -m http.server 8886 &.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title><3</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="d3-tip/d3-tip.js"></script>
+    <style>
+        .tool_tip {
+            background-color: white;
+            max-width: 300px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .text {
+            width: 50%;
+            margin-left: 25%;
+        }
+    </style>
+</head>
+<body>
+    <div class = 'text'>
+        <p>
+            BTS became the first K-pop group to top the Billboard Hot 100 chart in August. The group claimed the #1 spot with their single “Dynamite”, a bright disco-pop song. It was an incredible achievement for the group and its fans, who worked hard to stream the song. As BTS have repeatedly said, they hoped that the track would bring some explosive good vibes to fans in such a bleak year. “Recording this song was really fun, and like Jin said, we’re going through difficult times so we tried to have more fun working on this song,” RM, BTS’ leader, <a href="https://www.billboard.com/articles/columns/k-town/9438051/bts-apple-music-interview-dynamite">said in an interview</a>. “We made this song in hopes of giving energy to the listeners.”
+            </p>
+            <p>
+            “Dynamite” was also widely celebrated as a breakthrough for Asian representation in the US music industry. It was seen as BTS’ latest, and arguably most impressive, victory against racism and xenophobia. Before “Dynamite”, only two songs by Asian artists had achieved the same top position on the Hot 100 chart, <a href="https://www.billboard.com/articles/business/chart-beat/9442836/bts-dynamite-tops-hot-100-chart/">according to Billboard</a> — Kyu Sakamoto’s 1963 “<a href="https://www.youtube.com/watch?v=F284iB65-QU">Sukiyaki</a>” and Far East Movement’s 2010 “<a href="https://www.youtube.com/watch?v=w4s6H4ku6ZY">Like a G6</a>”. As music critic Seongdeok Seo <a href="https://magazine.weverse.io/article/view?lang=en&num=6">pointed out in Weverse magazine</a>, BTS had already consistently entered the top 10 of the Billboard Hot 100, which should have established them as mainstream artists within the US.“Despite all this, ranking No.1 is important,” Seo wrote. “Then what is the difference between Top 10 and No.1? To BTS, holding the top spot is an outcome of transcending the complex barrier of discrimination, exclusion, and prejudice.”
+            </p>
+            <p>
+            For many, however, the triumph of “Dynamite” was a somewhat uneasy victory. “Dynamite” was BTS’ first song entirely in English, though the group, like most K-pop artists, has always mixed some English phrases into their discography. Many fans worried that it may create an expectation that BTS and other foreign artists who hope to achieve the same level of success in the US must perform and speak in English to do so. If that had happened, the US reception of “Dynamite” would seem almost like a step backwards into ethnocentrism and xenophobia, rather than progress towards a future where artists can succeed regardless of their ethnicity and language.
+            </p>
+            <p>
+            Instead, many fans hoped that “Dynamite” would become <a href="https://www.buzzfeed.com/eleanorbate/bts-tonight-show-takeover-performances-review">a Trojan horse</a>, an ebullient English hit that would convince the US general public to finally listen to BTS’ “rich, varied, and top-tier discography in Korean.” As <a href="https://www.buzzfeed.com/eleanorbate/bts-tonight-show-takeover-performances-review">Ellie Bate observed in Buzzfeed</a>, this is exactly what the group did during a week of performances on the Tonight Show: though they opened and closed with Dynamite, the intervening shows highlighted some of BTS’ best work, including dancing to “<a href="https://www.youtube.com/watch?v=MXFkjMNXfpY">IDOL</a>” in traditional Korean clothes in front of Seoul’s Gyeongbok Palace. Fans also <a href="https://twitter.com/FallonTonight/status/1311471501766537217?s=20">convinced the Tonight Show</a> to add subtitles to the performances after they aired, making their Korean lyrics readily accessible for new US viewers. Overall, it seemed like BTS had successfully utilized their single English hit to gain more attention for their Korean discography. 
+            </p>
+            <p>
+            The ultimate test of the “Trojan horse” plan came with the release of BTS’ new album, BE, in November. The project was in some ways a return to the BTS fans were used to — tracks were mostly in Korean (minus Dynamite, which was included as the album’s outro) and definitely “rich, varied, and top-tier” in terms of lyricism and music style. Yet it was also an impressive statement of their talent and autonomy as artists. BE, which was conceived in response to the coronavirus pandemic earlier this year, was BTS’ most self-directed project to date (though members had always written and produced music to different degrees). Fans understood that the success of BE would be seen, fairly or not, as an evaluation of the members’ personal skill and effort as well as their ability to match the success of “Dynamite” with Korean tracks. So, when Park Jimin, who served as the project manager for BE, <a href="https://www.allkpop.com/article/2020/12/btss-music-project-manager-jimin-trends-worldwide-after-he-got-what-he-asked-for-as-all-7-songs-from-be-debut-on-billboard-hot-100 ">said that he hoped the entire album would make it onto the Hot 100</a>, fans prepared for a massive streaming campaign that would fulfill his wish. 
+            </p>
+            <p>
+            They succeeded — all six new songs on BE debuted on the Billboard Hot 100. The achievement, especially “Life goes On”’s #1 debut, <a href="https://www.billboard.com/articles/business/chart-beat/9491302/bts-life-goes-on-number-one-hot-100">broke records and made history</a>. After 2020, it seems like a large part of the US public may finally be ready to regularly and seriously listen to music that isn’t from their language or culture. 
+            </p>
+            <p>
+            But how had K-pop artists fared on the Billboard Hot 100 chart before BTS’ singular achievements? What songs succeeded? And how important is language for artists who hope to break into the US mainstream? 
+            </p>
+    </div>
+    <div class='plot_container'></div>
+    <div class = 'text'>
+        <h1>K-pop on the Billboard Hot 100</h1>
+
+
+<h2>Wonder Girls</h2>
+
+
+<p>
+The first K-pop group to make it onto the Billboard Hot 100 was Wonder Girls, a girl group formed by JYP Entertainment. After <a href="https://www.theatlantic.com/entertainment/archive/2012/01/does-korean-pop-actually-have-a-shot-at-success-in-the-us/252057/">multiple performances in the US</a>, including opening for the Jonas Brothers, their English single “Nobody” reached #76 on the chart in October 2010. They stared in a movie “<a href="https://www.youtube.com/watch?v=LMLzWRYZLhs">The Wonder Girls</a>”, which was released on TeenNick in 2012. At the time, Patrick St. Michel observed in <em>The Atlantic</em>, “the smart money seem[ed] to be on Wonder Girls to have the best chance yet to finally break through and sustain success in America.”  
+</p>
+<p>
+The Wonder Girls were a powerhouse group within the K-pop industry for their ten year career, consistently releasing hits <a href="https://www.billboard.com/articles/columns/k-town/7669731/wonder-girls-break-up-thank-you-for-being-so-wonderful-video">from their 2007 debut to their 2017 disbandment</a>. But they never achieved the US mainstream popularity that seemed possible in 2010. The group had <a href="http://www.thekrazemagazine.com/latest-updates/2018/7/21/history-of-k-pop-wonder-girls">multiple destabilizing lineup changes</a>, including vocalist Sunmi leaving in 2010 to return to school, after which a planned English album was scrapped. Yet their early success on the Hot 100 chart still had a lasting impact. “It made the improbable seem possible,” Tamar Herman <a href="https://www.billboard.com/articles/columns/k-town/8476481/wonder-girls-nobody-10-year-anniversary-k-pop-hot-100-chart/">writes for Billboard</a>. “[R]ather than looming over the industry like a taunt, the Hot 100 singles chart became a goal.”
+</p>
+<h2>Psy</h2>
+
+
+<p>
+The next K-pop artist to make it onto the Billboard Hot 100 chart needs no introduction. PSY’s “<a href="https://www.youtube.com/watch?v=9bZkp7q19f0">Gangnam Style</a>” <a href="https://www.bbc.com/news/blogs-magazine-monitor-30330167">nearly broke YouTube’s view counter</a> in 2014, as the viral hit continued to accumulate record-breaking streaming numbers after its 2012 release. “Gangnam Style” peaked at #2 on the Hot 100, just short of the top position, and stayed on the chart for 31 weeks. Unlike “Nobody”, “Gangnam Style” is sung mostly in Korean and wasn’t intended to break into the US market. The global spread of “Gangnam Style” and its cheesy dance moves surprised everyone, <a href="https://www.nytimes.com/2012/10/14/arts/music/interview-psy-the-artist-behind-gangnam-style.html">including PSY himself</a>. 
+</p>
+<p>
+PSY released “Gangnam Style” and his other chart-topping songs under contract with YG Entertainment. Though he unwittingly introduced most of the world to K-pop, he was somewhat unique within the industry. He was a soloist rather than a member of an idol group and comparatively old. His willingness to satirically critique Korean society also distinguished him —  “Gangnam Style” satirically targeted those who tried to mimic the residents of Seoul’s glitziest neighborhood. Adrian Hong, a “Korean-American consultant” <a href="https://www.theatlantic.com/international/archive/2012/08/gangnam-style-dissected-the-subversive-message-within-south-koreas-music-video-sensation/261462/">quoted in The Atlantic</a>, noted that “‘Korea has not had a long history of nuanced satire.’”
+</p>
+<p>
+“Gangnam Style” undoubtedly brought more exposure to K-pop artists overall, <a href="http://youtube-trends.blogspot.com/2013/07/a-year-since-gangnam-style-k-pop-keeps.html">as YouTube data shows</a>. It also left a lasting effect on the Billboard Hot 100 chart itself — in 2013, <a href="https://pitchfork.com/thepitch/psys-gangnam-style-changed-pop-music-whether-you-like-it-or-not/">after the song was released and likely at least partially because of it</a>, the rules for calculating chart positions were changed to include YouTube views. This opened up the possibility of music video-focused streaming, which has since become the focus of fan efforts to support K-pop songs. Subsequent but increasingly less successful hits, like “<a href="https://www.youtube.com/watch?v=ASO_zypdnsQ">Gentleman</a>” and “<a href="https://www.youtube.com/watch?v=FrG4TEcSuRg">Daddy</a>”, showed that it was possible for K-pop artists to have sustained popularity in the US (though it should also be noted that these songs contained much more English lyrics than “Gangnam Style”).  
+</p>
+<p>
+Yet PSY’s reception in the US didn’t necessarily signal a move away from xenophobia to the extent that a chart-topping Korean song would seem to indicate.  For most foreign listeners, “Gangnam Style” was just an absurd song with even weirder dance moves that was fun to play at parties. Socially conscious messages were there, but only if you took the time to research the translated lyrics and cultural context of the song. Though it’s hard to say for sure, I suspect that few did — as a 14-year-old in Ohio, I at least wasn’t very interested in the deeper meaning of “Gangnam Style” when I reluctantly performed the horse dance with friends.  
+</p>
+<p>
+Obviously, it’s ridiculous to expect everyone to closely engage with the songs they listen to. Many don’t even fully understand the messages of English pop songs. But for a while, the path “Gangnam Style” paved to the top of the Hot 100 — one reliant on mindless, dance-crazed virality — seemed like it might be the only way forward for K-pop artists hoping to break into the US mainstream. It was unclear whether it would be possible for a foreign act to deeply engage US listeners with its music.
+</p>
+<h2>CL</h2>
+
+
+<p>
+CL’s 2016 single “<a href="https://www.youtube.com/watch?v=Mr29X77OA5g">Lifted</a>” peaked at #94 on the Hot 100. The all-English track was part of a coordinated attempt to establish the soloist, a former member of star girl group 2NE1, as a mainstream US artist. CL was signed to YG Entertainment, making her PSY’s labelmate at the time — she featured on his 2015 song “Daddy”, which peaked at #97 on the Hot 100. 
+</p>
+<p>
+As a talented rapper and vocalist, CL was seen as “<a href="https://time.com/4503387/cl-america-k-pop/">the Future of K-Pop in America</a>” at the time. She’d had incredible success with 2NE1 in Korea and signed with Scooter Braun, who also managed Justin Bieber and Ariana Grande. She <a href="https://www.thefader.com/2018/02/26/cl-english-album-2ne1-kpop-yg-scooter-braun">reportedly had over 100 songs</a> ready to release in the US, but her career fizzled after “Lifted” and a much-anticipated album never materialized. Many fans assert that CL was horrifically mismanaged by YG and welcomed <a href="https://www.soompi.com/article/1368980wpp/cl-opens-up-about-leaving-yg-im-excited-for-the-1st-time-in-a-long-while">her departure from the company</a> in December 2019.
+</p>
+<h2>BTS</h2>
+
+
+<p>
+BTS Billboard Hot 100 successes are just one chapter in the group’s meteoric rise from K-pop underdogs to international superstars. After “<a href="https://www.youtube.com/watch?v=MBdVXkSdhwU">DNA</a>” peaked at #67 on the Hot 100 in 2017, the group has been persistently rising through the chart with each new release. “<a href="https://www.youtube.com/watch?v=7C2z4GqqS5E">Fake Love”,</a> the title track for their “Love Yourself: Tear” album, reached the #10 spot in 2018, inaugurating the group’s reign at the top of the chart. 
+</p>
+<p>
+The title track for BTS’ 2020 album “Map of the Soul: 7”, “<a href="https://www.youtube.com/watch?v=gwMa6gpoE9I">ON</a>”, set a new record for the group when it debuted at #4 on the Hot 100. Several other songs from the same album made it onto the chart as well, including two solo tracks (“<a href="https://www.youtube.com/watch?v=dNUnnb8F-Cw">Filter</a>” by Jimin and “<a href="https://www.youtube.com/watch?v=a_zk4JFK43g">My Time</a>” by Jungkook) without accompanying music videos. 
+</p>
+<p>
+The group finally achieved the #1 spot in August with “<a href="https://www.youtube.com/watch?v=gdZLi9oWNZg">Dynamite</a>”, and quickly reclaimed it with “<a href="https://www.youtube.com/watch?v=-5q5mZbe3V8">Life Goes On</a>” in November. The group has achieved unparalleled success in the US as well as virtually every other country. 
+</p>
+<p>
+Several other songs included in this graphic were released by BTS members performing as solo acts (“<a href="https://www.youtube.com/watch?v=i23NEQEFpgQ">Chicken Noodle Soup</a>” by j-hope and “<a href="https://www.youtube.com/watch?v=qGjAWJ2zWWI">Daechwita</a>” by Agust D, known as Suga in BTS) or are songs by other artists that feature BTS members (“<a href="https://www.youtube.com/watch?v=bIv16itYi_0">Waste it on Me</a>” by Steve Aoki and a remix of “<a href="https://www.youtube.com/watch?v=qvu4nPMyl3U">Savage Love</a>” by Jason Derulo and Jawsh 685, which also reached the #1 spot).
+</p>
+<h2>Blackpink</h2>
+
+
+<p>
+Blackpink, a girl group under YG Entertainment, entered the Billboard Hot 100 with “<a href="https://www.youtube.com/watch?v=IHNzOHi8sJs">DDU-DU DDU-DU</a>” in 2018. The group has continued to climb up the charts, though they have yet to break into the top ten. Blackpink has succeeded in building a global fanbase and making history as <a href="https://www.vulture.com/2019/04/coachella-2019-blackpink-set-was-historic-moment-for-k-pop.html">the first K-pop group to perform at the Coachella</a> music festival. Blackpink’s careers are far from over, and only time will tell if they continue to rise up the charts and into the US mainstream.
+</p>
+    </div>
+    <div class = 'text'>
+        <h1>A brief note: what is K-pop?</h1>
+
+
+<p>
+This piece obviously relies on K-pop as a convenient designation for a certain type of music. But what type of music is this, exactly? Like many music genres, the boundaries of K-pop are blurred and contested. <a href="https://ther3journal.com/issue-1/roundtable-kpop/ ">There’s no singular definition of the category</a>, and instead of advocating for one I’ll simply emphasize that the industry, the artists in it, and their fans are incredibly diverse, certainly much more so than many mainstream US media articles about the subject would suggest. Two of the artists that have topped the Hot 100 — BTS and PSY — have done as much to challenge the definition of K-pop and the industry status quo as they have to promote it and expand it overseas. 
+</p>
+    </div>
+    <div class='sentiment_container'></div>
+    <div class = 'text'>
+        <h1>What emotions do these popular K-pop songs convey? How do they vary depending on what element of the song one focuses on?</h1>
+
+
+<p>
+The above chart starts to more closely examine the emotions conveyed by different elements of the K-pop songs that charted in the Billboard Hot 100. The blue squares represent the “valence” or musical positiveness, estimated for the song by Spotify’s algorithm. The pink circles represent the sentiment, from negative to positive, of the song’s complete translated lyrics. The green shapes represent the sentiment of the song’s lyrics which were originally in English. 
+</p>
+<h1>How do the K-pop songs that make it onto the Billboard Hot 100 compare to others that are popular amongst fans of K-pop? </h1>
+
+
+<p>
+To answer that, I gathered data for K-pop songs that had reached the top 3 positions for the World Digital Song Sales chart, a Billboard ranking for songs in the “<a href="https://en.wikipedia.org/wiki/World_Digital_Song_Sales">world music</a>” genre. The “world music” category essentially serves as a catch-all for songs by foreign artists. The definition of “world music” is hazy and the use of the term, especially when applied to popular groups like BTS, <a href="https://alapadma.home.blog/">has been contested</a>. For my purposes, however, the ranking is a useful list of songs that are popular amongst listeners who are already paying attention to non-English-speaking artists. 
+</p>
+<p>
+K-pop songs that have topped the Billboard Hot 100 and those that have topped the World Digital Song Sales chart almost the same in terms of musical elements. Songs in both groups tend to be positive and very danceable. The sentiment of lyrics was also largely the same. The only noteworthy difference between the Billboard Hot 100 songs and the World Digital Song Sales songs was how much of the lyrics were sung in English. K-pop songs that are popular with K-pop audiences have lyrics that, on average, are about ⅓ in English. K-pop songs that have gained mainstream US success on the Hot 100, however, are about ¾ in English on average.  
+</p>
+<h1>Who am I?</h1>
+
+
+<p>
+For the purposes of this article, it’s important to note that I’m a white college student who was born and raised in the US. I definitely don’t speak Korean, but I can read Hangul and know enough basic vocabulary and grammar to understand many Korean song lyrics without translation. 
+</p>
+<p>
+I started listening to K-pop when I became a fan of BTS in the summer of 2017. I decided to check the group out after I stumbled across some tweets analyzing their <a href="https://www.youtube.com/watch?v=hmE9f-TEutc">Blood Sweat & Tears</a> music video. The first song that really pulled me in was <a href="https://www.youtube.com/watch?v=GZjt_sA2eso">Save Me</a>, then Blood Sweat & Tears, then <a href="https://www.youtube.com/watch?v=xEeFrLSkMm8">Spring Day</a>, which quickly became my favorite song and remains so to this day. Like so many other beginner BTS fans, I decided that I wanted to learn the names of each member. After closely studying the <a href="https://www.youtube.com/watch?v=BVwAVbKYYeM">Dope</a> music video, working my way through their entire discography, and watching more “crack” videos than I care to admit, I knew that BTS was special and well worth my time. 
+</p>
+<p>
+I started listening to other Korean artists around the same time (including K-indie and K-hip-hop singers, as well as K-pop), largely thanks to Spotify and YouTube’s recommendation algorithms. If you want proof that I really have spent a lot of time exploring this music, some of my favorite songs by Korean artists other than BTS are <a href="https://www.youtube.com/watch?v=nM0xDI5R50E">BBIBBI</a>, <a href="https://www.youtube.com/watch?v=WB4547-tSJA">Gang Gang Schiele</a>, <a href="https://www.youtube.com/watch?v=ScSn235gQx0">TWIT</a>, <a href="https://www.youtube.com/watch?v=SqNGSoLI8c8">Guess Not</a>, <a href="https://www.youtube.com/watch?v=RKhsHGfrFmY">Crooked</a>, <a href="https://www.youtube.com/watch?v=2gXjAWqCc2g">Luvproof</a>, <a href="https://www.youtube.com/watch?v=6sHIq41sI-w">TOUCH</a>, <a href="https://www.youtube.com/watch?v=lZf4sMs4ONQ">Then</a>, and <a href="https://www.youtube.com/watch?v=595hs1Ri-V4">Organic Life</a>.  In the fall of 2018, I studied in Seoul for a semester, which introduced me to more K-pop artists and strengthened my limited understanding of Korean. I listened to many new K-pop songs as they were released, but I wasn’t plugged into the social media communication networks that keep hardcore stans updated on artists and fandom conversations. 
+</p>
+<p>
+That changed in the spring of 2020 when I, like so many others, decided to create a stan Twitter account to escape lockdown boredom and finally became what would be considered a proper stan. I knew exactly when Dynamite and BE would be released, what the collectively-decided comeback goals were for each, and played a very small part in achieving those goals by streaming and buying music. 
+</p>
+<p>
+You can find the code used to collect, process, and analyze the data in this piece here: <a href="https://github.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/tree/master">https://github.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/tree/master</a>. 
+</p>
+    </div>
+    <script>
+         d3.csv("Spotify_BBH100_Kpop.csv", d3.autoType).then(function(data){
+            console.log(data)
+
+            ////PLOT FOR LANGUAGE AND CHART POSITION
+            //create svg
+            var w = 700
+            var h = 250
+            var p_h = 20
+            var p_w = 60
+            var svg = d3.select('.plot_container')
+                        .append('svg')
+                        .attr("viewBox", '0 0 ' + w +' ' + h);
+
+            //create date scale (map to height)
+            var date_min = d3.min(data, function(d){
+                return d["chart_date"];
+            })
+            var date_max = d3.max(data, function(d){
+                return d["chart_date"];
+            })
+            var date_scale = d3.scaleLinear()
+                               .domain([date_min, date_max])
+                               .range([p_w, w-p_w]);
+            //create chart position scale (map to width)
+            var chart_scale = d3.scaleLinear()
+                                .domain([0, 100])
+                                .range([p_h, h-p_h]);
+            //create number of lyrics scale (map to circle area)
+            var english_min = d3.min(data, function(d){ return d.english_count})
+            var total_min = d3.min(data, function(d){ return d.total_count})
+            var lyrics_min = d3.min([english_min, total_min])
+            var english_max = d3.max(data, function(d){ return d.english_count})
+            var total_max = d3.max(data, function(d){ return d.total_count})
+            var lyrics_max = d3.max([english_max, total_max])
+            var lyrics_scale = d3.scaleLinear()
+                                 .domain([lyrics_min, lyrics_max])
+                                 .range([4, 400])
+            
+            //create date/y axis
+            var formatTime = d3.timeFormat("%b %Y");
+            var y_axis = d3.axisLeft(chart_scale);
+            svg.append('g')
+                .attr("transform", "translate("+p_w+",0)")
+                .call(y_axis);
+            //create chart position/x axis
+            var x_axis = d3.axisBottom(date_scale)
+                            .tickFormat(formatTime);
+            svg.append('g')
+                .attr("transform", "translate(0,"+(h-p_h)+")")
+                .call(x_axis);
+
+            //try to setup tooltips for song titles
+            var ttTime = d3.timeFormat("%B %Y");
+            var tool_tip = d3.tip()
+                        .attr("class", "tool_tip")
+                        .offset([-5, 0])
+                        .html(function(d){  return d.song_title + " by " + d.artist+"<br> Peaked at #"+ d.peak_position+" in "+ttTime(d.chart_date);});
+                svg.call(tool_tip);
+
+
+            ////////draw trajectory lines to connect songs by the same artist
+            //unique artist names, only those with >1 song on chart
+            var artist_names = d3.map(data, function(d){
+                artist_data = data.filter(function(x){ return x.main_artist == d.main_artist})
+                if (artist_data.length > 1){
+                    return d.main_artist;
+                }}).keys() 
+            //function to collect line points for each artist
+            function make_trajectory(name) {
+                //filter songs for this artist
+                artist_data = data.filter(function(d){ return d.main_artist == name})
+                trajectory_points = []
+                //append coordinates for each song to list and return it
+                for (i = 0; i<artist_data.length; i++){
+                    d = artist_data[i]
+                    y = chart_scale(d.peak_position)
+                    x = date_scale(d.chart_date)
+                    trajectory_points.push([x,y])
+                }
+                return trajectory_points;
+            };
+            var artist_trajectory = svg.selectAll('.trajectory')
+                .data(artist_names)
+                .enter()
+                .append('path')
+                .attr('d', function(d){
+                    return d3.line()(make_trajectory(d))
+                })
+                .style('fill', 'none')
+                .style('stroke', 'LightGrey')
+                .style('stroke-width', 1)
+                .on('mouseover', function(d){
+                    d3.select(this).style('stroke-width', 3)
+                }).on('mouseout', function(d){
+                    d3.select(this).style('stroke-width', 1)
+                });
+
+            //create group for each song
+            var songs = svg.selectAll('.song')
+                .data(data)
+                .enter()
+                .append('g')
+                .attr('class', 'song')
+                .on('mouseover', function(d){
+                    tool_tip.show(d);
+                })
+                .on('mouseout', function(d){
+                    tool_tip.hide();
+                });
+            //draw circle to represent total lyrics of each song -- first date
+            var circle_r = 7;
+            songs.append('circle')
+                .attr('class', 'total_lyrics')
+                .attr('cy', function(d){ return chart_scale(d.peak_position)})
+                .attr('cx', function(d){ return date_scale(d.chart_date)})
+                .attr('r', circle_r)
+                .style('fill', 'pink');
+            //draw partiall circle to represent english lyrics
+            songs.append('path')
+                .attr('class', 'english_lyrics')
+                .attr("transform", function(d){
+                    var this_cy = chart_scale(d.peak_position);
+                    var this_cx = date_scale(d.chart_date);
+                    return "translate("+this_cx+","+this_cy+")"
+                })
+                .attr("d", function(d){
+                    var this_r = circle_r  //Math.sqrt(lyrics_scale(d.total_count))
+                    var this_ratio = d.english_count / d.total_count;
+                    var arcGenerator = d3.arc()
+                        .outerRadius(this_r)
+                        .innerRadius(0)
+                        .startAngle(0)
+                        .endAngle((Math.PI * 2)* this_ratio); 
+                    return arcGenerator();
+                })
+                .style('fill', 'green');
+
+
+
+
+        ////PLOT FOR SENTIMENT BY LANGUAGE
+        //create svg
+        var w = 700
+        var h = 500
+        var p_h = 200
+        var p_w = 60
+        var sent_svg = d3.select('.sentiment_container')
+                    .append('svg')
+                    .attr("viewBox", '0 0 ' + w +' ' + h);
+
+        //set up x-scale, by song title for now
+        var x_scale = d3.scaleBand()
+                        .domain(data.map(d => d.search_title))
+                        .range([p_w, w-p_w]);
+        //create x axis
+        var x_axis = d3.axisBottom(x_scale)
+                        .tickSize(0);
+        sent_svg.append('g')
+            .attr('class', 'sentiment_x_axis')
+            .attr("transform", "translate(0,"+(h-p_h)+")")
+            .call(x_axis)
+            .selectAll('text')
+            .attr("transform", "rotate(90)")
+            .style("text-anchor", "start");
+
+        //set up y-scale, polarity -1-1
+        var polarity_scale = d3.scaleLinear()
+                                .domain([-1, 1])
+                                .range([h-p_h, p_h/4])
+        var y_axis = d3.axisLeft(polarity_scale);
+        sent_svg.append('g')
+            .attr('class', 'sentiment_y_axis')
+            .attr("transform", "translate("+p_w+",0)")
+            .call(y_axis);
+
+        //tooltip for english
+        var eng_tool_tip = d3.tip()
+                        .attr("class", "tool_tip")
+                        .offset([-5, 0])
+                        .html(function(d){  return d.search_title + " by " + d.artist + "<br> Estimated sentiment of <b>English</b> lyrics: "+ d.english_sentiment;});
+        sent_svg.call(eng_tool_tip);
+        //tooltip for translated
+        var trans_tool_tip = d3.tip()
+                        .attr("class", "tool_tip")
+                        .offset([-5, 0])
+                        .html(function(d){  return d.search_title + " by " + d.artist + "<br> Estimated sentiment of <b>translated</b> lyrics: "+ d.translated_sentiment;});
+        sent_svg.call(trans_tool_tip);
+        //tooltip for spotify
+        var val_tool_tip = d3.tip()
+                        .attr("class", "tool_tip")
+                        .offset([-5, 0])
+                        .html(function(d){  return d.search_title + " by " + d.artist + "<br> Estimated valence of <b>music</b>: "+ d.scaled_valence;});
+        sent_svg.call(val_tool_tip);
+
+
+        //draw line to represent averages for english
+        var english_sentiment_avg = polarity_scale(d3.mean(data.map(d => d.english_sentiment)))
+            sent_svg.append('path')
+                    .attr('d', d3.line()([[p_w, english_sentiment_avg], [w-p_w, english_sentiment_avg]]))
+                    .attr('stroke', "green")
+                    .style('stroke-dasharray', '5,5');
+
+        //draw line to represent averages for translated
+        var translated_sentiment_avg = polarity_scale(d3.mean(data.map(d => d.translated_sentiment)))
+        sent_svg.append('path')
+                .attr('d', d3.line()([[p_w, translated_sentiment_avg], [w-p_w, translated_sentiment_avg]]))
+                .attr('stroke', "pink")
+                .style('stroke-dasharray', '5,5');
+        //draw line to represent averages for music valence
+        var valence_avg = polarity_scale(d3.mean(data.map(d => d.scaled_valence)))
+        sent_svg.append('path')
+                .attr('d', d3.line()([[p_w, valence_avg], [w-p_w, valence_avg]]))
+                .attr('stroke', "LightSkyBlue")
+                .style('stroke-dasharray', '5,5');
+
+
+        //create group for each song
+        var sent_songs = sent_svg.selectAll('.song')
+                .data(data)
+                .enter()
+                .append('g')
+                .attr('class', 'song');
+        var circle_r = 7;
+        var rect_w = 12;
+
+        //draw squares to represent spotify data for each song
+        sent_songs.append('rect')
+                .attr('class', 'spotify_valence')
+                .attr('width', rect_w)
+                .attr('height', rect_w)
+                .attr('x', function(d){ return x_scale(d.search_title) - rect_w/2})
+                .attr('y', function(d) { return polarity_scale(d.scaled_valence) - rect_w/2})
+                .style('fill', 'LightSkyBlue')
+                .on('mouseover', function(d){
+                    val_tool_tip.show(d);
+                })
+                .on('mouseout', function(d){
+                    val_tool_tip.hide();
+                });
+
+
+        //draw circle to represent total lyrics of each song
+        sent_songs.append('circle')
+                .attr('class', 'total_lyrics')
+                .attr('cy', function(d){ return polarity_scale(d.translated_sentiment)})
+                .attr('cx', function(d){ return x_scale(d.search_title)})
+                .attr('r', circle_r)
+                .style('fill', 'pink')
+                .on('mouseover', function(d){
+                    trans_tool_tip.show(d);
+                })
+                .on('mouseout', function(d){
+                    trans_tool_tip.hide();
+                });
+
+            //draw partiall circle to represent english lyrics
+            sent_songs.append('path')
+                .attr('class', 'english_lyrics')
+                .attr("transform", function(d){
+                    var this_cy = polarity_scale(d.english_sentiment);
+                    var this_cx = x_scale(d.search_title);
+                    return "translate("+this_cx+","+this_cy+")"
+                })
+                .attr("d", function(d){
+                    var this_r = circle_r  //Math.sqrt(lyrics_scale(d.total_count))
+                    var this_ratio = d.english_count / d.total_count;
+                    var arcGenerator = d3.arc()
+                        .outerRadius(this_r)
+                        .innerRadius(0)
+                        .startAngle(0)
+                        .endAngle((Math.PI * 2)* this_ratio); 
+                    return arcGenerator();
+                })
+                .style('fill', 'green')
+                .on('mouseover', function(d){
+                    eng_tool_tip.show(d);
+                })
+                .on('mouseout', function(d){
+                    eng_tool_tip.hide();
+                });
+            
+            
+         }); </script>
+</body>
