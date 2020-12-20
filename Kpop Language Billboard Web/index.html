@@ -156,7 +156,7 @@ You can find the code used to collect, process, and analyze the data in this pie
 </p>
     </div>
     <script>
-         d3.csv("Spotify_BBH100_Kpop.csv", d3.autoType).then(function(data){
+         d3.csv("BBSHRK - Spotify_BBH100_Kpop.csv", d3.autoType).then(function(data){
             console.log(data)
 
             ////PLOT FOR LANGUAGE AND CHART POSITION
@@ -314,8 +314,9 @@ You can find the code used to collect, process, and analyze the data in this pie
             
          }); </script>
     <script>
-        d3.csv("Spotify_BBH100_Kpop.csv", d3.autoType).then(function(data){
+        d3.csv("BBSHRK - Spotify_BBH100_Kpop.csv", d3.autoType).then(function(data){
             console.log(data)
+        data = data.sort((a, b) => d3.ascending(a.chart_date, b.chart_date))
         ////PLOT FOR SENTIMENT BY LANGUAGE
         //create svg
         var w = 700
@@ -392,7 +393,7 @@ You can find the code used to collect, process, and analyze the data in this pie
         var line_tool_tip = d3.tip()
                         .attr("class", "tool_tip")
                         .offset([-5, 0])
-                        .html(function(d){  return "Average " + d + ;});
+                        .html(function(d){  return "Average " + d + ".";});
         sent_svg.call(line_tool_tip);
 
 
@@ -402,7 +403,6 @@ You can find the code used to collect, process, and analyze the data in this pie
                     .attr('d', d3.line()([[p_w, english_sentiment_avg], [w-p_w, english_sentiment_avg]]))
                     .attr('stroke', "green")
                     .style('stroke-dasharray', '5,5');
-
         //draw line to represent averages for translated
         var translated_sentiment_avg = polarity_scale(d3.mean(data.map(d => d.translated_sentiment)))
         sent_svg.append('path')
