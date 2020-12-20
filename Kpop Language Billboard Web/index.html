@@ -170,8 +170,8 @@
             ////PLOT FOR LANGUAGE AND CHART POSITION
             //create svg
             var w = 700
-            var h = 250
-            var p_h = 20
+            var h = 330
+            var p_h = 40
             var p_w = 60
             var svg = d3.select('.plot_container')
                         .append('svg')
@@ -208,12 +208,30 @@
             svg.append('g')
                 .attr("transform", "translate("+p_w+",0)")
                 .call(y_axis);
+            // add y-axis label
+            svg.append("text")
+                    .attr("class", "y-axis-label")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 15)
+                    .attr("x", 0 - (h / 2))
+                    .attr("dy", "10px")
+                    .style('font-size', 12)
+                    .style("text-anchor", "middle")
+                    .text("Peak chart position"); 
             //create chart position/x axis
             var x_axis = d3.axisBottom(date_scale)
                             .tickFormat(formatTime);
             svg.append('g')
                 .attr("transform", "translate(0,"+(h-p_h)+")")
                 .call(x_axis);
+            // add x-axis label
+            svg.append("text")
+                    .attr("class", "x-axis-label")
+                    .attr("y", h-10)
+                    .attr("x", w/2)
+                    .style('font-size', 12)
+                    .style("text-anchor", "middle")
+                    .text("Chart date"); 
 
             //try to setup tooltips for song titles
             var ttTime = d3.timeFormat("%B %Y");
@@ -328,8 +346,8 @@
         ////PLOT FOR SENTIMENT BY LANGUAGE
         //create svg
         var w = 700
-        var h = 500
-        var p_h = 200
+        var h = 350
+        var p_h = 160
         var p_w = 60
         var sent_svg = d3.select('.sentiment_container')
                     .append('svg')
@@ -337,7 +355,7 @@
 
         //set up x-scale, by song title for now
         var x_scale = d3.scaleBand()
-                        .domain(data.map(d => d.search_title))
+                        .domain(data.map(d => d.song_title))
                         .range([p_w, w-p_w]);
         //create x axis
         var x_axis = d3.axisBottom(x_scale)
@@ -359,6 +377,17 @@
             .attr('class', 'sentiment_y_axis')
             .attr("transform", "translate("+p_w+",0)")
             .call(y_axis);
+        // add y-axis label
+        sent_svg.append("text")
+                    .attr("class", "y-axis-label")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 15)
+                    .attr("x", 0 - (h/3))
+                    .attr("dy", "10px")
+                    .style('font-size', 12)
+                    .style("text-anchor", "middle")
+                    .text("Emotion conveyed"); 
+        
 
         //DRAW LEGEND
         //create color scale           
@@ -383,19 +412,19 @@
         var eng_tool_tip = d3.tip()
                         .attr("class", "tool_tip")
                         .offset([-5, 0])
-                        .html(function(d){  return d.search_title + " by " + d.artist + "<br> Estimated sentiment of <b>English</b> lyrics: "+ d.english_sentiment;});
+                        .html(function(d){  return d.song_title + " by " + d.artist + "<br> Estimated sentiment of <b>English</b> lyrics: "+ d.english_sentiment;});
         sent_svg.call(eng_tool_tip);
         //tooltip for translated
         var trans_tool_tip = d3.tip()
                         .attr("class", "tool_tip")
                         .offset([-5, 0])
-                        .html(function(d){  return d.search_title + " by " + d.artist + "<br> Estimated sentiment of <b>translated</b> lyrics: "+ d.translated_sentiment;});
+                        .html(function(d){  return d.song_title + " by " + d.artist + "<br> Estimated sentiment of <b>translated</b> lyrics: "+ d.translated_sentiment;});
         sent_svg.call(trans_tool_tip);
         //tooltip for spotify
         var val_tool_tip = d3.tip()
                         .attr("class", "tool_tip")
                         .offset([-5, 0])
-                        .html(function(d){  return d.search_title + " by " + d.artist + "<br> Estimated valence of <b>music</b>: "+ d.scaled_valence;});
+                        .html(function(d){  return d.song_title + " by " + d.artist + "<br> Estimated valence of <b>music</b>: "+ d.scaled_valence;});
         sent_svg.call(val_tool_tip);
         //tooltip for average lines
         var line_tool_tip = d3.tip()
@@ -439,7 +468,7 @@
                 .attr('class', 'spotify_valence')
                 .attr('width', rect_w)
                 .attr('height', rect_w)
-                .attr('x', function(d){ return x_scale(d.search_title) - rect_w/2})
+                .attr('x', function(d){ return x_scale(d.song_title) - rect_w/2})
                 .attr('y', function(d) { return polarity_scale(d.scaled_valence) - rect_w/2})
                 .style('fill', 'LightSkyBlue')
                 .on('mouseover', function(d){
@@ -454,7 +483,7 @@
         sent_songs.append('circle')
                 .attr('class', 'total_lyrics')
                 .attr('cy', function(d){ return polarity_scale(d.translated_sentiment)})
-                .attr('cx', function(d){ return x_scale(d.search_title)})
+                .attr('cx', function(d){ return x_scale(d.song_title)})
                 .attr('r', circle_r)
                 .style('fill', 'pink')
                 .on('mouseover', function(d){
@@ -469,7 +498,7 @@
                 .attr('class', 'english_lyrics')
                 .attr("transform", function(d){
                     var this_cy = polarity_scale(d.english_sentiment);
-                    var this_cx = x_scale(d.search_title);
+                    var this_cx = x_scale(d.song_title);
                     return "translate("+this_cx+","+this_cy+")"
                 })
                 .attr("d", function(d){
