@@ -311,10 +311,11 @@ You can find the code used to collect, process, and analyze the data in this pie
                     return arcGenerator();
                 })
                 .style('fill', 'green');
-
-
-
-
+            
+         }); </script>
+    <script>
+        d3.csv("Spotify_BBH100_Kpop.csv", d3.autoType).then(function(data){
+            console.log(data)
         ////PLOT FOR SENTIMENT BY LANGUAGE
         //create svg
         var w = 700
@@ -337,7 +338,7 @@ You can find the code used to collect, process, and analyze the data in this pie
             .attr("transform", "translate(0,"+(h-p_h)+")")
             .call(x_axis)
             .selectAll('text')
-            .attr("transform", "rotate(90)")
+            .attr("transform", "rotate(90) translate(5,0)")
             .style("text-anchor", "start");
 
         //set up y-scale, polarity -1-1
@@ -387,6 +388,12 @@ You can find the code used to collect, process, and analyze the data in this pie
                         .offset([-5, 0])
                         .html(function(d){  return d.search_title + " by " + d.artist + "<br> Estimated valence of <b>music</b>: "+ d.scaled_valence;});
         sent_svg.call(val_tool_tip);
+        //tooltip for average lines
+        var line_tool_tip = d3.tip()
+                        .attr("class", "tool_tip")
+                        .offset([-5, 0])
+                        .html(function(d){  return "Average " + d + ;});
+        sent_svg.call(line_tool_tip);
 
 
         //draw line to represent averages for english
@@ -474,7 +481,5 @@ You can find the code used to collect, process, and analyze the data in this pie
                 .on('mouseout', function(d){
                     eng_tool_tip.hide();
                 });
-            
-            
-         }); </script>
+            });</script>
 </body>
