@@ -393,7 +393,7 @@ You can find the code used to collect, process, and analyze the data in this pie
         var line_tool_tip = d3.tip()
                         .attr("class", "tool_tip")
                         .offset([-5, 0])
-                        .html(function(d){  return "Average " + d + ".";});
+                        .html(function(str){  return "Average " + str + ".";});
         sent_svg.call(line_tool_tip);
 
 
