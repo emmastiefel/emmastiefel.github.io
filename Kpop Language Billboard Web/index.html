@@ -10,15 +10,46 @@
     <script src="d3-tip.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.js'></script>
     <style>
-        .tool_tip {
+        @import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Monoton&display=swap');
+        .svg_tool_tip {
             background-color: white;
             max-width: 300px;
             padding: 10px;
             border-radius: 5px;
         }
         .text {
+            font-family: sans-serif;
+            line-height: 1.6;
             width: 50%;
             margin-left: 25%;
+        }
+        .text h1, h2, h3 {
+            font-family: 'Bungee Shade', sans-serif;
+            color: #DBB95A;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline;
+            border-bottom: 3px solid #801E8F;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            background-color: white;
+            color: black;
+            border: 3px solid #801E8F;
+            text-align: center;
+            width: 300px;
+            padding: 10px;
+            border-radius: 5px;
+
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
         }
     </style>
 </head>
@@ -26,8 +57,20 @@
     <h2 class='text'><a href="/Kpop%20Language%20Billboard%20Web/final-submission.html">This is the most up to date version of this piece. Click here to view the version submitted on Friday, Dec. 18. </a></h2>
     <div class = 'text'>
         <h1><strong>Kpop, Language, and the Billboard Hot 100</strong></h1>
+        
         <p>
-        BTS became the first K-pop group to top the Billboard Hot 100 chart in August. The group claimed the #1 spot with their single “Dynamite”, a bright disco-pop song. It was an incredible achievement for the group and its fans, who worked hard to stream the song. As BTS have repeatedly said, they hoped that the track would bring some explosive good vibes to fans in such a bleak year. “Recording this song was really fun, and like Jin said, we’re going through difficult times so we tried to have more fun working on this song,” RM, BTS’ leader, <a href="https://www.billboard.com/articles/columns/k-town/9438051/bts-apple-music-interview-dynamite">said in an interview</a>. “We made this song in hopes of giving energy to the listeners.”
+            <div class="tooltip">BTS*
+                <span class="tooltiptext">Record-breaking Kpop group comprised of RM (Kim Namjoon), Jin (Kim Seokjin), Suga (Min Yoongi), J-Hope (Jung Hoseok), Jimin (Park Jimin), V (Kim Taehyung), and Jungkook (Jeon Jungkook).</span>
+              </div>  
+              became the first K-pop group to top the Billboard Hot 100 chart in August. The group claimed the #1 spot with their single “Dynamite”, a bright disco-pop song. It was an incredible achievement for the group and its fans, who worked hard to stream the song. As BTS have repeatedly said, they hoped that the track would bring some explosive good vibes to fans in such a bleak year. “Recording this song was really fun, and like 
+            <div class="tooltip">Jin*
+                <span class="tooltiptext">Jin is a BTS vocalist and the group’s main visual
+                    (the member who most fits Korean beauty standards and often functions as a sort
+                    of lead actor in their music videos) . He is the oldest member and known for
+                    being funny and "<a href="https://youtu.be/rCGEXzP4q-I?t=2">worldwide
+                    handsome</a>".</span>
+            </div>
+            said, we’re going through difficult times so we tried to have more fun working on this song,” RM, BTS’ leader, <a href="https://www.billboard.com/articles/columns/k-town/9438051/bts-apple-music-interview-dynamite">said in an interview</a>. “We made this song in hopes of giving energy to the listeners.”
         </p>
         <p>
         “Dynamite” was also widely celebrated as a breakthrough for Asian representation in the US music industry. It was seen as BTS’ latest, and arguably most impressive, victory against racism and xenophobia. Before “Dynamite”, only two songs by Asian artists had achieved the same top position on the Hot 100 chart, <a href="https://www.billboard.com/articles/business/chart-beat/9442836/bts-dynamite-tops-hot-100-chart/">according to Billboard</a> — Kyu Sakamoto’s 1963 “<a href="https://www.youtube.com/watch?v=F284iB65-QU">Sukiyaki</a>” and Far East Movement’s 2010 “<a href="https://www.youtube.com/watch?v=w4s6H4ku6ZY">Like a G6</a>”. As music critic Seongdeok Seo <a href="https://magazine.weverse.io/article/view?lang=en&num=6">pointed out in Weverse magazine</a>, BTS had already consistently entered the top 10 of the Billboard Hot 100, which should have established them as mainstream artists within the US.“Despite all this, ranking No.1 is important,” Seo wrote. “Then what is the difference between Top 10 and No.1? To BTS, holding the top spot is an outcome of transcending the complex barrier of discrimination, exclusion, and prejudice.”
@@ -237,7 +280,7 @@
             //try to setup tooltips for song titles
             var ttTime = d3.timeFormat("%B %Y");
             var tool_tip = d3.tip()
-                        .attr("class", "tool_tip")
+                        .attr("class", "svg_tool_tip")
                         .offset([-5, 0])
                         .html(function(d){  return d.song_title + " by " + d.artist+"<br> Peaked at #"+ d.peak_position+" in "+ttTime(d.chart_date);});
                 svg.call(tool_tip);
@@ -246,7 +289,7 @@
             //create color scale           
             var colorScale = d3.scaleOrdinal()
                                 .domain(["Complete lyrics", "English lyrics"])
-                                .range(["pink", "green"]);
+                                .range(["#C744DB", "#2EDBAA"]);
             var legendSequential = d3.legendColor() //generate and shape legend
                                 .shapeWidth(70)
                                 .shapeHeight(5)
@@ -318,7 +361,7 @@
                 .attr('cy', function(d){ return chart_scale(d.peak_position)})
                 .attr('cx', function(d){ return date_scale(d.chart_date)})
                 .attr('r', circle_r)
-                .style('fill', 'pink');
+                .style('fill', '#C744DB');
             //draw partiall circle to represent english lyrics
             songs.append('path')
                 .attr('class', 'english_lyrics')
@@ -337,7 +380,7 @@
                         .endAngle((Math.PI * 2)* this_ratio); 
                     return arcGenerator();
                 })
-                .style('fill', 'green');
+                .style('fill', '#2EDBAA');
             
          }); </script>
     <script>
@@ -394,7 +437,7 @@
         //create color scale           
         var sent_colorScale = d3.scaleOrdinal()
                             .domain(["Complete lyrics", "English lyrics", "Song audio"])
-                            .range(["pink", "green", "LightSkyBlue"]);
+                            .range(["#C744DB", "#2EDBAA", "blue"]);
         var sent_legendSequential = d3.legendColor() //generate and shape legend
                                 .shapeWidth(70)
                                 .shapeHeight(5)
@@ -411,25 +454,25 @@
 
         //tooltip for english
         var eng_tool_tip = d3.tip()
-                        .attr("class", "tool_tip")
+                        .attr("class", "svg_tool_tip")
                         .offset([-5, 0])
                         .html(function(d){  return d.song_title + " by " + d.artist + "<br> Estimated sentiment of <b>English</b> lyrics: "+ d.english_sentiment;});
         sent_svg.call(eng_tool_tip);
         //tooltip for translated
         var trans_tool_tip = d3.tip()
-                        .attr("class", "tool_tip")
+                        .attr("class", "svg_tool_tip")
                         .offset([-5, 0])
                         .html(function(d){  return d.song_title + " by " + d.artist + "<br> Estimated sentiment of <b>translated</b> lyrics: "+ d.translated_sentiment;});
         sent_svg.call(trans_tool_tip);
         //tooltip for spotify
         var val_tool_tip = d3.tip()
-                        .attr("class", "tool_tip")
+                        .attr("class", "svg_tool_tip")
                         .offset([-5, 0])
                         .html(function(d){  return d.song_title + " by " + d.artist + "<br> Estimated valence of <b>music</b>: "+ d.scaled_valence;});
         sent_svg.call(val_tool_tip);
         //tooltip for average lines
         var line_tool_tip = d3.tip()
-                        .attr("class", "tool_tip")
+                        .attr("class", "svg_tool_tip")
                         .offset([-5, 0])
                         .html(function(str){  return "Average " + str + ".";});
         sent_svg.call(line_tool_tip);
@@ -439,19 +482,19 @@
         var english_sentiment_avg = polarity_scale(d3.mean(data.map(d => d.english_sentiment)))
             sent_svg.append('path')
                     .attr('d', d3.line()([[p_w, english_sentiment_avg], [w-p_w, english_sentiment_avg]]))
-                    .attr('stroke', "green")
+                    .attr('stroke', "#2EDBAA")
                     .style('stroke-dasharray', '5,5');
         //draw line to represent averages for translated
         var translated_sentiment_avg = polarity_scale(d3.mean(data.map(d => d.translated_sentiment)))
         sent_svg.append('path')
                 .attr('d', d3.line()([[p_w, translated_sentiment_avg], [w-p_w, translated_sentiment_avg]]))
-                .attr('stroke', "pink")
+                .attr('stroke', "#C744DB")
                 .style('stroke-dasharray', '5,5');
         //draw line to represent averages for music valence
         var valence_avg = polarity_scale(d3.mean(data.map(d => d.scaled_valence)))
         sent_svg.append('path')
                 .attr('d', d3.line()([[p_w, valence_avg], [w-p_w, valence_avg]]))
-                .attr('stroke', "LightSkyBlue")
+                .attr('stroke', "blue")
                 .style('stroke-dasharray', '5,5');
 
 
@@ -471,7 +514,7 @@
                 .attr('height', rect_w)
                 .attr('x', function(d){ return x_scale(d.song_title) - rect_w/2})
                 .attr('y', function(d) { return polarity_scale(d.scaled_valence) - rect_w/2})
-                .style('fill', 'LightSkyBlue')
+                .style('fill', 'blue')
                 .on('mouseover', function(d){
                     val_tool_tip.show(d);
                 })
@@ -486,7 +529,7 @@
                 .attr('cy', function(d){ return polarity_scale(d.translated_sentiment)})
                 .attr('cx', function(d){ return x_scale(d.song_title)})
                 .attr('r', circle_r)
-                .style('fill', 'pink')
+                .style('fill', '#C744DB')
                 .on('mouseover', function(d){
                     trans_tool_tip.show(d);
                 })
@@ -512,7 +555,7 @@
                         .endAngle((Math.PI * 2)* this_ratio); 
                     return arcGenerator();
                 })
-                .style('fill', 'green')
+                .style('fill', '#2EDBAA')
                 .on('mouseover', function(d){
                     eng_tool_tip.show(d);
                 })
