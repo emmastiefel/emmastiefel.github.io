@@ -208,7 +208,7 @@
             </p>
     </div>
     <script>
-         d3.csv("BBSHRK - Spotify_BBH100_Kpop.csv", d3.autoType).then(function(data){
+         d3.csv("hot100_radio_streaming_sales_Kpop.csv", d3.autoType).then(function(data){
             console.log(data)
 
             ////PLOT FOR LANGUAGE AND CHART POSITION
@@ -308,14 +308,15 @@
             ////////draw trajectory lines to connect songs by the same artist
             //unique artist names, only those with >1 song on chart
             var artist_names = d3.map(data, function(d){
-                artist_data = data.filter(function(x){ return x.main_artist == d.main_artist})
+                //only store songs for this artist that appeared on hot 100 (peak position > 0)
+                artist_data = data.filter(function(x){ return x.main_artist == d.main_artist && x.peak_position > 0})
                 if (artist_data.length > 1){
                     return d.main_artist;
                 }}).keys() 
             //function to collect line points for each artist
             function make_trajectory(name) {
-                //filter songs for this artist
-                artist_data = data.filter(function(d){ return d.main_artist == name})
+                //filter songs for this artist on hot 100
+                artist_data = data.filter(function(d){ return d.main_artist == name && d.peak_position > 0})
                 trajectory_points = []
                 //append coordinates for each song to list and return it
                 for (i = 0; i<artist_data.length; i++){
