@@ -1,0 +1,180 @@
+<script>
+    d3.csv("BBSHRK - Spotify_BBH100_Kpop.csv", d3.autoType).then(function(data){
+        console.log(data)
+    data = data.sort((a, b) => d3.ascending(a.chart_date, b.chart_date))
+    ////PLOT FOR SENTIMENT BY LANGUAGE
+    //create svg
+    var w = 700
+    var h = 350
+    var p_h = 160
+    var p_w = 60
+    var sent_svg = d3.select('.sentiment_container')
+                .append('svg')
+                .attr("viewBox", '0 0 ' + w +' ' + h);
+
+    //set up x-scale, by song title for now
+    var x_scale = d3.scaleBand()
+                    .domain(data.map(d => d.song_title))
+                    .range([p_w, w-p_w]);
+    //create x axis
+    var x_axis = d3.axisBottom(x_scale)
+                    .tickSize(0);
+    sent_svg.append('g')
+        .attr('class', 'sentiment_x_axis')
+        .attr("transform", "translate(0,"+(h-p_h)+")")
+        .call(x_axis)
+        .selectAll('text')
+        .attr("transform", "rotate(90) translate(5,0)")
+        .style("text-anchor", "start");
+
+    //set up y-scale, polarity -1-1
+    var polarity_scale = d3.scaleLinear()
+                            .domain([-1, 1])
+                            .range([h-p_h, p_h/4])
+    var y_axis = d3.axisLeft(polarity_scale);
+    sent_svg.append('g')
+        .attr('class', 'sentiment_y_axis')
+        .attr("transform", "translate("+p_w+",0)")
+        .call(y_axis);
+    // add y-axis label
+    sent_svg.append("text")
+                .attr("class", "y-axis-label")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 15)
+                .attr("x", 0 - (h/3))
+                .attr("dy", "10px")
+                .style('font-size', 12)
+                .style("text-anchor", "middle")
+                .text("Emotion conveyed"); 
+    
+
+    //DRAW LEGEND
+    //create color scale           
+    var sent_colorScale = d3.scaleOrdinal()
+                        .domain(["Complete lyrics", "English lyrics", "Song audio"])
+                        .range(["#C744DB", "#2EDBAA", "blue"]);
+    var sent_legendSequential = d3.legendColor() //generate and shape legend
+                            .shapeWidth(70)
+                            .shapeHeight(5)
+                            .orient('horizontal')
+                            .scale(sent_colorScale);
+        sent_svg.append("g") //add legend to svg, position it
+                .attr("class", "legendSequential")
+                .attr("transform", "translate(" + (w/2 - (70*1.5)) + ",10)")
+                .call(sent_legendSequential);
+        //format label text
+        sent_svg.select(".legendSequential")
+                .selectAll(".label")
+                .style("font-size", 10);
+
+    //tooltip for english
+    var eng_tool_tip = d3.tip()
+                    .attr("class", "svg_tool_tip")
+                    .offset([-5, 0])
+                    .html(function(d){  return d.song_title + " by " + d.artist + "<br> Estimated sentiment of <b>English</b> lyrics: "+ d.english_sentiment;});
+    sent_svg.call(eng_tool_tip);
+    //tooltip for translated
+    var trans_tool_tip = d3.tip()
+                    .attr("class", "svg_tool_tip")
+                    .offset([-5, 0])
+                    .html(function(d){  return d.song_title + " by " + d.artist + "<br> Estimated sentiment of <b>translated</b> lyrics: "+ d.translated_sentiment;});
+    sent_svg.call(trans_tool_tip);
+    //tooltip for spotify
+    var val_tool_tip = d3.tip()
+                    .attr("class", "svg_tool_tip")
+                    .offset([-5, 0])
+                    .html(function(d){  return d.song_title + " by " + d.artist + "<br> Estimated valence of <b>music</b>: "+ d.scaled_valence;});
+    sent_svg.call(val_tool_tip);
+    //tooltip for average lines
+    var line_tool_tip = d3.tip()
+                    .attr("class", "svg_tool_tip")
+                    .offset([-5, 0])
+                    .html(function(str){  return "Average " + str + ".";});
+    sent_svg.call(line_tool_tip);
+
+
+    //draw line to represent averages for english
+    var english_sentiment_avg = polarity_scale(d3.mean(data.map(d => d.english_sentiment)))
+        sent_svg.append('path')
+                .attr('d', d3.line()([[p_w, english_sentiment_avg], [w-p_w, english_sentiment_avg]]))
+                .attr('stroke', "#2EDBAA")
+                .style('stroke-dasharray', '5,5');
+    //draw line to represent averages for translated
+    var translated_sentiment_avg = polarity_scale(d3.mean(data.map(d => d.translated_sentiment)))
+    sent_svg.append('path')
+            .attr('d', d3.line()([[p_w, translated_sentiment_avg], [w-p_w, translated_sentiment_avg]]))
+            .attr('stroke', "#C744DB")
+            .style('stroke-dasharray', '5,5');
+    //draw line to represent averages for music valence
+    var valence_avg = polarity_scale(d3.mean(data.map(d => d.scaled_valence)))
+    sent_svg.append('path')
+            .attr('d', d3.line()([[p_w, valence_avg], [w-p_w, valence_avg]]))
+            .attr('stroke', "blue")
+            .style('stroke-dasharray', '5,5');
+
+
+    //create group for each song
+    var sent_songs = sent_svg.selectAll('.song')
+            .data(data)
+            .enter()
+            .append('g')
+            .attr('class', 'song');
+    var circle_r = 7;
+    var rect_w = 12;
+
+    //draw squares to represent spotify data for each song
+    sent_songs.append('rect')
+            .attr('class', 'spotify_valence')
+            .attr('width', rect_w)
+            .attr('height', rect_w)
+            .attr('x', function(d){ return x_scale(d.song_title) - rect_w/2})
+            .attr('y', function(d) { return polarity_scale(d.scaled_valence) - rect_w/2})
+            .style('fill', 'blue')
+            .on('mouseover', function(d){
+                val_tool_tip.show(d);
+            })
+            .on('mouseout', function(d){
+                val_tool_tip.hide();
+            });
+
+
+    //draw circle to represent total lyrics of each song
+    sent_songs.append('circle')
+            .attr('class', 'total_lyrics')
+            .attr('cy', function(d){ return polarity_scale(d.translated_sentiment)})
+            .attr('cx', function(d){ return x_scale(d.song_title)})
+            .attr('r', circle_r)
+            .style('fill', '#C744DB')
+            .on('mouseover', function(d){
+                trans_tool_tip.show(d);
+            })
+            .on('mouseout', function(d){
+                trans_tool_tip.hide();
+            });
+
+        //draw partiall circle to represent english lyrics
+        sent_songs.append('path')
+            .attr('class', 'english_lyrics')
+            .attr("transform", function(d){
+                var this_cy = polarity_scale(d.english_sentiment);
+                var this_cx = x_scale(d.song_title);
+                return "translate("+this_cx+","+this_cy+")"
+            })
+            .attr("d", function(d){
+                var this_r = circle_r  //Math.sqrt(lyrics_scale(d.total_count))
+                var this_ratio = d.english_count / d.total_count;
+                var arcGenerator = d3.arc()
+                    .outerRadius(this_r)
+                    .innerRadius(0)
+                    .startAngle(0)
+                    .endAngle((Math.PI * 2)* this_ratio); 
+                return arcGenerator();
+            })
+            .style('fill', '#2EDBAA')
+            .on('mouseover', function(d){
+                eng_tool_tip.show(d);
+            })
+            .on('mouseout', function(d){
+                eng_tool_tip.hide();
+            });
+        });</script>
