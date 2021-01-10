@@ -277,14 +277,6 @@
                     .style("text-anchor", "middle")
                     .text("Chart date"); 
 
-            //try to setup tooltips for song titles
-            var ttTime = d3.timeFormat("%B %Y");
-            var tool_tip = d3.tip()
-                        .attr("class", "svg_tool_tip")
-                        .offset([-5, 0])
-                        .html(function(d){  return d.song_title + " by " + d.artist+"<br> Peaked at #"+ d.peak_position+" in "+ttTime(d.chart_date);});
-                svg.call(tool_tip);
-
             //DRAW LEGEND
             //create color scale           
             var colorScale = d3.scaleOrdinal()
@@ -304,24 +296,37 @@
                         .selectAll(".label")
                         .style("font-size", 10);
 
+            ///specify what chart to display
+            var chart_variable = 'peak_position_sales'
+            data = data.filter(function(d){ return d[chart_variable] > 0})
+            console.log(chart_variable)
+            console.log(data)
+
+            //try to setup tooltips for song titles
+            var ttTime = d3.timeFormat("%B %Y");
+            var tool_tip = d3.tip()
+                        .attr("class", "svg_tool_tip")
+                        .offset([-5, 0])
+                        .html(function(d){  return d.search_title + " by " + d.artist+"<br> Peaked at #"+ d[chart_variable] +" in "+ ttTime(d.chart_date);});
+                svg.call(tool_tip);
 
             ////////draw trajectory lines to connect songs by the same artist
             //unique artist names, only those with >1 song on chart
             var artist_names = d3.map(data, function(d){
                 //only store songs for this artist that appeared on hot 100 (peak position > 0)
-                artist_data = data.filter(function(x){ return x.main_artist == d.main_artist && x.peak_position > 0})
+                artist_data = data.filter(function(x){ return x.main_artist == d.main_artist && x[chart_variable] > 0})
                 if (artist_data.length > 1){
                     return d.main_artist;
                 }}).keys() 
             //function to collect line points for each artist
             function make_trajectory(name) {
                 //filter songs for this artist on hot 100
-                artist_data = data.filter(function(d){ return d.main_artist == name && d.peak_position > 0})
+                artist_data = data.filter(function(d){ return d.main_artist == name && d[chart_variable] > 0})
                 trajectory_points = []
                 //append coordinates for each song to list and return it
                 for (i = 0; i<artist_data.length; i++){
                     d = artist_data[i]
-                    y = chart_scale(d.peak_position)
+                    y = chart_scale(d[chart_variable])
                     x = date_scale(d.chart_date)
                     trajectory_points.push([x,y])
                 }
@@ -359,7 +364,7 @@
             var circle_r = 7;
             songs.append('circle')
                 .attr('class', 'total_lyrics')
-                .attr('cy', function(d){ return chart_scale(d.peak_position)})
+                .attr('cy', function(d){ return chart_scale(d[chart_variable])})
                 .attr('cx', function(d){ return date_scale(d.chart_date)})
                 .attr('r', circle_r)
                 .style('fill', '#C744DB');
@@ -367,13 +372,13 @@
             songs.append('path')
                 .attr('class', 'english_lyrics')
                 .attr("transform", function(d){
-                    var this_cy = chart_scale(d.peak_position);
+                    var this_cy = chart_scale(d[chart_variable]);
                     var this_cx = date_scale(d.chart_date);
                     return "translate("+this_cx+","+this_cy+")"
                 })
                 .attr("d", function(d){
                     var this_r = circle_r  //Math.sqrt(lyrics_scale(d.total_count))
-                    var this_ratio = d.english_count / d.total_count;
+                    var this_ratio = d.english_percentage;
                     var arcGenerator = d3.arc()
                         .outerRadius(this_r)
                         .innerRadius(0)
