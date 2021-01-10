@@ -296,10 +296,12 @@
                         .selectAll(".label")
                         .style("font-size", 10);
 
-            ///specify what chart to display
-            var chart_variable = 'peak_position_sales'
-            data = data.filter(function(d){ return d[chart_variable] > 0})
-            console.log(chart_variable)
+            ///specify what chart to display, for now h100 is '' and others need _ under names
+            var chart_variable = ''
+            var position_variable = 'peak_position' + chart_variable;
+            var date_variable = 'chart_date' + chart_variable;
+            data = data.filter(function(d){ return d[position_variable] > 0})
+            console.log(position_variable)
             console.log(data)
 
             //try to setup tooltips for song titles
@@ -307,50 +309,58 @@
             var tool_tip = d3.tip()
                         .attr("class", "svg_tool_tip")
                         .offset([-5, 0])
-                        .html(function(d){  return d.search_title + " by " + d.artist+"<br> Peaked at #"+ d[chart_variable] +" in "+ ttTime(d.chart_date);});
+                        .html(function(d){  return d.search_title + " by " + d.artist+"<br> Peaked at #"+ d[position_variable] +" in "+ ttTime(d[date_variable]);});
                 svg.call(tool_tip);
 
             ////////draw trajectory lines to connect songs by the same artist
-            //unique artist names, only those with >1 song on chart
+            //unique artist names, only those with >=1 song on chart
             var artist_names = d3.map(data, function(d){
                 //only store songs for this artist that appeared on hot 100 (peak position > 0)
-                artist_data = data.filter(function(x){ return x.main_artist == d.main_artist && x[chart_variable] > 0})
-                if (artist_data.length > 1){
+                artist_data = data.filter(function(x){ return x.main_artist == d.main_artist && x[position_variable] > 0})
+                if (artist_data.length > 0){
                     return d.main_artist;
                 }}).keys() 
+
+            //append group for each artist, highlight songs + line on hover
+            var artists = svg.selectAll('.artist')
+                .data(artist_names)
+                .enter()
+                .append('g')
+                .on('mouseover', function(d){
+                    d3.select(this).select('.trajectory').style('stroke-width', 3)
+                }).on('mouseout', function(d){
+                    d3.select(this).select('.trajectory').style('stroke-width', 1)
+                });
+
             //function to collect line points for each artist
             function make_trajectory(name) {
                 //filter songs for this artist on hot 100
-                artist_data = data.filter(function(d){ return d.main_artist == name && d[chart_variable] > 0})
+                artist_data = data.filter(function(d){ return d.main_artist == name && d[position_variable] > 0})
                 trajectory_points = []
                 //append coordinates for each song to list and return it
                 for (i = 0; i<artist_data.length; i++){
                     d = artist_data[i]
-                    y = chart_scale(d[chart_variable])
-                    x = date_scale(d.chart_date)
+                    y = chart_scale(d[position_variable])
+                    x = date_scale(d[date_variable])
                     trajectory_points.push([x,y])
                 }
                 return trajectory_points;
             };
-            var artist_trajectory = svg.selectAll('.trajectory')
-                .data(artist_names)
-                .enter()
-                .append('path')
+            artists.append('path')
+                .attr('class', 'trajectory')
                 .attr('d', function(d){
                     return d3.line()(make_trajectory(d))
                 })
                 .style('fill', 'none')
                 .style('stroke', 'LightGrey')
-                .style('stroke-width', 1)
-                .on('mouseover', function(d){
-                    d3.select(this).style('stroke-width', 3)
-                }).on('mouseout', function(d){
-                    d3.select(this).style('stroke-width', 1)
-                });
+                .style('stroke-width', 1);
 
-            //create group for each song
-            var songs = svg.selectAll('.song')
-                .data(data)
+
+            //create group for each song, within artist group
+            var songs = artists.selectAll('.song')
+                .data(function(d){ 
+                    artist_data = data.filter(function(x){ return x.main_artist == d && x[position_variable] > 0})
+                    return artist_data})
                 .enter()
                 .append('g')
                 .attr('class', 'song')
@@ -360,20 +370,22 @@
                 .on('mouseout', function(d){
                     tool_tip.hide();
                 });
+
+           
             //draw circle to represent total lyrics of each song -- first date
             var circle_r = 7;
             songs.append('circle')
                 .attr('class', 'total_lyrics')
-                .attr('cy', function(d){ return chart_scale(d[chart_variable])})
-                .attr('cx', function(d){ return date_scale(d.chart_date)})
+                .attr('cy', function(d){ return chart_scale(d[position_variable])})
+                .attr('cx', function(d){ return date_scale(d[date_variable])})
                 .attr('r', circle_r)
                 .style('fill', '#C744DB');
             //draw partiall circle to represent english lyrics
             songs.append('path')
                 .attr('class', 'english_lyrics')
                 .attr("transform", function(d){
-                    var this_cy = chart_scale(d[chart_variable]);
-                    var this_cx = date_scale(d.chart_date);
+                    var this_cy = chart_scale(d[position_variable]);
+                    var this_cx = date_scale(d[date_variable]);
                     return "translate("+this_cx+","+this_cy+")"
                 })
                 .attr("d", function(d){
