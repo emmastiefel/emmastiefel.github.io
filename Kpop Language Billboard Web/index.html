@@ -297,7 +297,7 @@
                         .style("font-size", 10);
 
             ///specify what chart to display, for now h100 is '' and others need _ under names
-            var chart_variable = ''
+            var chart_variable = '_streaming'
             var position_variable = 'peak_position' + chart_variable;
             var date_variable = 'chart_date' + chart_variable;
             data = data.filter(function(d){ return d[position_variable] > 0})
