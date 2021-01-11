@@ -27,7 +27,9 @@
             font-family: 'Bungee Shade', sans-serif;
             color: #DBB95A;
         }
-        
+        .plot_container {
+            width: 50%;
+        }
         .tooltip {
             position: relative;
             display: inline;
@@ -332,8 +334,8 @@
 
             ////PLOT FOR LANGUAGE AND CHART POSITION
             //create svg
-            var w = 700
-            var h = 315
+            var w = 400
+            var h = 400
             var p_h = 40
             var p_w = 60
             var svg = d3.select('.plot_container')
@@ -349,25 +351,18 @@
             })
             var date_scale = d3.scaleLinear()
                                .domain([date_min, date_max])
-                               .range([p_w, w-p_w]);
+                               //.range([p_w, w-p_w]);
+                               .range([p_h, h-p_h])
             //create chart position scale (map to height)
             var chart_scale = d3.scaleLinear()
-                                .domain([0, 100])
-                                .range([p_h, h-p_h]);
-            //create number of lyrics scale (map to circle area)
-            var english_min = d3.min(data, function(d){ return d.english_count})
-            var total_min = d3.min(data, function(d){ return d.total_count})
-            var lyrics_min = d3.min([english_min, total_min])
-            var english_max = d3.max(data, function(d){ return d.english_count})
-            var total_max = d3.max(data, function(d){ return d.total_count})
-            var lyrics_max = d3.max([english_max, total_max])
-            var lyrics_scale = d3.scaleLinear()
-                                 .domain([lyrics_min, lyrics_max])
-                                 .range([4, 400])
+                                .domain([100, 1])
+                                //.range([p_h, h-p_h]);
+                                .range([p_w, w-p_w]);
             
             //create date/y axis
             var formatTime = d3.timeFormat("%b %Y");
-            var y_axis = d3.axisLeft(chart_scale);
+            var y_axis = d3.axisLeft(date_scale)
+                            .tickFormat(formatTime);
             svg.append('g')
                 .attr("transform", "translate("+p_w+",0)")
                 .call(y_axis);
@@ -382,8 +377,8 @@
                     .style("text-anchor", "middle")
                     .text("Peak chart position"); 
             //create chart position/x axis
-            var x_axis = d3.axisBottom(date_scale)
-                            .tickFormat(formatTime);
+            var x_axis = d3.axisBottom(chart_scale)
+                            //.tickFormat(formatTime);
             svg.append('g')
                 .attr("transform", "translate(0,"+(h-p_h)+")")
                 .call(x_axis);
@@ -462,8 +457,8 @@
                     //append coordinates for each song to list and return it
                     for (i = 0; i<artist_data.length; i++){
                         d = artist_data[i]
-                        y = chart_scale(d[position_variable])
-                        x = date_scale(d[date_variable])
+                        x = chart_scale(d[position_variable])
+                        y = date_scale(d[date_variable])
                         trajectory_points.push([x,y])
                     }
                     return trajectory_points;
@@ -497,8 +492,8 @@
                 var circle_r = 7;
                 songs.append('circle')
                     .attr('class', 'total_lyrics')
-                    .attr('cy', function(d){ return chart_scale(d[position_variable])})
-                    .attr('cx', function(d){ return date_scale(d[date_variable])})
+                    .attr('cx', function(d){ return chart_scale(d[position_variable])})
+                    .attr('cy', function(d){ return date_scale(d[date_variable])})
                     .attr('r', circle_r)
                     .style('fill', '#C744DB');
 
@@ -506,8 +501,8 @@
                 songs.append('path')
                     .attr('class', 'english_lyrics')
                     .attr("transform", function(d){
-                        var this_cy = chart_scale(d[position_variable]);
-                        var this_cx = date_scale(d[date_variable]);
+                        var this_cy = date_scale(d[date_variable]);
+                        var this_cx = chart_scale(d[position_variable]);
                         return "translate("+this_cx+","+this_cy+")"
                     })
                     .attr("d", function(d){
@@ -523,9 +518,7 @@
                     .style('fill', '#2EDBAA');
             }
             draw_chart('')
-            svg.selectAll('.artist').selectAll('circle').style('fill', 'grey')
-            svg.selectAll('.artist').selectAll('.english_lyrics').style('fill', 'grey')
-            draw_chart('_streaming')
+
          }); </script>
     <script>
         d3.csv("https://raw.githubusercontent.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/master/wdss.csv", d3.autoType).then(function(data){
