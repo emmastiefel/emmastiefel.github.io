@@ -295,116 +295,122 @@
                 svg.select(".legendSequential")
                         .selectAll(".label")
                         .style("font-size", 10);
-
+                    
+            ///// FUNCTION TO DRAW CHARTS
             ///specify what chart to display, for now h100 is '' and others need _ under names
-            var chart_variable = '_streaming'
-            var position_variable = 'peak_position' + chart_variable;
-            var date_variable = 'chart_date' + chart_variable;
-            data = data.filter(function(d){ return d[position_variable] > 0})
-            console.log(position_variable)
-            console.log(data)
+            function draw_chart(chart_variable) {
+                var position_variable = 'peak_position' + chart_variable;
+                var date_variable = 'chart_date' + chart_variable;
+                chart_data = data.filter(function(d){ return d[position_variable] > 0})
+                console.log(position_variable)
+                console.log(chart_data)
 
-            //try to setup tooltips for song titles
-            var ttTime = d3.timeFormat("%B %Y");
-            var tool_tip = d3.tip()
-                        .attr("class", "svg_tool_tip")
-                        .offset([-5, 0])
-                        .html(function(d){  return d.search_title + " by " + d.artist+"<br> Peaked at #"+ d[position_variable] +" in "+ ttTime(d[date_variable]);});
-                svg.call(tool_tip);
+                //try to setup tooltips for song titles
+                var ttTime = d3.timeFormat("%B %Y");
+                var tool_tip = d3.tip()
+                            .attr("class", "svg_tool_tip")
+                            .offset([-5, 0])
+                            .html(function(d){  return d.search_title + " by " + d.artist+"<br> Peaked at #"+ d[position_variable] +" in "+ ttTime(d[date_variable]);});
+                    svg.call(tool_tip);
 
-            ////////draw trajectory lines to connect songs by the same artist
-            //unique artist names, only those with >=1 song on chart
-            var artist_names = d3.map(data, function(d){
-                //only store songs for this artist that appeared on hot 100 (peak position > 0)
-                artist_data = data.filter(function(x){ return x.main_artist == d.main_artist && x[position_variable] > 0})
-                if (artist_data.length > 0){
-                    return d.main_artist;
-                }}).keys() 
+                ////////draw trajectory lines to connect songs by the same artist
+                //unique artist names, only those with >=1 song on chart
+                var artist_names = d3.map(chart_data, function(d){
+                    //only store songs for this artist that appeared on hot 100 (peak position > 0)
+                    artist_data = chart_data.filter(function(x){ return x.main_artist == d.main_artist && x[position_variable] > 0})
+                    if (artist_data.length > 0){
+                        return d.main_artist;
+                    }}).keys() 
 
-            //append group for each artist, highlight songs + line on hover
-            var artists = svg.selectAll('.artist')
-                .data(artist_names)
-                .enter()
-                .append('g')
-                .on('mouseover', function(d){
-                    d3.select(this).select('.trajectory').style('stroke-width', 3)
-                }).on('mouseout', function(d){
-                    d3.select(this).select('.trajectory').style('stroke-width', 1)
-                });
+                console.log(artist_names)
+                //append group for each artist, highlight songs + line on hover
+                var artists = svg.selectAll('.artist'+ chart_variable)
+                    .data(artist_names)
+                    .enter()
+                    .append('g')
+                    .attr('class', 'artist'+ chart_variable)
+                    .on('mouseover', function(d){
+                        d3.select(this).select('.trajectory').style('stroke-width', 3)
+                    }).on('mouseout', function(d){
+                        d3.select(this).select('.trajectory').style('stroke-width', 1)
+                    });
 
-            //function to collect line points for each artist
-            function make_trajectory(name) {
-                //filter songs for this artist on hot 100
-                artist_data = data.filter(function(d){ return d.main_artist == name && d[position_variable] > 0})
-                trajectory_points = []
-                //append coordinates for each song to list and return it
-                for (i = 0; i<artist_data.length; i++){
-                    d = artist_data[i]
-                    y = chart_scale(d[position_variable])
-                    x = date_scale(d[date_variable])
-                    trajectory_points.push([x,y])
-                }
-                return trajectory_points;
-            };
-            artists.append('path')
-                .attr('class', 'trajectory')
-                .attr('d', function(d){
-                    return d3.line()(make_trajectory(d))
-                })
-                .style('fill', 'none')
-                .style('stroke', 'LightGrey')
-                .style('stroke-width', 1);
+                //function to collect line points for each artist
+                function make_trajectory(name) {
+                    //filter songs for this artist on hot 100
+                    artist_data = chart_data.filter(function(d){ return d.main_artist == name && d[position_variable] > 0})
+                    trajectory_points = []
+                    //append coordinates for each song to list and return it
+                    for (i = 0; i<artist_data.length; i++){
+                        d = artist_data[i]
+                        y = chart_scale(d[position_variable])
+                        x = date_scale(d[date_variable])
+                        trajectory_points.push([x,y])
+                    }
+                    return trajectory_points;
+                };
+                //draw paths for each artist
+                artists.append('path')
+                    .attr('class', 'trajectory')
+                    .attr('d', function(d){
+                        return d3.line()(make_trajectory(d))
+                    })
+                    .style('fill', 'none')
+                    .style('stroke', 'LightGrey')
+                    .style('stroke-width', 1);
 
+                //create group for each song, within artist group
+                var songs = artists.selectAll('.song')
+                    .data(function(d){ 
+                        artist_data = chart_data.filter(function(x){ return x.main_artist == d && x[position_variable] > 0})
+                        return artist_data})
+                    .enter()
+                    .append('g')
+                    .attr('class', 'song')
+                    .on('mouseover', function(d){
+                        tool_tip.show(d);
+                    })
+                    .on('mouseout', function(d){
+                        tool_tip.hide();
+                    });
 
-            //create group for each song, within artist group
-            var songs = artists.selectAll('.song')
-                .data(function(d){ 
-                    artist_data = data.filter(function(x){ return x.main_artist == d && x[position_variable] > 0})
-                    return artist_data})
-                .enter()
-                .append('g')
-                .attr('class', 'song')
-                .on('mouseover', function(d){
-                    tool_tip.show(d);
-                })
-                .on('mouseout', function(d){
-                    tool_tip.hide();
-                });
+                //draw circle to represent total lyrics of each song -- first date
+                var circle_r = 7;
+                songs.append('circle')
+                    .attr('class', 'total_lyrics')
+                    .attr('cy', function(d){ return chart_scale(d[position_variable])})
+                    .attr('cx', function(d){ return date_scale(d[date_variable])})
+                    .attr('r', circle_r)
+                    .style('fill', '#C744DB');
 
-           
-            //draw circle to represent total lyrics of each song -- first date
-            var circle_r = 7;
-            songs.append('circle')
-                .attr('class', 'total_lyrics')
-                .attr('cy', function(d){ return chart_scale(d[position_variable])})
-                .attr('cx', function(d){ return date_scale(d[date_variable])})
-                .attr('r', circle_r)
-                .style('fill', '#C744DB');
-            //draw partiall circle to represent english lyrics
-            songs.append('path')
-                .attr('class', 'english_lyrics')
-                .attr("transform", function(d){
-                    var this_cy = chart_scale(d[position_variable]);
-                    var this_cx = date_scale(d[date_variable]);
-                    return "translate("+this_cx+","+this_cy+")"
-                })
-                .attr("d", function(d){
-                    var this_r = circle_r  //Math.sqrt(lyrics_scale(d.total_count))
-                    var this_ratio = d.english_percentage;
-                    var arcGenerator = d3.arc()
-                        .outerRadius(this_r)
-                        .innerRadius(0)
-                        .startAngle(0)
-                        .endAngle((Math.PI * 2)* this_ratio); 
-                    return arcGenerator();
-                })
-                .style('fill', '#2EDBAA');
+                //draw partiall circle to represent english lyrics
+                songs.append('path')
+                    .attr('class', 'english_lyrics')
+                    .attr("transform", function(d){
+                        var this_cy = chart_scale(d[position_variable]);
+                        var this_cx = date_scale(d[date_variable]);
+                        return "translate("+this_cx+","+this_cy+")"
+                    })
+                    .attr("d", function(d){
+                        var this_r = circle_r  //Math.sqrt(lyrics_scale(d.total_count))
+                        var this_ratio = d.english_percentage;
+                        var arcGenerator = d3.arc()
+                            .outerRadius(this_r)
+                            .innerRadius(0)
+                            .startAngle(0)
+                            .endAngle((Math.PI * 2)* this_ratio); 
+                        return arcGenerator();
+                    })
+                    .style('fill', '#2EDBAA');
+            }
+            draw_chart('')
+            svg.selectAll('.artist').selectAll('circle').style('fill', 'grey')
+            svg.selectAll('.artist').selectAll('.english_lyrics').style('fill', 'grey')
+            draw_chart('_sales')
             
          }); </script>
     <script>
         d3.csv("https://raw.githubusercontent.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/master/wdss.csv", d3.autoType).then(function(data){
-            console.log(data)
-
             ////PLOT FOR LANGUAGE AND CHART POSITION
             //create svg
             var w = 700
@@ -428,7 +434,7 @@
                                
             //create english percentage scale (map to width)
             var english_scale = d3.scaleLinear()
-                                .domain([0, 1])
+                                .domain([100, 1])
                                 .range([h-p_h, p_h]);
 
             //setup tooltips for song titles
@@ -436,17 +442,18 @@
             var tool_tip = d3.tip()
                         .attr("class", "svg_tool_tip")
                         .offset([-5, 0])
-                        .html(function(d){  return d.song_title + " by " + d.artist+"<br> English percentage: "+ (d.english_count / d.total_count);});
+                        .html(function(d){  return d.song_title + " by " + d.artist+"<br> English percentage: "+ (d.english_percentage);});
                 svg.call(tool_tip);
 
             var num_1 = data.filter(function(d){ return d.peak_position == 1})
+            console.log(num_1)
             var wdss_songs = svg.selectAll('.wdss_song')
-                    .data(num_1)
+                    .data(data)
                     .enter()
                     .append('circle')
                     .attr('r', 5)
                     .attr('cx', function(d) { return date_scale(d.chart_date)})
-                    .attr('cy', function(d) { return english_scale(d.english_count / d.total_count)})
+                    .attr('cy', function(d) { return english_scale(d.peak_position)})
                     .on('mouseover', function(d){
                     tool_tip.show(d);
                     })
