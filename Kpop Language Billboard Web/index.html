@@ -30,6 +30,9 @@
         .plot_container {
             width: 75%;
         }
+        .subcharts_container {
+            width: 60%;
+        }
         .tooltip {
             position: relative;
             display: inline;
@@ -327,7 +330,7 @@
             This is where K-pop groups/their fans really make an impact, dedication to buy songs and coordination to share funds; vertical lines are entire albums being purchased by fans
             </p>
     </div>
-    <div class='wdss_comparison_container'></div>
+    <div class='subcharts_container'></div>
     <script>
          d3.csv("https://raw.githubusercontent.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/master/hot100_radio_streaming_sales_Kpop.csv", d3.autoType).then(function(data){
             console.log(data)
@@ -514,8 +517,127 @@
                     })
                     .style('fill', '#2EDBAA');
             }
-            draw_chart('_radio')
+            draw_chart('_h100')
 
          }); </script>
+    <script>
+        d3.csv("https://raw.githubusercontent.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/master/hot100_radio_streaming_sales_Kpop.csv", d3.autoType).then(function(data){
+            //sort data by date
+            data = data.sort((a,b) => d3.descending(a.chart_date_h100, b.chart_date_h100))
+            
+            //assign data w/o hot 100 value to 101 position so they show up at end
+            for (var i=0; i < data.length; i ++) {
+                if (data[i]['peak_position_h100'] > 0) {
+                    continue;
+                } else {
+                    data[i]['peak_position_h100'] = 101;
+                }
+            }
+            //sort data by hot 100 position
+            data = data.sort((a,b) => d3.ascending(a.peak_position_h100, b.peak_position_h100))
+            console.log(data)
+
+            ////PLOT FOR LANGUAGE AND CHART POSITION
+            //create svg
+            var h = 217
+            var w = 100
+            var p_h = 10
+            var p_w = 30
+            var sub_svg = d3.select('.subcharts_container')
+                        .append('svg')
+                        .attr("viewBox", '0 0 ' + w +' ' + h);
+
+            //create band scale for each song
+            var song_scale = d3.scaleBand()
+                            .domain(data.map(d => d.search_title))
+                            .range([p_h, h-p_h])
+                            .paddingInner(0.3);
+                            
+            //create chart position scale (map to height)
+            const bar_w = 20;
+            var chart_scale = d3.scaleLinear()
+                                .domain([100, 1])
+                                .range([0, bar_w]);
+
+            //create song name / y axis
+            var y_axis = d3.axisLeft(song_scale);
+            sub_svg.append('g')
+                .style("font", "2px sans-serif")
+                .attr("transform", "translate("+p_w+",0)")
+                .call(y_axis);
+            
+            
+            /////DRAW CHART/////
+
+            //tooltips :D
+            var ttTime = d3.timeFormat("%B %Y");
+                var tool_tip = d3.tip()
+                            .attr("class", "svg_tool_tip")
+                            .offset([-5, 0])
+                            .html(function(d){  return d.search_title + " by " + d.artist+"<br>"
+                                                    +"Radio: "+d.peak_position_radio+"<br>"
+                                                    +"Streaming: "+d.peak_position_streaming+"<br>"
+                                                    +"Sales: "+d.peak_position_sales+"<br>"});
+                    sub_svg.call(tool_tip);
+
+            //create groups for each song
+            var songs = sub_svg.selectAll('rect')
+                            .data(data)
+                            .enter()
+                            .append('g')
+                            .on('mouseover', function(d){
+                                tool_tip.show(d);
+                            })
+                            .on('mouseout', function(d){
+                                tool_tip.hide();
+                            });
+
+            
+            
+            //draw radio bars
+            songs.append('rect')
+                .attr('y', function(d){ return song_scale(d.search_title)})
+                .attr('x', p_w)
+                .attr('width', function(d){ 
+                    if (d.peak_position_radio > 0){
+                        return chart_scale(d.peak_position_radio)
+                    } else {
+                        return 0
+                    }
+                })
+                .attr('height', song_scale.bandwidth())
+                .style('fill', 'red');
+            //draw streaming bars
+            songs.append('rect')
+                .attr('y', function(d){ return song_scale(d.search_title)})
+                .attr('x', p_w + bar_w + 1)
+                .attr('width', function(d){ 
+                    if (d.peak_position_streaming > 0){
+                        return chart_scale(d.peak_position_streaming)
+                    } else {
+                        return 0
+                    }
+                })
+                .attr('height', song_scale.bandwidth())
+                .style('fill', 'green');
+            //draw sales bars
+            songs.append('rect')
+                .attr('y', function(d){ return song_scale(d.search_title)})
+                .attr('x', p_w + (bar_w + 1)*2)
+                .attr('width', function(d){ 
+                    if (d.peak_position_sales > 0){
+                        return chart_scale(d.peak_position_sales);
+                    } else {
+                        return 0
+                    }
+                })
+                .attr('height', song_scale.bandwidth())
+                .style('fill', 'blue');
+            
+           
+                            
+
+            
+        });</script>
     
 </body>
