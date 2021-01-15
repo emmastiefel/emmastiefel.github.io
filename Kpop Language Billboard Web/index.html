@@ -523,7 +523,7 @@
     <script>
         d3.csv("https://raw.githubusercontent.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/master/hot100_radio_streaming_sales_Kpop.csv", d3.autoType).then(function(data){
             //sort data by date
-            data = data.sort((a,b) => d3.descending(a.chart_date_h100, b.chart_date_h100))
+            data = data.sort((a,b) => d3.ascending(a.chart_date_h100, b.chart_date_h100))
             
             //assign data w/o hot 100 value to 101 position so they show up at end
             for (var i=0; i < data.length; i ++) {
@@ -539,32 +539,23 @@
 
             ////PLOT FOR LANGUAGE AND CHART POSITION
             //create svg
-            var h = 217
-            var w = 100
-            var p_h = 10
-            var p_w = 30
+            var w = 500
+            var h = 600
+            var p_h = 20
+            var p_w = 60
             var sub_svg = d3.select('.subcharts_container')
                         .append('svg')
                         .attr("viewBox", '0 0 ' + w +' ' + h);
 
             //create band scale for each song
-            var song_scale = d3.scaleBand()
-                            .domain(data.map(d => d.search_title))
-                            .range([p_h, h-p_h])
-                            .paddingInner(0.3);
+            var chart_labels = ['_h100', '_sales', '_streaming', '_radio'];
+            const chart_heights = {'_h100': p_w, '_sales': p_w*2, '_streaming': p_w*4, '_radio': p_w*5}
                             
             //create chart position scale (map to height)
-            const bar_w = 20;
             var chart_scale = d3.scaleLinear()
                                 .domain([100, 1])
-                                .range([0, bar_w]);
-
-            //create song name / y axis
-            var y_axis = d3.axisLeft(song_scale);
-            sub_svg.append('g')
-                .style("font", "2px sans-serif")
-                .attr("transform", "translate("+p_w+",0)")
-                .call(y_axis);
+                                //.range([p_w, w-p_w/2]);
+                                .range([h-p_h, p_h])
             
             
             /////DRAW CHART/////
@@ -575,69 +566,109 @@
                             .attr("class", "svg_tool_tip")
                             .offset([-5, 0])
                             .html(function(d){  return d.search_title + " by " + d.artist+"<br>"
+                                                    +"H100: "+d.peak_position_h100+"<br>"
                                                     +"Radio: "+d.peak_position_radio+"<br>"
                                                     +"Streaming: "+d.peak_position_streaming+"<br>"
                                                     +"Sales: "+d.peak_position_sales+"<br>"});
                     sub_svg.call(tool_tip);
+            
 
             //create groups for each song
             var songs = sub_svg.selectAll('rect')
                             .data(data)
                             .enter()
                             .append('g')
+                            .attr('id', function(d){ 
+                                //create variable to store circle centerpoints for this song.... yeet
+                                d['song_points'] = []
+                                return d.unique_id})
+                            .style('display', function(d){
+                                if (d.peak_position_h100 > 100){
+                                    return 'none';
+                                }
+                            })
                             .on('mouseover', function(d){
+                                //draw path between all the circles for that song
+                                d3.select(this).append('path')
+                                    .attr('class', 'song_path')
+                                    .attr('d', function(d){
+                                        return d3.line()(d['song_points'])
+                                    })
+                                    .style('fill', 'none')
+                                    .style('stroke', 'LightGrey')
+                                    .style('stroke-width', 1);
                                 tool_tip.show(d);
                             })
                             .on('mouseout', function(d){
+                                d3.select(this).select('.song_path').remove()
                                 tool_tip.hide();
                             });
+            
+            //function to draw circles for each song
+            //draw circle to represent total lyrics of each song
+            var circle_r = 7
+            function draw_song_circles(chart_label){
+                //filter data to only include songs on the given chart
+                chart_data = data.filter(function(d){ return d['peak_position'+chart_label] > 0 && d['peak_position'+chart_label] < 100})
+                //unique chart positions
+                var unique_positions = d3.map(chart_data, function(d){
+                    //only store songs for this artist that appeared on hot 100 (peak position > 0)
+                    position_data = chart_data.filter(function(x){ return x['peak_position'+chart_label] == d['peak_position'+chart_label]})
+                    if (position_data.length > 0){
+                        return d['peak_position'+chart_label];
+                    }}).keys() 
 
-            
-            
-            //draw radio bars
-            songs.append('rect')
-                .attr('y', function(d){ return song_scale(d.search_title)})
-                .attr('x', p_w)
-                .attr('width', function(d){ 
-                    if (d.peak_position_radio > 0){
-                        return chart_scale(d.peak_position_radio)
-                    } else {
-                        return 0
-                    }
-                })
-                .attr('height', song_scale.bandwidth())
-                .style('fill', 'red');
-            //draw streaming bars
-            songs.append('rect')
-                .attr('y', function(d){ return song_scale(d.search_title)})
-                .attr('x', p_w + bar_w + 1)
-                .attr('width', function(d){ 
-                    if (d.peak_position_streaming > 0){
-                        return chart_scale(d.peak_position_streaming)
-                    } else {
-                        return 0
-                    }
-                })
-                .attr('height', song_scale.bandwidth())
-                .style('fill', 'green');
-            //draw sales bars
-            songs.append('rect')
-                .attr('y', function(d){ return song_scale(d.search_title)})
-                .attr('x', p_w + (bar_w + 1)*2)
-                .attr('width', function(d){ 
-                    if (d.peak_position_sales > 0){
-                        return chart_scale(d.peak_position_sales);
-                    } else {
-                        return 0
-                    }
-                })
-                .attr('height', song_scale.bandwidth())
-                .style('fill', 'blue');
-            
-           
-                            
+                //draw circles by unique position
+                for (var i=0; i<unique_positions.length; i++) {
+                    this_position = unique_positions[i];
+                    position_data = chart_data.filter(function(x){ return x['peak_position'+chart_label] == this_position})
+                    //if there are more than one songs at the position, space out vertically
+                    for (var j=0; j<position_data.length; j++) {
+                        d = position_data[j]
+                        //store circle coordinates in song datapoint :)
+                        d_y = chart_scale(d['peak_position'+chart_label])
+                        d_x = chart_heights[chart_label] + j*(circle_r*2+1);//chart_bands(chart_label) + j*(circle_r*2+1)
+                        d['song_points'].push([d_x, d_y])
 
+                        //draw circles for total lyrics
+                        sub_svg.select('#'+d['unique_id'])
+                                .append('circle')
+                                .attr('class', 'total_lyrics')
+                                .attr('cy', d_y)
+                                .attr('cx', d_x)//
+                                .attr('r', circle_r)
+                                .style('fill', '#C744DB');
+                        //draw partiall circle to represent english lyrics
+                        sub_svg.select('#'+d['unique_id'])
+                            .append('path')
+                            .attr('class', 'english_lyrics')
+                            .attr("transform", function(d){
+                                return "translate("+d_x+","+d_y+")"
+                            })
+                            .attr("d", function(d){
+                                var this_r = circle_r  //Math.sqrt(lyrics_scale(d.total_count))
+                                var this_ratio = d.english_percentage;
+                                var arcGenerator = d3.arc()
+                                    .outerRadius(this_r)
+                                    .innerRadius(0)
+                                    .startAngle(0)
+                                    .endAngle((Math.PI * 2)* this_ratio); 
+                                return arcGenerator();
+                            })
+                            .style('fill', '#2EDBAA');
+                    }
+                }
+            }
+            //draw songs for each chart
+            for (var i=0; i < 4; i++){
+                console.log(chart_labels[i])
+                draw_song_circles(chart_labels[i])}
             
+            //function to display songs not on hot 100 :)
+            function show_not_h100() {
+                songs.style('display', 'inline');
+            } //show_not_h100()
+
         });</script>
     
 </body>
