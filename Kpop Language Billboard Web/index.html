@@ -52,9 +52,17 @@
             position: absolute;
             z-index: 1;
         }
-
         .tooltip:hover .tooltiptext {
             visibility: visible;
+        }
+        text{
+            font-family: sans-serif;
+        }
+        .chart_titles {
+            font-size: 12px;
+        }
+        .y-axis-label {
+            font-size: 12px;
         }
     </style>
 </head>
@@ -338,7 +346,7 @@
             ////PLOT FOR LANGUAGE AND CHART POSITION
             //create svg
             var w = 700
-            var h = 300
+            var h = 400
             var p_h = 40
             var p_w = 60
             var svg = d3.select('.plot_container')
@@ -541,7 +549,7 @@
             //create svg
             var w = 500
             var h = 600
-            var p_h = 20
+            var p_h = 40
             var p_w = 60
             var sub_svg = d3.select('.subcharts_container')
                         .append('svg')
@@ -550,7 +558,7 @@
             //create band scale for each song
             var chart_labels = ['_h100', '_sales', '_streaming', '_radio'];
             const chart_heights = {'_h100': p_w + 40, '_sales': p_w + 190, '_streaming': w-p_w-60, '_radio': w-p_w}
-            const chart_names = {'_h100': 'Hot 100', '_sales': 'Digital Song Sales', '_streaming': 'Streaming Songs', '_radio': 'Radio Songs'}
+            const chart_names = {'_h100': ['Hot 100', ''], '_sales': ['Digital Song', 'Sales'], '_streaming': ['Streaming', 'Songs'], '_radio': ['Radio', 'Songs']}
                             
             //create chart position scale (map to height)
             var chart_scale = d3.scaleLinear()
@@ -567,6 +575,22 @@
                         return d3.line()([[chart_heights[d], p_h], [chart_heights[d], h-p_h]])
                     })
                     .style('stroke', 'black');
+            //labels for each chart
+            var chart_titles = sub_svg.selectAll('.chart_titles')
+                    .data(chart_labels)
+                    .enter()
+                    .append('text')
+                    .attr('class', 'chart_titles')
+                    .attr('x', function(d){ return chart_heights[d]})
+                    .attr('y', p_h/4)
+                    .style('text-anchor', 'middle');
+            chart_titles.append('tspan')
+                    .text(function(d){ return chart_names[d][0]});
+            chart_titles.append('tspan')
+                    .attr('dy', p_h/4)
+                    .attr('x', function(d){ return chart_heights[d]})
+                    .text(function(d){ return chart_names[d][1]})
+
             //tick labels going across graph (unlabeled)
             var chart_axis_ticks = d3.axisLeft(chart_scale)
                                 .tickSize(w-p_w*1.5)
@@ -593,8 +617,6 @@
                     .attr("y", 15)
                     .attr("x", 0 - (h / 2))
                     .attr("dy", "10px")
-                    .style('font-size', 12)
-                    .style('font-family', 'sans-serif')
                     .style("text-anchor", "middle")
                     .text("Peak chart position"); 
 
