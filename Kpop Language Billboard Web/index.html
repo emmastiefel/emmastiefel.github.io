@@ -572,7 +572,13 @@
                     .enter()
                     .append('path')
                     .attr('d', function(d){
-                        return d3.line()([[chart_heights[d], p_h], [chart_heights[d], h-p_h]])
+                        if (d == '_h100'){
+                            return d3.line()([[chart_heights[d], p_h], [chart_heights[d], h-p_h]])
+                        } else{
+                            //other charts only have 50 positions!!
+                            return d3.line()([[chart_heights[d], p_h], [chart_heights[d], chart_scale(50)]])
+                        }
+                        
                     })
                     .style('stroke', 'black');
             //labels for each chart
