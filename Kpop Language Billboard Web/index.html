@@ -9,6 +9,8 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="d3-tip.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.js'></script>
+    <script src="https://unpkg.com/enter-view"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Monoton&display=swap');
         .svg_tool_tip {
@@ -608,7 +610,10 @@
                     .attr("stroke-opacity", 0.5)
                     .attr("stroke-dasharray", "5,5"));
             //right and left axes
-            var chart_axis_r = d3.axisRight(chart_scale);
+            var chart_axis_r = d3.axisRight(d3.scaleLinear()
+                                .domain([50, 1])
+                                .range([chart_scale(50), p_h]))
+                                .ticks(5);
             sub_svg.append('g')
                 .attr("transform", "translate("+(w-p_w/2)+",0)")
                 .call(chart_axis_r);
@@ -626,7 +631,25 @@
                     .style("text-anchor", "middle")
                     .text("Peak chart position"); 
 
-                 
+            
+            //DRAW LEGEND
+            //create color scale           
+            var colorScale = d3.scaleOrdinal()
+                                .domain(["Complete lyrics", "English lyrics"])
+                                .range(["#C744DB", "#2EDBAA"]);
+            var legendSequential = d3.legendColor() //generate and shape legend
+                                .shapeWidth(70)
+                                .shapeHeight(5)
+                                .orient('horizontal')
+                                    .scale(colorScale);
+                sub_svg.append("g") //add legend to svg, position it
+                        .attr("class", "legendSequential")
+                        .attr("transform", "translate(" + (w/2 - 70) + "," + chart_scale(62)+ ")")
+                        .call(legendSequential);
+                //format label text
+                sub_svg.select(".legendSequential")
+                        .selectAll(".label")
+                        .style("font-size", 10);
                             
 
             /////DRAW CHART/////
@@ -640,7 +663,8 @@
                                                     +"H100: "+d.peak_position_h100+"<br>"
                                                     +"Radio: "+d.peak_position_radio+"<br>"
                                                     +"Streaming: "+d.peak_position_streaming+"<br>"
-                                                    +"Sales: "+d.peak_position_sales+"<br>"});
+                                                    +"Sales: "+d.peak_position_sales+"<br>"
+                                                    +"%eng: "+d.english_percentage+"<br>"});
                     sub_svg.call(tool_tip);
             
 
