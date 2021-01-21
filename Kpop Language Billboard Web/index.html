@@ -13,27 +13,59 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Monoton&display=swap');
-        .svg_tool_tip {
+        .diy_tool_tip {
+            position: absolute;
             background-color: white;
             max-width: 300px;
-            padding: 10px;
+            padding: 5px;
             border-radius: 5px;
+            z-index: 100;
         }
         .text {
-            font-family: sans-serif;
-            line-height: 1.6;
             width: 50%;
             margin-left: 25%;
         }
-        .text h1, h2, h3 {
+        p, .text {
+            font-family: sans-serif;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
             font-family: 'Bungee Shade', sans-serif;
             color: #DBB95A;
         }
+        .hot_100 {
+            position: relative;
+        }
         .plot_container {
-            width: 75%;
+            position: sticky;
+            width: 70%;
+            top: 0%;
+        }
+        .plot_caption{
+            width: 70%;
+            margin-left: 15%;
+        }
+        .h100_step {
+            position: relative;
+            background-color: white;
+            width: 30%; 
+            left: 70%; 
+            margin-bottom: 500px;
+        }
+        .subcharts {
+            position: relative;
         }
         .subcharts_container {
+            position: sticky;
+            top: 0%;
+            margin-left: 40%;
             width: 60%;
+        }
+        .subchart_step {
+            position: relative;
+            background-color: white;
+            width: 40%; 
+            margin-bottom: 500px;
         }
         .tooltip {
             position: relative;
@@ -46,13 +78,16 @@
             color: black;
             border: 3px solid #801E8F;
             text-align: center;
-            width: 300px;
             padding: 10px;
             border-radius: 5px;
-
+            
             /* Position the tooltip */
             position: absolute;
-            z-index: 1;
+            width: 400px;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -200px;
+            
         }
         .tooltip:hover .tooltiptext {
             visibility: visible;
@@ -69,278 +104,257 @@
     </style>
 </head>
 <body>
-    <h2 class='text'><a href="/Kpop%20Language%20Billboard%20Web/final-submission.html">This is the most up to date version of this piece. Click here to view the version submitted on Friday, Dec. 18. </a></h2>
     <div class = 'text'>
         <h1><strong>K-pop, Language, and the Billboard Hot 100</strong></h1>
 
 
         <p>
-        <div class="tooltip">BTS* <span class="tooltiptext">Record-breaking K-pop group comprised of RM (Kim Namjoon), Jin (Kim Seokjin), Suga (Min Yoongi), J-Hope (Jung Hoseok), Jimin (Park Jimin), V (Kim Taehyung), and Jungkook (Jeon Jungkook).</span></div> became the first K-pop group to top the Billboard Hot 100 chart in August. The group claimed the #1 spot with their single “<a href="https://www.youtube.com/watch?v=gdZLi9oWNZg">Dynamite</a>”, a bright disco-pop song. It was an incredible achievement for the group and its fans, who worked hard to stream the song. “Recording this song was really fun, and like <div class="tooltip">Jin*<span class="tooltiptext">Jin is a BTS vocalist and the group’s main visual (the member who most fits Korean beauty standards and often functions as a sort of lead actor in their music videos) . He is the oldest member and known for being funny and "<a href="https://youtu.be/rCGEXzP4q-I">worldwide handsome</a>".</span></div> said, we’re going through difficult times so we tried to have more fun working on this song,” RM, BTS’ leader, <a href="https://www.billboard.com/articles/columns/k-town/9438051/bts-apple-music-interview-dynamite">said in an interview</a>.
+        <span class="tooltip">BTS<span class="tooltiptext">Record-breaking K-pop group comprised of RM (Kim Namjoon), Jin (Kim Seokjin), Suga (Min Yoongi), J-Hope (Jung Hoseok), Jimin (Park Jimin), V (Kim Taehyung), and Jungkook (Jeon Jungkook). The boy group is part of Big Hit Entertainment and debuted in 2013.</span></span> became the first K-pop group to top the Billboard Hot 100 chart in August 2020. It was an incredible achievement for the group and its fans, who worked hard to buy and stream “<a href="https://www.youtube.com/watch?v=gdZLi9oWNZg">Dynamite</a>”, a bright disco-pop song, to the #1 spot. 
         </p>
         <p>
-        “Dynamite” was also widely celebrated as a breakthrough for Asian representation in the US music industry. Before “Dynamite”, only two songs by Asian artists had achieved the same top position on the Hot 100 chart, <a href="https://www.billboard.com/articles/business/chart-beat/9442836/bts-dynamite-tops-hot-100-chart/">according to Billboard</a> — Kyu Sakamoto’s 1963 “<a href="https://www.youtube.com/watch?v=F284iB65-QU">Sukiyaki</a>” and Far East Movement’s 2010 “<a href="https://www.youtube.com/watch?v=w4s6H4ku6ZY">Like a G6</a>”. As music critic Seongdeok Seo <a href="https://magazine.weverse.io/article/view?lang=en&num=6">pointed out</a> in <div class="tooltip">Weverse magazine*<span class="tooltiptext">Weverse is a web platform owned by Big Hit Entertainment, which manages BTS and several other K-pop groups. It began publishing Weverse Magazine in 2020, with articles that analyze and promote the music of Big Hit artists.</span></div>, BTS had already consistently entered the top 10 of the Billboard Hot 100, which should have established them as mainstream artists within the US.“Despite all this, ranking No.1 is important,” Seo wrote. “Then what is the difference between Top 10 and No.1? To BTS, holding the top spot is an outcome of transcending the complex barrier of discrimination, exclusion, and prejudice.”
+        “Dynamite” was also widely celebrated as a breakthrough for Asian representation in the US music industry. Before “Dynamite”, <a href="https://www.billboard.com/articles/business/chart-beat/9442836/bts-dynamite-tops-hot-100-chart/">only two songs</a> by Asian artists had topped the Hot 100 chart. As music critic Seongdeok Seo <a href="https://magazine.weverse.io/article/view?lang=en&num=6">pointed out</a> in <span class="tooltip">Weverse magazine<span class="tooltiptext">Weverse is a web platform owned by Big Hit Entertainment, which manages BTS and several other K-pop groups. It began publishing Weverse Magazine in 2020, with articles that analyze and promote the music of Big Hit artists.</span></span>, BTS had already consistently entered the top 10 of the Billboard Hot 100, which established their US popularity. “Despite all this, ranking No.1 is important,” Seo wrote. “Then what is the difference between Top 10 and No.1? To BTS, holding the top spot is an outcome of transcending the complex barrier of discrimination, exclusion, and prejudice.”
         </p>
         <p>
-        For many, however, the triumph of “Dynamite” was a somewhat uneasy victory. “Dynamite” was BTS’ first song entirely in English, though the group, like most K-pop acts, has always mixed some English phrases into their lyrics. Many fans worried that it may create an expectation that BTS and other foreign artists who hope to achieve the same level of success in the US must perform and speak in English to do so. If that had happened, the US reception of “Dynamite” would seem almost like a step backwards into ethnocentrism and xenophobia, rather than progress towards a future where artists can succeed regardless of their ethnicity and language.
+        For many, however, “Dynamite”’s victory was uneasy. “Dynamite” was BTS’ first song entirely in English (though the group, like most K-pop acts, has always mixed some English phrases into their lyrics). Many fans worried that it may create an expectation that BTS and other foreign artists who hope to achieve the same level of success in the US must perform in English. If that had happened, the US reception of “Dynamite” would seem almost like a step backwards into ethnocentrism and xenophobia instead of progress towards a future where talented artists succeed regardless of their ethnicity and language.
         </p>
         <p>
-        Instead, many fans hoped that “Dynamite” would become <a href="https://www.buzzfeed.com/eleanorbate/bts-tonight-show-takeover-performances-review">a Trojan horse</a>, an ebullient English hit that would convince the US general public to finally listen to BTS’ “rich, varied, and top-tier discography in Korean.” As <a href="https://www.buzzfeed.com/eleanorbate/bts-tonight-show-takeover-performances-review">Ellie Bate observed in Buzzfeed</a>, this is exactly what the group did during a week of performances on the Tonight Show: though they opened and closed with Dynamite, the intervening shows highlighted some of BTS’ best work, including dancing to “<a href="https://www.youtube.com/watch?v=MXFkjMNXfpY">IDOL</a>” in traditional Korean clothes in front of Seoul’s Gyeongbok Palace. Fans also <a href="https://twitter.com/FallonTonight/status/1311471501766537217?s=20">convinced the Tonight Show</a> to add subtitles to the performances after they aired, making their Korean lyrics readily accessible for new US viewers. Overall, it seemed like BTS had successfully utilized their single English hit to gain more attention for their Korean discography. 
+        With this in mind, many fans hoped “Dynamite” would become <a href="https://www.buzzfeed.com/eleanorbate/bts-tonight-show-takeover-performances-review">a Trojan horse</a>, an ebullient English hit that would convince the US public to finally listen to BTS’ “rich, varied, and top-tier discography in Korean.” The ultimate test of the “Trojan horse” theory came with the release of BTS’ new album, <em><a href="https://www.youtube.com/watch?v=-5q5mZbe3V8&list=OLAK5uy_lrj6FwTFFdXG2HCmEMDQWzRDrBU8NLdhw">BE</a></em>, in November 2020. The album was mostly in Korean (minus Dynamite, which was included as the outro) and just as <span class="tooltip">“rich, varied, and top-tier”<span class="tooltiptext">Tracks range from "Blue and Grey", a mellow reflection on anxiety and depression, to "Telepathy", an upbeat, funky song about not being able to see fans due to the pandemic (and my personal favorite).</span></span> in terms of lyricism and music style as BTS’ other work. Fans prepared a massive streaming and buying campaign in hopes of getting each of the album’s seven songs onto the Hot 100 chart. They succeeded — all six new songs on <em>BE</em> debuted on the Billboard Hot 100. 
         </p>
         <p>
-        The ultimate test of the “Trojan horse” plan came with the release of BTS’ new album, BE, in November. The project was in some ways a return to the BTS fans were used to — tracks were mostly in Korean (minus Dynamite, which was included as the album’s outro) and “rich, varied, and top-tier” in terms of lyricism and music style. Yet it was also an impressive statement of their talent and autonomy as artists. BE, which was conceived in response to the coronavirus pandemic earlier this year, was BTS’ most self-directed project to date (though members had always written and produced music to different degrees). Fans understood that the success of BE would be seen, fairly or not, as an evaluation of the members’ personal skill and effort as well as their ability to match the success of “Dynamite” with Korean tracks. So, when BTS member Park Jimin, who served as the project manager for BE, <a href="https://www.allkpop.com/article/2020/12/btss-music-project-manager-jimin-trends-worldwide-after-he-got-what-he-asked-for-as-all-7-songs-from-be-debut-on-billboard-hot-100 ">said that he hoped the entire album would make it onto the Hot 100</a>, fans prepared for a massive streaming campaign that would fulfill his wish. 
+        After 2020, it seems like a large part of the US public may finally be ready to regularly and seriously listen to music from another language and culture. But how had K-pop artists fared in the US before BTS’ singular achievements? What songs succeeded? And how important is language for artists who hope to break into the US mainstream? 
         </p>
         <p>
-        They succeeded — all six new songs on BE debuted on the Billboard Hot 100. The achievement, especially “Life goes On”’s #1 debut, <a href="https://www.billboard.com/articles/business/chart-beat/9491302/bts-life-goes-on-number-one-hot-100">broke records and made history</a>. After 2020, it seems like a large part of the US public may finally be ready to regularly and seriously listen to music that isn’t from their language or culture. 
+        In an attempt to answer these questions, I collected all of the K-pop songs that have appeared on <span class="tooltip">the Billboard Hot 100 chart<span class="tooltiptext">I focus on the Hot 100 chart because it is the most widely accepted measure of how popular a song is within the US. As we'll see later on, the Hot 100 is especially useful because it combines multiple sources of data about how many people are listening to a song. But it certainly isn't the only measure of a song's popularity.</span></span> and counted how many of their lyrics were originally in English. The data help illustrate how K-pop became a part of the US music scene.
         </p>
-        <p>
-        But how had K-pop artists fared on the Billboard Hot 100 chart before BTS’ singular achievements? What songs succeeded? And how important is language for artists who hope to break into the US mainstream? 
-        </p>
+        
+    </div>
+
+<div class='diy_tool_tip'>
+    <p>:D</p>
+</div>
+<div class = 'hot_100'>
+    <div class='plot_container'>
         <h1>K-pop on the Billboard Hot 100</h1>
+        <svg></svg>
+        <div class='plot_caption'>
+            <p>
+                <em>The above chart displays all K-pop songs that have appeared on the Billboard Hot 100 chart, </em><span class="tooltip"><em>as listed by <a href="https://en.wikipedia.org/wiki/List_of_K-pop_songs_on_the_Billboard_charts#Billboard_Hot_100_(Complete)">this Wikipedia page</a> with a few edits.</em><span class="tooltiptext">I’d like to thank Wikipedia editor Bonnielou2013 for maintaining this list. I verified the chart positions listed on Wikipedia using Billboard's public chart history lookup for each artist. I only verified artists listed on Wikipedia, so if the Wikipedia list does not include some K-pop artists who made it onto the chart those errors will be reflected here as well.</span></span><em>Each circle represents a song, with the green shapes representing the percentage of lyrics originally </em><span class="tooltip"><em>in English</em><span class="tooltiptext">Or at least, written in roman characters — a few songs contain words in other languages as well.</span></span> <em>and the pink representing the lyrics originally in Korean. Most of the song lyrics were </em><span class="tooltip"><em>retrieved from Genius.</em><span class="tooltiptext">I used the Genius API to retrieve lyrics for some songs and web scraped lyrics for others. If lyrics were not on Genius, I manually searched for and copied the relevant information from other lyrics websites.</span></span> <em>Each song is displayed at the date it debuted on the chart and the highest position it achieved. The grey lines connect songs released by the same main artist. </em>
+            </p>
+        </div>
     </div>
-    <div class='plot_container'></div>
-    <div class='text'>
+    
+    <div class='h100_step' id='Wonder_Girls'>
+        <h2>Wonder Girls</h2>
+
+
         <p>
-            <em>The above chart displays all K-pop songs that have appeared on the Billboard Hot 100 chart, as listed by <a href="https://en.wikipedia.org/wiki/List_of_K-pop_songs_on_the_Billboard_charts#Billboard_Hot_100_(Complete)">this Wikipedia page</a>. Each circle represents a song, with the green shapes representing the percentage of lyrics originally in English and the pink representing the lyrics originally in Korean. Each song is displayed at the date it debuted on the chart and the highest position it achieved. The grey lines connect songs released by the same main artist (they do not include features). </em>
-            </p>
-            <ul>
-            
-            <li>Figure out how/if to address unique vs. total word counts….
-            
-            <li>Add wiki lists for  
-            <ul>
-             
-            <li>Radio play  
-            <ul>
-              
-            <li>Only dynamite and savage love — ie almost entirely english mainstream hits
-            </li>  
-            </ul>
-             
-            <li>Streaming  
-            <ul>
-              
-            <li>Not as many as i thought...
-            </li>  
-            </ul>
-             
-            <li>Digital sales  
-            <ul>
-              
-            <li>More songs! Including artists that didnt show up before (k/da and verivery) which i find really weird and almost suspicious…. But ok   
-            <ul>
-               
-            <li>k/da <a href="https://www.theverge.com/2018/11/11/18076272/league-of-legends-virtual-k-pop-new-audience">https://www.theverge.com/2018/11/11/18076272/league-of-legends-virtual-k-pop-new-audience</a> 
-               
-            <li>Verivery???!!! <a href="https://twitter.com/Jeff__Benjamin/status/1318329595855339522?s=20">https://twitter.com/Jeff__Benjamin/status/1318329595855339522?s=20</a>  i have no idea why they are there but i guess i will roll with it
-            </li>   
-            </ul>
-              
-            <li>I think it is probs much easier for K-pop songs to show up on sales charts bc fans are committed to buying whereas most us mainstream hits get by with radio and streams but have less active support?   
-            <ul>
-               
-            <li>On the chart dated September 19th, “Dynamite” drew 140,000 downloads (No.1), 13 million streams (No. 16), and made its debut at No.49 on Billboard’s Radio Songs chart. “WAP” took back its No.1 spot with 48 million streams (No.1), 16,000 downloads (No.2), and ranked No.27 on the radio chart. Exchanging the first and second spots with digital song sales and streams on the Hot 100 is unusual. Since the past few years, streaming has been on the rise while album/download sales glaringly declined and the influence of radio airplay, which was considered as a traditional media, in fact, increased. As you can see from the difference in downloads between “Dynamite” and “WAP,” it is rare for digital song sales to be in the 100,000s. Normally, Hip-Hop and R&B songs dominate the Hot 100 with streams while Pop and Rock songs seek their way onto the chart via radio airplay. Taylor Swift and Ariana Grande are some of the rare artists who don’t play by this rule. But now we can say that BTS found its own breakthrough by digital song sales.. <a href="https://magazine.weverse.io/article/view?lang=en&num=6">https://magazine.weverse.io/article/view?lang=en&num=6</a> 
-            </li>   
-            </ul>
-              
-            <li><a href="https://www.papermag.com/bts-blackpink-taylor-swift-stan-fundraisers-charts-2647856794.html?rebelltitem=9#rebelltitem9">https://www.papermag.com/bts-blackpink-taylor-swift-stan-fundraisers-charts-2647856794.html?rebelltitem=9#rebelltitem9</a> paper article on stan fundraising
-              
-            <li><a href="https://www.forbes.com/sites/bryanrolli/2021/12/30/bts-scored-the-bestselling-us-song-download-released-in-2020-and-three-of-the-top-10/?sh=2369983611cf">https://www.forbes.com/sites/bryanrolli/2021/12/30/bts-scored-the-bestselling-us-song-download-released-in-2020-and-three-of-the-top-10/?sh=2369983611cf</a> 
-            </li>  
-            </ul>
-             
-            <li>And i think try to compare to other songs? Like maybe h100 #1s at least??? If thats the data we have - for sales/radio/streaming breakdown  
-            <ul>
-              
-            <li>Though idk its kinda obvious maybe :p
-            </li>  
-            </ul>
-             
-            <li>Note different chart start and end dates, rules etc.
-            </li> 
-            </ul>
-            </li> 
-            </ul>
-            <h2>Wonder Girls</h2>
-            
-            
-            <p>
-            The first K-pop group to make it onto the Billboard Hot 100 was Wonder Girls, a girl group formed by JYP Entertainment. After <a href="https://www.theatlantic.com/entertainment/archive/2012/01/does-korean-pop-actually-have-a-shot-at-success-in-the-us/252057/">multiple performances in the US</a>, including opening for the Jonas Brothers, their English single “Nobody” reached #76 on the chart in October 2010. They stared in a movie “<a href="https://www.youtube.com/watch?v=LMLzWRYZLhs">The Wonder Girls</a>”, which was released on TeenNick in 2012. At the time, Patrick St. Michel observed in <em>The Atlantic</em>, “the smart money seem[ed] to be on Wonder Girls to have the best chance yet to finally break through and sustain success in America.”  
-            </p>
-            <p>
-            The Wonder Girls were a powerhouse group within the K-pop industry for their ten year career, consistently releasing hits <a href="https://www.billboard.com/articles/columns/k-town/7669731/wonder-girls-break-up-thank-you-for-being-so-wonderful-video">from their 2007 debut to their 2017 disbandment</a>. But they never achieved the US mainstream popularity that seemed possible in 2010. The group had <a href="http://www.thekrazemagazine.com/latest-updates/2018/7/21/history-of-k-pop-wonder-girls">multiple destabilizing lineup changes</a>, including vocalist Sunmi leaving in 2010 to return to school, after which a planned English album was scrapped. Yet their early success on the Hot 100 chart still had a lasting impact. “It made the improbable seem possible,” Tamar Herman <a href="https://www.billboard.com/articles/columns/k-town/8476481/wonder-girls-nobody-10-year-anniversary-k-pop-hot-100-chart/">writes for Billboard</a>. “[R]ather than looming over the industry like a taunt, the Hot 100 singles chart became a goal.”
-            </p>
-            <h2>Psy</h2>
-            
-            
-            <p>
-            The next K-pop artist to make it onto the Billboard Hot 100 chart needs no introduction. PSY’s “<a href="https://www.youtube.com/watch?v=9bZkp7q19f0">Gangnam Style</a>” <a href="https://www.bbc.com/news/blogs-magazine-monitor-30330167">nearly broke YouTube’s view counter</a> in 2014, as the viral hit continued to accumulate record-breaking streaming numbers after its 2012 release. “Gangnam Style” peaked at #2 on the Hot 100, just short of the top position, and stayed on the chart for 31 weeks. Unlike “Nobody”, “Gangnam Style” is sung mostly in Korean and wasn’t intended to break into the US market. The global spread of “Gangnam Style” and its cheesy dance moves surprised everyone, <a href="https://www.nytimes.com/2012/10/14/arts/music/interview-psy-the-artist-behind-gangnam-style.html">including PSY himself</a>. 
-            </p>
-            <p>
-            PSY released “Gangnam Style” and his other chart-topping songs under contract with YG Entertainment. Though he unwittingly introduced most of the world to K-pop, he was somewhat unique within the industry. He was a soloist rather than a member of an idol group and comparatively old. His willingness to satirically critique Korean society also distinguished him —  “Gangnam Style” satirically targeted those who tried to mimic the residents of Seoul’s glitziest neighborhood. Adrian Hong, a “Korean-American consultant” <a href="https://www.theatlantic.com/international/archive/2012/08/gangnam-style-dissected-the-subversive-message-within-south-koreas-music-video-sensation/261462/">quoted in The Atlantic</a>, noted that “‘Korea has not had a long history of nuanced satire.’”
-            </p>
-            <p>
-            “Gangnam Style” undoubtedly brought more exposure to K-pop artists overall, <a href="http://youtube-trends.blogspot.com/2013/07/a-year-since-gangnam-style-k-pop-keeps.html">as YouTube data shows</a>. It also left a lasting effect on the Billboard Hot 100 chart itself — in 2013, <a href="https://pitchfork.com/thepitch/psys-gangnam-style-changed-pop-music-whether-you-like-it-or-not/">after the song was released and likely at least partially because of it</a>, the rules for calculating chart positions were changed to include YouTube views. This opened up the possibility of music video-focused streaming, which has since become the focus of fan efforts to support K-pop songs. Subsequent but increasingly less successful hits, like “<a href="https://www.youtube.com/watch?v=ASO_zypdnsQ">Gentleman</a>” and “<a href="https://www.youtube.com/watch?v=FrG4TEcSuRg">Daddy</a>”, showed that it was possible for K-pop artists to have sustained popularity in the US (though it should also be noted that these songs contained much more English lyrics than “Gangnam Style”).  
-            </p>
-            <p>
-            Yet PSY’s reception in the US didn’t necessarily signal a move away from xenophobia to the extent that a chart-topping Korean song would seem to indicate.  For most foreign listeners, “Gangnam Style” was just an absurd song with even weirder dance moves that was fun to play at parties. Socially conscious messages were there, but only if you took the time to research the translated lyrics and cultural context of the song. Though it’s hard to say for sure, I suspect that few did — as a 14-year-old in Ohio, I at least wasn’t very interested in the deeper meaning of “Gangnam Style” when I reluctantly performed the horse dance with friends.  
-            </p>
-            <p>
-            Obviously, it’s ridiculous to expect everyone to closely engage with the songs they listen to. Many don’t even fully understand the messages of English pop songs. But for a while, the path “Gangnam Style” paved to the top of the Hot 100 — one reliant on mindless, dance-crazed virality — seemed like it might be the only way forward for K-pop artists hoping to break into the US mainstream. It was unclear whether it would be possible for a foreign act to deeply engage US listeners with its music.
-            </p>
-            <ul>
-            
-            <li>Talk about his other hits and how he had some other hits but eventually moved on
-            </li>
-            </ul>
-            <h2>CL</h2>
-            
-            
-            <p>
-            CL’s 2016 single “<a href="https://www.youtube.com/watch?v=Mr29X77OA5g">Lifted</a>” peaked at #94 on the Hot 100. The all-English track was part of a coordinated attempt to establish the soloist, a former member of star girl group 2NE1, as a mainstream US artist. CL was signed to YG Entertainment, making her PSY’s labelmate at the time — she featured on his 2015 song “Daddy”, which peaked at #97 on the Hot 100. 
-            </p>
-            <p>
-            As a talented rapper and vocalist, CL was seen as “<a href="https://time.com/4503387/cl-america-k-pop/">the Future of K-Pop in America</a>” at the time. She’d had incredible success with 2NE1 in Korea and signed with Scooter Braun, who also managed Justin Bieber and Ariana Grande. She <a href="https://www.thefader.com/2018/02/26/cl-english-album-2ne1-kpop-yg-scooter-braun">reportedly had over 100 songs</a> ready to release in the US, but her career fizzled after “Lifted” and a much-anticipated album never materialized. Many fans assert that CL was horrifically mismanaged by YG and welcomed <a href="https://www.soompi.com/article/1368980wpp/cl-opens-up-about-leaving-yg-im-excited-for-the-1st-time-in-a-long-while">her departure from the company</a> in December 2019.
-            </p>
-            <h2>BTS</h2>
-            
-            
-            <p>
-            BTS Billboard Hot 100 successes are just one chapter in the group’s meteoric rise from K-pop underdogs to international superstars. After “<a href="https://www.youtube.com/watch?v=MBdVXkSdhwU">DNA</a>” peaked at #67 on the Hot 100 in 2017, the group has been persistently rising through the chart with each new release. “<a href="https://www.youtube.com/watch?v=7C2z4GqqS5E">Fake Love</a>”, the title track for their “Love Yourself: Tear” album, reached the #10 spot in 2018, inaugurating the group’s reign at the top of the chart. 
-            </p>
-            <p>
-            BTS Members performing as solo acts have also had songs chart on the Hot 100 (“<a href="https://www.youtube.com/watch?v=i23NEQEFpgQ">Chicken Noodle Soup</a>” by j-hope and “<a href="https://www.youtube.com/watch?v=qGjAWJ2zWWI">Daechwita</a>” by Agust D, a solo stage name of Suga), and songs by other artists that feature BTS members have made it onto the chart as well (“<a href="https://www.youtube.com/watch?v=bIv16itYi_0">Waste it on Me</a>” by Steve Aoki).
-            </p>
-            <p>
-            The title track for BTS’ March 2020 album “Map of the Soul: 7”, “<a href="https://www.youtube.com/watch?v=gwMa6gpoE9I">ON</a>”, set a new record for the group when it debuted at #4 on the Hot 100. Several other songs from the same album made it onto the chart as well: “<a href="https://www.youtube.com/watch?v=vGbuUFRdYqU">Black Swan</a>”, which was released in January, and two solo tracks without accompanying music videos (“<a href="https://www.youtube.com/watch?v=dNUnnb8F-Cw">Filter</a>” by Jimin and “<a href="https://www.youtube.com/watch?v=a_zk4JFK43g">My Time</a>” by Jungkook). 
-            </p>
-            <ul>
-            
-            <li>#billboard recalculate <a href="http://www.koreaherald.com/view.php?ud=20200309000675">http://www.koreaherald.com/view.php?ud=20200309000675</a>  
-            <ul>
-             
-            <li>On - ppl think it was robbed rip
-             
-            <li>Ie how much do people actually trust and care about billboard in the first place, distrust
-             
-            <li>More experimental? I guess? Also arguably not promoted as much? Idk 
-            </li> 
-            </ul>
-            </li> 
-            </ul>
-            <p>
-            The group finally achieved the #1 spot in August with “<a href="https://www.youtube.com/watch?v=gdZLi9oWNZg">Dynamite</a>”. They quickly reclaimed it with a remix of “<a href="https://www.youtube.com/watch?v=qvu4nPMyl3U">Savage Love</a>” featuring three of the members alongside Jason Derulo and Jawsh 685’s “Laxed (Siren Beat)”. 
-            </p>
-            <ul>
-            
-            <li>Joon’s korean dynamite verse <a href="https://www.teenvogue.com/story/bts-map-of-the-soul-one-concert-best-moments">https://www.teenvogue.com/story/bts-map-of-the-soul-one-concert-best-moments</a> 
-            
-            <li>Telling jimmy (i think) to write their english song lol: <a href="https://www.youtube.com/watch?t=322&v=EatgTC4CD-c&feature=youtu.be">https://www.youtube.com/watch?t=322&v=EatgTC4CD-c&feature=youtu.be</a> 
-            </li>
-            </ul>
-            <p>
-            Around the same time BTS released “Dynamite”, Weverse started selling <a href="https://www.usbtsarmy.com/merch-announcements/learn-korean-with-bts-package">“Learn! Korean with BTS” packages</a>, which included a book and “speaking pen”. The packages extended a series of educational videos launched in March 2020 that were seen as a response to fan complaints about the lack of translated subtitles for official content. 
-            </p>
-            <p>
-            Most BTS fans probably won’t become fluent enough in Korean to not need subtitles. But almost all will pick up at least some of the language over time just by listening to song lyrics.
-            </p>
-            <ul>
-            
-            <li><a href="https://twitter.com/vantestaegi/status/1324475518830354433?s=20">https://twitter.com/vantestaegi/status/1324475518830354433?s=20</a> fluent in just one day :D
-            </li>
-            </ul>
-            <p>
-            Every song on BTS’ latest album, BE, charted on the Hot 100 when it was released in November, with the lead single “<a href="https://www.youtube.com/watch?v=-5q5mZbe3V8">Life Goes On</a>” claiming the number one spot. The success provided new hope that BTS and the community of fans surrounding them can truly transcend the language and cultural differences that were expected to hinder the group.
-            </p>
-            <ul>
-            
-            <li>grammys ~  only nominating dynamite  
-            <ul>
-             
-            <li>black swan deserves grammy <a href="https://twitter.com/ctrlbwl/status/1338859700612255744?s=20">https://twitter.com/ctrlbwl/status/1338859700612255744?s=20</a> 
-            </li> 
-            </ul>
-            
-            <li>And yet: language, culture, anxiety about whether they will be reduced to this/expected to sing in english, if they can do it again with be
-            
-            <li><a href="https://magazine.weverse.io/article/view?lang=en&colca=1&num=62">https://magazine.weverse.io/article/view?lang=en&colca=1&num=62</a> namjoon interview, culture language
-            </li>
-            </ul>
-            <h2>Pinkfong</h2>
-            
-            
-            <p>
-            “Baby Shark” has seemed inescapable since its release in early 2019. Yet while almost everyone knows how to sing along to the chorus, few know that the company that produced it — <a href="https://www.theguardian.com/music/shortcuts/2018/sep/03/baby-shark-short-guide-most-annoying-song">Pinkfong</a> — is based in South Korea. As a result, it was included in <a href="https://en.wikipedia.org/wiki/List_of_K-pop_songs_on_the_Billboard_charts#Billboard_Hot_100_(Complete)">the Wikipedia list</a> of K-pop songs on the Billboard Hot 100, the basis for this data, though its presence <a href="https://en.wikipedia.org/wiki/Talk:List_of_K-pop_songs_on_the_Billboard_charts">has been debated</a> by the page’s editors. 
-            </p>
-            <p>
-            The inclusion of “Baby Shark” on this chart forces us to reexamine what “K-pop” actually is. If you want to take “K-pop” at face value, “Baby Shark” is undoubtedly included — it was created by a Korean company and is terrifyingly popular. Of course, it’s not in Korean, but neither are several other songs on this chart that seem more indisputably “K-pop”. The clearest difference between “Baby Shark” and the other songs mentioned here is that it doesn’t have clearly identifiable human artists behind it and isn’t a part of the idol industry that is often equated with K-pop.  
-            </p>
-            <p>
-            On that basis, you might justifiably decide to ignore “Baby Shark” in this chart, and you could go edit it off the Wikipedia list if you wanted. But it’s an important reminder that the boundaries of K-pop are blurred and contested. There’s no singular definition of the category, and instead of advocating for one I’ll simply emphasize that the K-pop industry, artists, and fans are incredibly diverse and constantly changing. At least two of the other artists that have topped the Hot 100 — BTS and PSY — have done as much to challenge the definition of K-pop and the industry status quo as they have to promote it and expand it overseas. 
-            </p>
-            <h2>Blackpink</h2>
-            
-            
-            <p>
-            Blackpink, a girl group under YG Entertainment, entered the Billboard Hot 100 with “<a href="https://www.youtube.com/watch?v=IHNzOHi8sJs">DDU-DU DDU-DU</a>” in 2018. The group has continued to climb up the charts, though they have yet to break into the top ten. Blackpink has succeeded in building a global fanbase and making history as <a href="https://www.vulture.com/2019/04/coachella-2019-blackpink-set-was-historic-moment-for-k-pop.html">the first K-pop group to perform at the Coachella</a> music festival. Blackpink’s careers are far from over, and only time will tell if they continue to rise up the charts and into the US mainstream.
-            </p>
-            <ul>
-            
-            <li>Also, perhaps very much in my opinion, blackpink’s success is the ultimate indication that the us market is actually becoming more open to artists from other cultures who dont sing in english
-            
-            <li>Like, bts succeeded because they are incredible artists doing things in a way no one else could
-            
-            <li>Psy succeeded to the extent that he did because… memes? Youtube dances? Exoticism? 
-            
-            <li>But i think blackpink has succeeded just because they’re really talented pop artists
-            
-            <li>Like, how you like that or ddududdudu arent and will never be idol or fake love or bst, but they dont need to be, theyre just good songs that are fun to listen to
-            
-            <li>I feel like blinks would come after me for this, but, like, its nothing bad against blackpink, theyre all talented, but, like……………… there is no blackpink universe haha
-            </li>
-            </ul>
-            <p>
-            Also kinda mismanaged idk arguably or like yes there is yg controversy here too 
-            </p>
-            <ul>
-            
-            <li>But they dont actually have that many songs 
-            <ul>
-             
-            <li><a href="http://www.thekrazemagazine.com/latest-updates/2020/3/10/why-does-blackpink-have-so-few-songs">http://www.thekrazemagazine.com/latest-updates/2020/3/10/why-does-blackpink-have-so-few-songs</a> 
-            </li> 
-            </ul>
-            
-            <li>Yg: focus on quality not quantity: <a href="https://yg-life.com/archives/130368?lang=en">https://yg-life.com/archives/130368?lang=en</a> 
-            
-            <li>Fans potested for more music <a href="https://www.scmp.com/lifestyle/entertainment/article/3042582/blackpink-fans-protest-against-yg-entertainment-over-what">https://www.scmp.com/lifestyle/entertainment/article/3042582/blackpink-fans-protest-against-yg-entertainment-over-what</a> 
-            </li>
-            </ul>
-            <h1>Subcharts</h1>
-            
-            
-            <p>
-            Different numbers that go into billboard, how songs actually get there, bla bla bla
-            </p>
-            <h2>Radio</h2>
-            
-            
-            <p>
-            Not many and they’re all in english (and gangnam style), radio refuses to play non-english songs, fans are frustrated with it
-            </p>
-            <h2>Streaming</h2>
-            
-            
-            <p>
-            The most popular h100 songs mostly, which is kind of surprising to me because of how much fans focus on streaming — i guess they just dont have the numbers still??
-            </p>
-            <h2>Sales</h2>
-            
-            
-            <p>
-            This is where K-pop groups/their fans really make an impact, dedication to buy songs and coordination to share funds; vertical lines are entire albums being purchased by fans
-            </p>
+        The first K-pop group to make it onto the Hot 100 was <span class="tooltip">the Wonder Girls,<span class="tooltiptext">The group's lineup changed multiple times. Members included Kim Yubin, Park Yeeun, Min Sunye, Lee Sunmi, Kim Hyuna, Ahn Sohee, and Woo Hyerim.</span></span>
+         a girl group formed by<span class="tooltip">JYP Entertainment.<span class="tooltiptext">JYP is one of the "Big Three" South Korean entertainment companies. It was founded and named after Jinyoung Park in 1997. Some of the most popular artists under JYP include <a href="https://www.youtube.com/watch?v=MBiIeiAJlDQ">god</a>, <a href="https://www.youtube.com/watch?v=bTYAJabnXlU">Rain</a>, <a href="https://www.youtube.com/watch?v=vrdk3IGcau8">GOT7</a>, <a href="https://www.youtube.com/watch?v=CM4CkVFmTds">Twice</a>, and <a href="https://www.youtube.com/watch?v=fE2h3lGlOsk">Itzy</a>.</span></span> After <a href="https://www.theatlantic.com/entertainment/archive/2012/01/does-korean-pop-actually-have-a-shot-at-success-in-the-us/252057/">multiple performances in the US</a>, the English version of their single “<a href="https://www.youtube.com/watch?v=BA7fdSkp8ds">Nobody</a>” reached #76 on the chart in 2010. They would go on to star in a TeenNick movie “<a href="https://www.youtube.com/watch?v=LMLzWRYZLhs">The Wonder Girls</a>”, in 2012. At the time, Patrick St. Michel <a href="https://www.theatlantic.com/entertainment/archive/2012/01/does-korean-pop-actually-have-a-shot-at-success-in-the-us/252057/">observed in The Atlantic</a>, “the smart money seem[ed] to be on Wonder Girls to have the best chance yet to finally break through and sustain success in America.”  
+        </p>
+        <p>
+        The Wonder Girls were a powerhouse group within the K-pop industry for their ten year career, <a href="https://www.youtube.com/watch?v=3fy4cqWMhyI">consistently</a> <a href="https://www.youtube.com/watch?v=V9QXQz6uE0M">releasing</a> <a href="https://www.youtube.com/watch?v=PYGODWJgR-c">hits</a> <a href="https://www.billboard.com/articles/columns/k-town/7669731/wonder-girls-break-up-thank-you-for-being-so-wonderful-video">from their 2007 debut to </a><span class="tooltip"><a href="https://www.billboard.com/articles/columns/k-town/7669731/wonder-girls-break-up-thank-you-for-being-so-wonderful-video">their 2017 disbandment</a>.<span class="tooltiptext">Several Wonder Girls members continued to release great music after leaving the group. Hyuna joined 4minute, a girl group under another company. Yubin <a href="https://www.soompi.com/article/1399830wpp/yubin-shares-fun-teaser-for-1st-comeback-since-starting-her-own-agency">started her own entertainment agency and released music as a solo artist</a>. Lee Sunmi and Park Yeeun, who performs as Ha:tfelt, also have solo careers and are some of my favorite performers — I <a href="https://www.youtube.com/watch?v=F4qfN5UeFvQ">strongly</a> <a href="https://www.youtube.com/watch?v=VNVAL_EQYdg">recommend</a> <a href="https://www.youtube.com/watch?v=H8YW1tlsmE8">checking</a> <a href="https://www.youtube.com/watch?v=uhrIVVueOCo">out</a> <a href="https://www.youtube.com/watch?v=ur0hCdne2-s">their</a> <a href="https://www.youtube.com/watch?v=NQONKTUFh6g">songs</a>.</span></span>But they never achieved the US mainstream popularity that seemed possible in 2010. The group had <a href="http://www.thekrazemagazine.com/latest-updates/2018/7/21/history-of-k-pop-wonder-girls">multiple destabilizing lineup changes</a>, including vocalist Sunmi leaving in 2010 to return to school, after which a planned English album was scrapped. Yet their early success on the Hot 100 chart still had a lasting impact. “It made the improbable seem possible,” Tamar Herman <a href="https://www.billboard.com/articles/columns/k-town/8476481/wonder-girls-nobody-10-year-anniversary-k-pop-hot-100-chart/">writes for Billboard</a>. “[R]ather than looming over the [K-pop] industry like a taunt, the Hot 100 singles chart became a goal.”
+        </p>
     </div>
-    <div class='subcharts_container'></div>
+        
+    <div class='h100_step' id='PSY'>
+        <h2>Psy</h2>
+
+
+        <p>
+        The next K-pop artist to make it onto the Billboard Hot 100 chart needs no introduction. “<a href="https://www.youtube.com/watch?v=9bZkp7q19f0">Gangnam Style</a>” peaked at #2 on the Hot 100, just short of the top position, and stayed on the chart for 31 weeks. It likely would have reached the #1 spot if it had been released a year later, after Billboard <a href="https://www.billboard.com/articles/business/8545169/2013-year-of-streaming">changed how it counts digital streams</a>. Unlike “Nobody”, “Gangnam Style” is mostly in Korean and wasn’t intended to break into the US market. The global popularity of “Gangnam Style” and its cheesy dance moves surprised everyone, <a href="https://www.nytimes.com/2012/10/14/arts/music/interview-psy-the-artist-behind-gangnam-style.html">including PSY himself</a>. 
+        </p>
+        <p>
+        PSY released his most popular songs as a soloist under <span class="tooltip">YG Entertainment.<span class="tooltiptext">YG is one of the "Big Three" South Korean entertainment companies. It was founded in 1996 by Hyunsuk Yang. Some of the most popular artists under YG include <a href="https://www.youtube.com/watch?v=4v4PFanJj_U">Sechs Kies</a>, <a href="https://www.youtube.com/watch?v=AAbokV76tkU">BIGBANG</a>, <a href="https://www.youtube.com/watch?v=j7_lSP8Vc3o">2NE1</a>, and <a href="https://www.youtube.com/watch?v=4tBnF46ybZk">Winner</a>, as well as two other artists who’ve appeared on the Hot 100 — CL and Blackpink.</span></span>Though he introduced the world to K-pop, PSY was <span class="tooltip">somewhat unique<span class="tooltiptext">He was a soloist, not a member of an idol group, and comparatively old at 35.</span></span> within the industry. He was unusually willing to satirically critique Korean society — “Gangnam Style” mocked those who tried to emulate the residents of <span class="tooltip">Seoul’s glitziest neighborhood.<span class="tooltiptext">Gangnam is a recently developed (it was farmland in the early 70s) and extremely wealthy neighborhood in Seoul. It's home to many corporations and cultural institutions.
+        </span></span> Adrian Hong, a “Korean-American consultant” <a href="https://www.theatlantic.com/international/archive/2012/08/gangnam-style-dissected-the-subversive-message-within-south-koreas-music-video-sensation/261462/">quoted in The Atlantic</a>, noted that <span class="tooltip">“‘Korea has not had a long history of nuanced satire.’”<span class="tooltiptext">Yet there has, of course, aways been Korean artists who critique their society. Seo Taiji and Boys, the group widely acknowledged as the early-90s pioneers of K-pop, were renowned for socially conscious tracks like "<a href="https://www.youtube.com/watch?v=IRFfPZQeJuo">Come Back Home</a>" and "<a href="https://www.youtube.com/watch?v=4ost77cj92U">Classroom Idea</a>". BTS has also performed many politically aware songs, “<a href="https://doolsetbangtan.wordpress.com/2018/06/20/am-i-wrong/">Am I Wrong</a>”.</span></span>
+        </p>
+        <p>
+        “Gangnam Style” brought more exposure to K-pop overall, <a href="http://youtube-trends.blogspot.com/2013/07/a-year-since-gangnam-style-k-pop-keeps.html">as YouTube data shows</a>. Subsequent but increasingly less popular hits, like “<a href="https://www.youtube.com/watch?v=ASO_zypdnsQ">Gentleman</a>” and <span class="tooltip">“<a href="https://www.youtube.com/watch?v=FrG4TEcSuRg">Daddy</a>”,<span class="tooltiptext">"Daddy" featured CL, a female performer also under YG Entertainment and the next K-pop artist to appear on the Hot 100.</span></span> showed it was possible for K-pop artists to have some sustained popularity in the US. Yet PSY’s reception in the US didn’t necessarily signal a move away from xenophobia to the extent that a chart-topping Korean song would seem to indicate.  For most foreign listeners, “Gangnam Style” was just a weird song with even weirder dance moves that’s fun to play at parties. Socially conscious messages were there, but only if you took the time to research the song’s cultural context. 
+        </p>
+        <p>
+        Obviously, it’s unrealistic to expect everyone to closely engage with the songs they listen to; many don’t even fully understand the messages of English pop songs. But the success of “Gangnam Style” wasn’t a purely positive reflection on the US music industry. As ethnomusicologist Stephanie Choi <a href="https://www.scmp.com/culture/music/article/2127984/bts-pave-way-k-pop-golden-age-us-achieving-what-psy-and-wonder-girls">said in the South China Morning Post</a>,  “Despite his long career and musical talent, Psy was depicted in the United States as a hilarious, thus non-threatening, Asian male stereotype.”
+        </p>
+    </div>
+    
+    <div class='h100_step' id='CL'>
+        <h2>CL</h2>
+
+
+        <p>
+        CL’s 2016 single “<a href="https://www.youtube.com/watch?v=Mr29X77OA5g">Lifted</a>” peaked at #94 on the Hot 100. The all-English track was part of a coordinated attempt to establish the soloist, a former member of YG Entertainment girl group 2NE1, as a mainstream US artist.
+        </p>
+        <p>
+        As a <a href="https://www.youtube.com/watch?v=8o4Zj98FeX4&has_verified=1">talented rapper</a>, CL was seen as “<a href="https://time.com/4503387/cl-america-k-pop/">the Future of K-Pop in America</a>” in 2016. She’d had <span class="tooltip">incredible success with 2NE1<span class="tooltiptext">2NE1's 2011 hit "I AM THE BEST" was incredibly popular on its own and also featured on <a href="https://www.billboard.com/articles/columns/k-town/6214538/microsoft-commercial-2ne1-i-am-the-best-k-pop-ad-apple">a Microsoft commercial</a>, a short clip that also somewhat introduced many US listeners to K-pop.</span></span> in Korea and signed with Scooter Braun, who also managed Justin Bieber and Ariana Grande. She <a href="https://www.thefader.com/2018/02/26/cl-english-album-2ne1-kpop-yg-scooter-braun">reportedly had over 100 songs</a> ready to release in the US, but her career fizzled after “Lifted” and a much-anticipated album never materialized. Many fans assert that CL was mismanaged by YG Entertainment and <span class="tooltip">welcomed <a href="https://www.soompi.com/article/1368980wpp/cl-opens-up-about-leaving-yg-im-excited-for-the-1st-time-in-a-long-while">her departure from the company</a> in December 2019.<span class="tooltiptext">Since then, CL has released multiple new songs and plans to release a solo album soon. Her music is <a href="https://www.youtube.com/watch?v=_6_DE4SIq44">well</a> <a href="https://www.youtube.com/watch?v=JeGhUESd_1o">worth</a> <a href="https://www.youtube.com/watch?v=k4Q-DulyShA">a listen.</a></span></span>
+        </p>
+    </div>
+        
+    <div class='h100_step' id='BTS'>
+        <h2>BTS</h2>
+
+
+        <p>
+        <span class="tooltip">BTS’ Billboard Hot 100 successes<span class="tooltiptext">BTS Members performing as solo acts have also had songs chart on the Hot 100 (“Chicken Noodle Soup” by j-hope and “Daechwita” by Agust D, Suga’s solo stage name), and songs by other artists that feature BTS members have made it onto the chart as well (“Waste it on Me” by Steve Aoki).</span></span> are just one chapter in the group’s meteoric rise from K-pop underdogs to international superstars. After “<a href="https://www.youtube.com/watch?v=MBdVXkSdhwU">DNA</a>” peaked at #67 on the Hot 100 in 2017, the group has been persistently rising through the chart. “<a href="https://www.youtube.com/watch?v=7C2z4GqqS5E">Fake Love</a>”, the title track for BTS’ <em>Love Yourself: Tear</em> album, reached the #10 spot in 2018, inaugurating the group’s reign at the top of the chart. 
+        </p>
+        <p>
+        The title track for BTS’ March 2020 album <em>Map of the Soul: 7</em>, “<a href="https://www.youtube.com/watch?v=gwMa6gpoE9I">ON</a>”, set a new record for the group when it <span class="tooltip">debuted at #4 on the Hot 100.<span class="tooltiptext">Some fans of the group were skeptical of Billboard's calculations regarding "ON" and trended <a href="http://www.koreaherald.com/view.php?ud=20200309000675">#BillboardRecalculate</a> on Twitter to ask for a recount. Fans had noticed an apparent discrepancy between publicly available data about the song's streams and the numbers Billboard reported, raising concerns about accuracy that were heightened after Billboard made a mistake with the song's release date in a tweet. It isn't the only time <a href="https://www.billboard.com/articles/business/chart-beat/9380654/billboard-hot-100-number-one-calculations-6ix9ine">Billboard has had to defend its calculations</a>, but the incident highlights how closely many fans watch these charts.</span></span> Several other songs from the same album made it onto the chart as well: “<a href="https://www.youtube.com/watch?v=vGbuUFRdYqU">Black Swan</a>”, which was released in January, and two solo tracks <span class="tooltip">without accompanying music videos<span class="tooltiptext">But, as of BTS' October Map of the Soul ON:E concert, these songs do have live dance performances. They're both incredible and, though officially not available online, well worth your time if you happen to stumble across a recording.</span></span> (“<a href="https://www.youtube.com/watch?v=dNUnnb8F-Cw">Filter</a>” by Jimin and “<a href="https://www.youtube.com/watch?v=a_zk4JFK43g">My Time</a>” by Jungkook).
+        </p>
+        <p>
+        The group finally reached the #1 spot with “<a href="https://www.youtube.com/watch?v=gdZLi9oWNZg">Dynamite</a>”. As mentioned earlier, it was the group’s first and currently only song entirely in English. With many, many performances on US television and a US-focused promotion strategy <a href="https://www.vox.com/21498770/bts-dynamite">emphasizing that the song is not sung in Korean</a>, “Dynamite” launched BTS to a new level of fame amongst the US general public. 
+        </p>
+        <p>
+        The achievement clearly meant a lot to BTS — they included <a href="https://genius.com/21390169">a recording</a> of their celebration of “Dynamite”’s first week at #1 in their next album, <em>BE. </em>Yet it was also clear that they were mindful of the implications of “Dynamite” on the rest of their career. They have repeatedly <a href="https://www.usatoday.com/story/entertainment/music/2020/08/19/bts-talks-challenges-recording-first-all-english-song-dynamite-message-to-fans-during-pandemic/5605191002/">described “Dynamite” as an unplanned effort</a> to bring joy to fans in the midst of an unprecedented pandemic, refusing to refer to it as the strategic maneuver <a href="https://www.vox.com/21498770/bts-dynamite">some observers see it as</a>. Over the past years, BTS have repeatedly said that<a href="https://www.theatlantic.com/culture/archive/2020/09/bts-dynamite-international-pop-k-sensation-sunshine-rainbow/615928/https://www.theatlantic.com/culture/archive/2020/09/bts-dynamite-international-pop-k-sensation-sunshine-rainbow/615928/"> they would not start making English music</a>. BTS might eventually release more English songs, but they don’t want their international and US success to be contingent upon doing so.
+        </p>
+        <p>
+        Instead, while BTS members have <a href="https://www.soompi.com/article/1374774wpp/bts-names-their-personal-goals-for-2020-including-mixtapes-learning-new-things-and-more">learned more English</a>, they’ve also asked their fans to learn Korean. Around the same time BTS released “Dynamite”, Weverse started selling <a href="https://www.usbtsarmy.com/merch-announcements/learn-korean-with-bts-package">“Learn! Korean with BTS” packages</a>. The packages extended a series of educational videos launched in March 2020 that were <a href="https://www.scmp.com/magazines/style/news-trends/article/3077291/bts-want-you-learn-korean-new-weverse-app-what-do-k-pop">seen as a response to fan complaints</a> about <span class="tooltip">the lack of translated subtitles for official content.<span class="tooltiptext">BTS fans, like many K-pop fans, often have to rely on unpaid fan translators to understand their favorite artist’s music and other content. While the vast network of BTS fan translators is impressive, many have complained that Big Hit, BTS’ company, is not doing their part to make the group’s content accessible to their global fan (and customer) base.</span></span> Most BTS fans probably won’t become fluent enough in Korean to not need subtitles. But almost all will pick up at least a few words of the language <a href="https://twitter.com/vantestaegi/status/1324475518830354433?s=20">just by listening to song lyrics</a>.
+        </p>
+        <p>
+        Whether or not the US general public will also be willing to pick up a bit of Korean remains to be seen. After “Dynamite”, BTS quickly reclaimed the #1 spot on the Hot 100 with a mostly-English remix of “<a href="https://www.youtube.com/watch?v=qvu4nPMyl3U">Savage Love</a>” featuring <span class="tooltip">three of the members<span class="tooltiptext">Jungkook sings multiple English verses and Suga and J-Hope wrote and perform consecutive Korean verses.</span></span> alongside Jason Derulo and Jawsh 685’s “<a href="https://www.youtube.com/watch?v=PFxsG8vLm78">Laxed (Siren Beat)</a>”. In another bittersweet victory, BTS received <a href="https://www.cnn.com/2020/11/24/entertainment/bts-grammy-nomination-intl-hnk-scli/index.html">their first Grammy nomination</a> for “Dynamite”, but the band’s Korean tracks from <em>Map of the Soul: 7 </em><span class="tooltip">were snubbed.<span class="tooltiptext"><a href="https://twitter.com/jhsjoonie/status/1301208426106818561?s=20">Many fans</a> (including myself) wish that "Black Swan" had received Grammy recognition for its depth and artistry.</span></span> In another year, the group’s Korean discography may finally get the institutional recognition in the US so many fans believe it deserves, but the US music industry apparently isn’t ready for that just yet. 
+        </p>
+        <p>
+        But since all of BTS’ latest album, <em>BE</em>, charted on the Hot 100 when it was released in November, it seems possible that the group may be expanding its fan base at a rate that makes “non-fan” general public support irrelevant. In line with the “Trojan horse” theory discussed earlier, “Dynamite” seems to have introduced enough new fans to the group so that “<a href="https://www.youtube.com/watch?v=-5q5mZbe3V8">Life Goes On</a>”, the mostly Korean lead single for <em>BE</em>, <a href="https://www.billboard.com/articles/business/chart-beat/9491302/bts-life-goes-on-number-one-hot-100">debuted at #1</a>. The success provided new proof that for BTS and the community of fans surrounding them, at least, <a href="https://twitter.com/yoonmlned/status/845508752233115649?lang=en">music transcends language.</a>
+        </p>
+    </div>
+
+    <div class='h100_step' id='Blackpink'>
+        <h2>Blackpink</h2>
+
+
+        <p>
+        Blackpink, a girl group under YG Entertainment, entered the Billboard Hot 100 with “<a href="https://www.youtube.com/watch?v=IHNzOHi8sJs">DDU-DU DDU-DU</a>” in 2018. The group has continued to climb up the charts, though they have yet to break into the top ten. Blackpink has succeeded in building a global fanbase and making history as <a href="https://www.vulture.com/2019/04/coachella-2019-blackpink-set-was-historic-moment-for-k-pop.html">the first K-pop group to perform at the Coachella</a> music festival. 
+        </p>
+        <p>
+        In my opinion, Blackpink’s popularity is the best indication that US listeners are becoming more open to music from other cultures. Both Blackpink and BTS have succeeded in spite of language barriers, but BTS are once-in-a-lifetime, <a href="https://time.com/entertainer-of-the-year-2020-bts/">generation-defining artists</a>. It's hard to imagine the group’s authenticity and artistry not receiving widespread success once their career achieved a certain level of momentum. Blackpink, on the other hand, are incredibly talented performers, but their discography doesn’t have the depth or message that pulled many fans into BTS’ work — observers have noted that many of the group’s most popular songs follow <a href="http://www.koreaherald.com/view.php?ud=20200702000667 ">one catchy formula</a>. As Eve Barlow <a href="https://www.vulture.com/2019/04/coachella-2019-blackpink-set-was-historic-moment-for-k-pop.html">wrote after their Coachella performance</a>, Blackpink’s popularity is “a heartening reminder of the universality of a hard-ass pop banger.”
+        </p>
+    </div>
+
+    <div class='h100_step' id='Pinkfong'>
+        <h2>Pinkfong?</h2>
+
+
+        <p>
+        “<a href="https://www.youtube.com/watch?v=XqZsoesa55w">Baby Shark</a>” has seemed inescapable since its release in early 2019. Yet while almost everyone (unfortunately) knows how to sing along to the chorus, few know that the company behind it — <a href="https://www.theguardian.com/music/shortcuts/2018/sep/03/baby-shark-short-guide-most-annoying-song">Pinkfong</a> — is based in South Korea. As a result, it was included in <a href="https://en.wikipedia.org/wiki/List_of_K-pop_songs_on_the_Billboard_charts#Billboard_Hot_100_(Complete)">the Wikipedia list</a> of K-pop songs on the Hot 100, the basis for this data, though its presence <a href="https://en.wikipedia.org/wiki/Talk:List_of_K-pop_songs_on_the_Billboard_charts">has been debated</a> by the page’s editors. 
+        </p>
+        <p>
+        The inclusion of “Baby Shark” on this chart forces a reexamination of what “K-pop” actually is. If you want to take “K-pop” at face value, “Baby Shark” is undoubtedly included — it was created by a Korean company and is terrifyingly popular. Of course, it’s not in Korean, but neither are several other songs on this chart that seem more indisputably “K-pop”. The clearest difference between “Baby Shark” and the other songs mentioned here is that it doesn’t have clearly identifiable human artists behind it and isn’t a part of the idol industry that is often equated with K-pop. It’s success in the US says more about globalization and the terrifying power of toddler streamers than xenophobia or cultural representation. On that basis, you might justifiably decide <span class="tooltip">to ignore “Baby Shark”<span class="tooltiptext"> Though maybe you would decide to include <a href="https://youtu.be/pJyTzJiZg34?t=88">this impromptu live remix</a> of "Baby Shark" initiated by BTS member J-Hope, which I just had to bring up somehow.</span></span> in this chart. But it’s an important reminder that the boundaries of K-pop are blurred and contested. 
+        </p>
+    </div>
+</div>
+
+
+
+<div class='text'>
+    <h1>How do songs make it onto the Hot 100?</h1>
+
+
+    <p>
+    The Hot 100 is such a <a href="https://www.npr.org/sections/therecord/2013/08/16/207879695/how-the-hot-100-became-americas-hit-barometer">widely cited</a> measure of song popularity because it combines data from multiple sources — sales, digital streams, and radio airplay. There’s no one way onto the Hot 100, and different genres and artists often develop their own blueprint for topping the chart. 
+    </p>
+    <p>
+    What does that blueprint look like for K-pop songs? The following section answers this question by adding data about K-pop songs on Billboard’s Digital Song Sales, Streaming Songs, and Radio Songs charts to the Hot 100 data. A song’s rank on these charts isn’t the same as the overall number of sales, streams, and radio plays it earned, but it still illustrates how these songs made it onto the Hot 100.
+    </p>
+    <p>
+        <em>The below chart displays all K-pop songs that have appeared on the Billboard Hot 100, Digital Song Sales, Streaming Songs, and Radio Songs charts, as listed by <a href="https://en.wikipedia.org/wiki/List_of_K-pop_songs_on_the_Billboard_charts#Billboard_Hot_100_(Complete)">this Wikipedia page</a> with a few edits. Each circle represents a song, with the green shapes representing the percentage of lyrics originally in English and the pink representing the lyrics originally in Korean. Each song is displayed at the highest position it achieved on each chart. Hover over a song to reveal lines connecting all of its chart appearances; if no lines appear, the song only ranked on one chart. Note that the Digital Song Sales, Streaming Songs, and Radio Songs charts only list 50 positions.</em>
+        </p>
+</div>
+
+<div class='subcharts'>
+    <div class='subcharts_container'>
+    </div>
+    <div class='subchart_step' id='_sales'>
+        <h2>Digital Sales</h2>
+
+
+        <p>
+        Sales are where most K-pop artists and the fans supporting them have the largest impact. Many K-pop fans don’t think twice about buying their favorite artists’ music upon its release, making it possible for them to outsell mainstream Western performers with more passive audiences. Both BTS and Blackpink fans <span class="tooltip">regularly <a href="https://www.papermag.com/bts-blackpink-taylor-swift-stan-fundraisers-charts-2647856794.html?rebelltitem=19#rebelltitem19">crowdsource funds to support their favorite artists’ releases</a>,<span class="tooltiptext">Many large fandoms fundraise like this. BTS fans on Twitter, at least, do so on a much larger scale -- the two most popular BTS funding accounts have over 180,000 combined followers.</span></span> a practice that boosts chart performance and allows fans with less disposable income to purchase music. As the graph shows, many K-pop songs perform much better on Billboard’s Digital Song Sales charts than the Hot 100.
+        </p>
+        <p>
+        Almost every song from BTS’ <span class="tooltip">most recent Korean albums<span class="tooltiptext">BE (released November 20, 2020), Map of the Soul: 7 (released February 21, 2020), Map of the Soul: Persona (released April 12, 2019), and Love Yourself: Answer (released August 24, 2018).</span></span> has charted on the Digital Song Sales chart. Every track from the most recent solo mixtape produced by a BTS member, <span class="tooltip"><em><a href="https://www.youtube.com/watch?v=7p17Y0QDMKY&list=OLAK5uy_lV1BhQbKMjudkNoNKYokycJgbbWDdt7ZM&index=1">D-2</a></em> by Agust D (who performs as Suga in BTS),<span class="tooltiptext">Given that Suga is my BTS bias (my favorite member), I have to note that this mixtape is incredible and well worth a listen. “<a href="https://www.youtube.com/watch?v=qGjAWJ2zWWI">Daechwita</a>”, the lead track, is, for lack of a better phrase, straight fire. “<a href="https://www.youtube.com/watch?v=ndlqBiq2ll4">What do you think?</a>” is a great diss track that <a href="https://genius.com/Genius-english-translations-agust-d-what-do-you-think-english-translation-lyrics">predicts their Billboard success</a>. And “<a href="https://www.youtube.com/watch?v=sHbl6mt6X80">People</a>”, a fan favorite, is a softer <a href="https://genius.com/Genius-english-translations-agust-d-people-english-translation-lyrics">reflection on change and acceptance.</a></span></span>also made it onto the sales chart, an especially impressive accomplishment given that the entire album was available to download for free. Many who bought D-2 did so solely to support Agust D’s work and promote his music.
+        </p>
+        <p>
+        “Normally, Hip-Hop and R&B songs dominate the Hot 100 with streams while Pop and Rock songs seek their way onto the chart via radio airplay,” <a href="https://magazine.weverse.io/article/view?lang=en&num=6 ">music critic Seongdeok Seo noted</a>. “Taylor Swift and Ariana Grande are some of the rare artists who don’t play by this rule. But now we can say that BTS found its own breakthrough by digital song sales.” 
+        </p>
+        <p>
+        This trend also holds true for most of the Blackpink songs that made it onto the Hot 100. Like BTS, the girl group’s dedicated fans regularly buy their music, though their US fanbase, at least, isn’t as powerful. Only the title track from Blackpink’s latest album, “<a href="https://www.youtube.com/watch?v=dyRsYk0LyA8">Lovesick Girls</a>”, made it onto the Hot 100 and Sales charts, <span class="tooltip">despite intense anticipation from dedicated fans.<span class="tooltiptext">Called simply <em>THE ALBUM</em>, it’s the first full-length album from Blackpink, who debuted in 2016. Blackpink has released songs at a notably slow rate, especially compared to BTS and other K-pop groups. <a href="https://yg-life.com/archives/130368?lang=en">YG Entertainment maintains</a> that this is done to ensure the songs they do release are high quality, but <a href="http://www.koreatimes.co.kr/www/news/nation/2019/12/732_280463.html ">fans protested the lack of music</a> and what they see as other indications of poor management in 2019.</span></span>
+        </p>
+    </div>
+    <div class='subchart_step' id='_streaming'>
+        <h2>Streaming </h2>
+
+
+        <p>
+        Similar to Digital Song Sales, many K-pop songs make it onto Billboard’s Streaming Songs chart in large part thanks to coordination from dedicated fans. Many fans <a href="https://www.armymagazine.co/single-post/let-s-bring-bts-to-the-top-an-ultimate-army-streaming-guide">strategically alter their online behavior</a> to <a href="https://www.koreaexpose.com/k-pop-stream-breathe/">maximize the streams</a> recorded for the song. Yet, because listening to music on digital platforms is generally much more common than buying songs, K-pop artists have fiercer competition on this chart and less songs make it to the top. 
+        </p>
+        <p>
+        In addition to Billboard and other official music charts, YouTube view counts are a common goal for K-pop fans — BTS fans worked hard to give “Dynamite” a<a href="https://www.billboard.com/articles/columns/k-town/9438762/bts-dynamite-youtube-record/#:~:text=%22Dynamite%22%20is%20blowing%20up%20on,first%2Dday%20debut%20to%20date."> record-breaking 101.1 million views</a> in its first 24 hours. Perhaps as a result of this, all of the K-pop songs that have made it onto the streaming chart have music videos. 
+        </p>
+        <p>
+        Before 2013, however, Billboard didn’t include YouTube views in its streaming numbers. The breakout success of “Gangnam Style” was <a href="https://pitchfork.com/thepitch/psys-gangnam-style-changed-pop-music-whether-you-like-it-or-not/">one of the reasons the rule changed</a>, with an immediate impact on the types of songs that made it into the charts. After the modification, “<a href="https://www.youtube.com/watch?v=qV0LHCHf-pE">Harlem Shake</a>”, <span class="tooltip">another <a href="https://www.youtube.com/watch?v=8f7wj_RcqYk">video-and-dance-trend-fuelled</a> viral hit,<span class="tooltiptext">Almost everyone who was alive and connected to the internet in 2013 participated in the "Harlem Shake" dance trend — <a href="https://www.youtube.com/watch?v=uLEf36edQws">including predebut BTS.</a></span></span> <a href="https://www.billboard.com/articles/business/8545169/2013-year-of-streaming">reached #1 on the Hot 100,</a> an achievement “Gangnam Style” fell just short of prior to the update.
+        </p>
+    </div>
+    <div class='subchart_step' id='_radio'>
+        <h2>Radio</h2>
+
+
+        <p>
+        Radio stations have largely refused to play even the most popular K-pop songs because they aren’t in English. As a result, <span class="tooltip">the only K-pop songs<span class="tooltiptext">The Wikipedia list includes the BTS remix of "Savage Love" among K-pop songs that have charted on Billboard's Radio Songs chart. After independently verifying that most of the airplay for the song went to the version that did not include BTS members (and the Korean verses they added) and that the song is not listed on BTS' Billboard Radio Songs chart history, I removed it from my data.</span></span>to have charted on Billboard’s Radio Songs chart is “Dynamite”, an English track by the world’s biggest boyband, and “Gangnam Style”, the hyper-viral exception. 
+        </p>
+        <p>
+
+        </p>
+        <p>
+        “A radio programmer wants songs that the listener is going to sing along or rap along with,” pop critic Chris Molanphy <a href="https://nowthisnews.com/pop/radio-why-wont-you-play-bts">told Now This News</a> in an article about why BTS is absent from Western airwaves. “They want engagement from the listener. Call it xenophobia, that's certainly part of it. But when you look at the scant history of non-English language hits over the years, the fact that BTS would be facing this challenge is not all that surprising.” 
+        </p>
+        <p>
+        <a href="https://www.theatlantic.com/culture/archive/2020/09/bts-dynamite-international-pop-k-sensation-sunshine-rainbow/615928/">Awareness that their favorite artists are effectively barred from radio</a> (and other music industry institutions, like the Grammys) is part of what motivates many fans to invest in streaming and buying K-pop songs. <span class="tooltip">Fans are often criticized<span class="tooltiptext">Criticisms I've seen online include disappointment that fans aren't mobilizing to support charities instead (<a href="https://www.vice.com/en/article/wxqayy/kpop-band-bts-fans-raising-money-for-indian-school">though many do</a>), frustration that self-organized K-pop fan activities are somehow unfair to other artists, and the notion that fans have mindlessly fallen into a capitalist trap (this belief is not only misogynistic and condescending towards young female K-pop fans, but also ignores that coordinated streaming and buying are how fans assert their agency in an industry prone to dismissing them and the artists they love).</span></span> for such coordinated buying and streaming campaigns, but it’s important to note that these actions are how fans assert their agency in an industry prone to dismissing them and the artists they love. While there are many reasons why fans stream and buy music, a major one is the need to make up for exclusion from the traditional US music industry — like lack of radioplay — with grassroots support.
+        </p>
+    </div>
+</div>
+<div class='text'>
+
+<ul>
+
+    <li>English / chart position correlation chart??
+    </li>
+    </ul>
+    <ul>
+    
+    <li>Language is pretty important, especially when it comes to more conservative/institutional bits of us music industry
+    
+    <li>But its changing quickly, especially for younger generations
+    
+    <li>Kpop artists dont need us validation (though they seek it + enjoy it + are influenced by us music), but like they are way popular in many other places — for example sm isnt on this chart but like they doing fine, etc.
+    
+    <li>But us audiences are missing out - and not just on korean artists but like everyone
+    
+    <li>Answer your questions: After 2020, it seems like a large part of the US public may finally be ready to regularly and seriously listen to music that isn’t from their language or culture. But how had K-pop artists fared on the Billboard Hot 100 chart before BTS’ singular achievements? What songs succeeded? And how important is language for artists who hope to break into the US mainstream? 
+    </li>
+    </ul>
+</div>
+<div class='text'>
+    <h1>Who am I?</h1>
+
+
+        <p>
+        I’m a white <span class="tooltip">college student<span class="tooltiptext">But soon to be graduate and aspiring data journalist — if you liked this piece, hire me!</span></span> who was born and raised in the US. I definitely don’t speak Korean, but I can read <span class="tooltip">Hangul<span class="tooltiptext">The Korean alphabet.</span></span>
+        </p>
+        <p>
+        and know enough basic vocabulary and grammar to understand many Korean song lyrics without translation. 
+        </p>
+        <p>
+        I started listening to K-pop when I became a fan of BTS in the summer of 2017. I decided to check them out after I stumbled across some tweets analyzing their “<a href="https://www.youtube.com/watch?v=hmE9f-TEutc">Blood Sweat & Tears</a>” music video. The first song that really pulled me in was “<a href="https://www.youtube.com/watch?v=GZjt_sA2eso">Save Me</a>”, then “Blood Sweat & Tears”, then “<a href="https://www.youtube.com/watch?v=xEeFrLSkMm8">Spring Day</a>”, which quickly became my favorite song and remains so to this day. Like so many other beginner BTS fans, I decided that I wanted to learn the names of each member. After closely studying the “<a href="https://www.youtube.com/watch?v=BVwAVbKYYeM">Dope</a>” music video, working my way through their entire discography, and watching more “crack” videos than I care to admit, I knew that BTS was well worth my time. 
+        </p>
+        <p>
+        I started listening to other Korean artists around the same time (including K-indie and K-hip-hop singers), largely thanks to Spotify and YouTube’s recommendation algorithms. If you want proof that I really have listened to a wide variety of Korean songs, here’s a random selection of my favorite songs by artists other than BTS: “<a href="https://www.youtube.com/watch?v=nM0xDI5R50E">BBIBBI</a>”, “<a href="https://www.youtube.com/watch?v=WB4547-tSJA">Gang Gang Schiele</a>”, “<a href="https://www.youtube.com/watch?v=ScSn235gQx0">TWIT</a>”, “<a href="https://www.youtube.com/watch?v=zndvqTc4P9I">Icy</a>”, “<a href="https://www.youtube.com/watch?v=RKhsHGfrFmY">Crooked</a>”, “<a href="https://www.youtube.com/watch?v=2gXjAWqCc2g">Luvproof</a>”, “<a href="https://www.youtube.com/watch?v=6sHIq41sI-w">TOUCH</a>”, “<a href="https://www.youtube.com/watch?v=44EpAfRreJ4">haPPiness</a>”, and “<a href="https://www.youtube.com/watch?v=595hs1Ri-V4">Organic Life</a>”.  In the fall of 2018, I studied in Seoul for a semester, which introduced me to more K-pop artists and strengthened my limited understanding of Korean. I listened to many new K-pop songs as they were released, but I wasn’t plugged into the social media communication networks that keep hardcore fans updated on artists and fandom conversations. 
+        </p>
+        <p>
+        That changed in the spring of 2020 when I, like so many others, decided to create a stan Twitter account to escape lockdown boredom. I knew exactly when “Dynamite” and <em>BE</em> would be released, what the collectively-decided comeback goals were for each, and played a very small part in achieving those goals by streaming and buying music. 
+        </p>
+        <p>
+        I also looked up the translations for every track on <em>BE</em> as soon as they were available and regularly revisit translations for my favorite songs. I rarely pay close attention to the lyrics of English songs because I don’t feel like I have to. With songs by BTS and other artists who mostly don’t perform in English, I either completely ignore the lyrical meaning or take the time to read through it line by line and commit it to memory. My personal experience engaging with music across a language barrier, therefore, is similar to what Ellie Bate <a href="https://www.buzzfeed.com/eleanorbate/bts-bang-bang-con-live-concert-army">described in an article for Buzzfeed</a>: “the language barrier actually works as a means to encourage fans to look deeper into the group's music and analyse translations of their lyrics.” 
+        </p>
+        <p>
+        You can find the code used to collect, process, and analyze the data in this piece here: <a href="https://github.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/tree/master">https://github.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/tree/master</a>. 
+        </p>
+</div>
     <script>
          d3.csv("https://raw.githubusercontent.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/master/hot100_radio_streaming_sales_Kpop.csv", d3.autoType).then(function(data){
             console.log(data)
@@ -348,11 +362,11 @@
             ////PLOT FOR LANGUAGE AND CHART POSITION
             //create svg
             var w = 700
-            var h = 400
+            var h = 350
             var p_h = 40
             var p_w = 60
             var svg = d3.select('.plot_container')
-                        .append('svg')
+                        .select('svg')
                         .attr("viewBox", '0 0 ' + w +' ' + h);
 
             //create date scale (map to width)
@@ -431,11 +445,11 @@
 
                 //try to setup tooltips for song titles
                 var ttTime = d3.timeFormat("%B %Y");
-                var tool_tip = d3.tip()
-                            .attr("class", "svg_tool_tip")
-                            .offset([-5, 0])
-                            .html(function(d){  return d.search_title + " by " + d.artist+"<br> Peaked at #"+ d[position_variable] +" in "+ ttTime(d[date_variable]);});
-                    svg.call(tool_tip);
+                //var tool_tip = d3.tip()
+                 //           .attr("class", "svg_tool_tip")
+                //            .offset([-5, 0])
+                //            .html(function(d){  return d.search_title + " by " + d.artist+"<br> Peaked at #"+ d[position_variable] +" in "+ ttTime(d[date_variable]);});
+                //    svg.call(tool_tip);
 
                 ////////draw trajectory lines to connect songs by the same artist
                 //unique artist names, only those with >=1 song on chart
@@ -453,11 +467,13 @@
                     .enter()
                     .append('g')
                     .attr('class', 'artist'+ chart_variable)
+                    .attr('id', function(d){ return String(d).replaceAll(' ', '_')})
                     .on('mouseover', function(d){
                         d3.select(this).select('.trajectory').style('stroke-width', 3)
                     }).on('mouseout', function(d){
                         d3.select(this).select('.trajectory').style('stroke-width', 1)
-                    });
+                    })
+                    .style('display', 'none');
 
                 //function to collect line points for each artist
                 function make_trajectory(name) {
@@ -492,10 +508,24 @@
                     .append('g')
                     .attr('class', 'song')
                     .on('mouseover', function(d){
-                        tool_tip.show(d);
-                    })
+                        d3.select('.diy_tool_tip')
+                            .style('left', function(){
+                                var x = d3.event.pageX
+                                console.log(x)
+                                return (x + 20) + 'px';
+                            }).style('top', function(){
+                                var y = d3.event.pageY
+                                console.log(y)
+                                return (y + 20) + 'px';
+                            })
+                            .style('display', 'inline')
+                            .select('p')
+                            .html(d.search_title + " by " + d.artist+"<br> Peaked at #"+ d[position_variable] +" in "+ ttTime(d[date_variable]));
+                        //tool_tip.show(d);
+                        })
                     .on('mouseout', function(d){
-                        tool_tip.hide();
+                        d3.select('.diy_tool_tip').style('display', 'none');
+                        //tool_tip.hide();
                     });
 
                 //draw circle to represent total lyrics of each song -- first date
@@ -529,20 +559,27 @@
             }
             draw_chart('_h100')
 
+            //SCROLL TRIGGERS - ENTER VIEW
+            enterView({
+                selector: '.h100_step',
+                enter: function(el) {
+                    el.classList.add('entered');
+                    this_filter = el.id; // store filter/element id
+                    console.log(this_filter)
+                    //display artist dots when scrolled into view
+                    svg.select('#'+this_filter).style('display', 'inline')
+                },
+                exit: function(el){
+                },
+                offset: 0.25, // enter at bottom of viewport
+            });
          }); </script>
     <script>
         d3.csv("https://raw.githubusercontent.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/master/hot100_radio_streaming_sales_Kpop.csv", d3.autoType).then(function(data){
             //sort data by date
             data = data.sort((a,b) => d3.ascending(a.chart_date_h100, b.chart_date_h100))
             
-            //assign data w/o hot 100 value to 101 position so they show up at end
-            for (var i=0; i < data.length; i ++) {
-                if (data[i]['peak_position_h100'] > 0) {
-                    continue;
-                } else {
-                    data[i]['peak_position_h100'] = 101;
-                }
-            }
+
             //sort data by hot 100 position
             data = data.sort((a,b) => d3.ascending(a.peak_position_h100, b.peak_position_h100))
             console.log(data)
@@ -656,16 +693,6 @@
 
             //tooltips :D
             var ttTime = d3.timeFormat("%B %Y");
-                var tool_tip = d3.tip()
-                            .attr("class", "svg_tool_tip")
-                            .offset([-5, 0])
-                            .html(function(d){  return d.search_title + " by " + d.artist+"<br>"
-                                                    +"H100: "+d.peak_position_h100+"<br>"
-                                                    +"Radio: "+d.peak_position_radio+"<br>"
-                                                    +"Streaming: "+d.peak_position_streaming+"<br>"
-                                                    +"Sales: "+d.peak_position_sales+"<br>"
-                                                    +"%eng: "+d.english_percentage+"<br>"});
-                    sub_svg.call(tool_tip);
             
 
             //create groups for each song
@@ -770,7 +797,32 @@
             } show_not_h100()            
 
             songs.on('mouseover', function(d){
-                                tool_tip.show(d);
+                            //display tooltips
+                            d3.select('.diy_tool_tip')
+                                .style('left', function(){
+                                    var x = d3.event.pageX
+                                    console.log(x)
+                                    return (x + 20) + 'px';
+                                }).style('top', function(){
+                                    var y = d3.event.pageY
+                                    console.log(y)
+                                    return (y + 20) + 'px';
+                                })
+                                .style('display', 'inline')
+                                .select('p')
+                                //display relevant positions
+                                .html(function (){
+                                    var output = d.search_title + " by " + d.artist;
+                                    if (d.peak_position_h100 > 0){
+                                        output = output+"<br>" +"H100: "+d.peak_position_h100
+                                    } if (d.peak_position_sales > 0){
+                                        output = output +"<br>"+"Sales: "+d.peak_position_sales
+                                    } if (d.peak_position_streaming > 0){
+                                        output = output+"<br>" + "Streaming: "+d.peak_position_streaming
+                                    }if (d.peak_position_radio > 0){
+                                        output = output +"<br>"+"Radio: "+d.peak_position_radio
+                                    }
+                                    return output; });
 
                                 //draw path between all the circles for that song, using stored node positions
                                 sub_svg.append('path')
@@ -793,7 +845,7 @@
                             })
                             .on('mouseout', function(){
                                 sub_svg.select('.song_path').remove()
-                                tool_tip.hide();
+                                d3.select('.diy_tool_tip').style('display', 'none')
                             })
 
         });</script>
