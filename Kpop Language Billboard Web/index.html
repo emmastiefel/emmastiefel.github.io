@@ -42,8 +42,9 @@
             top: 0%;
         }
         .plot_caption{
-            width: 70%;
-            margin-left: 15%;
+            font-size: smaller;
+            width: 90%;
+            margin-left: 5%;
         }
         .h100_step {
             position: relative;
@@ -70,7 +71,7 @@
         .tooltip {
             position: relative;
             display: inline;
-            border-bottom: 3px solid #801E8F;
+            border-bottom: 3px dashed #801E8F;
         }
         .tooltip .tooltiptext {
             visibility: hidden;
@@ -83,7 +84,7 @@
             
             /* Position the tooltip */
             position: absolute;
-            width: 400px;
+            width: 300px;
             bottom: 100%;
             left: 50%;
             margin-left: -200px;
@@ -91,6 +92,10 @@
         }
         .tooltip:hover .tooltiptext {
             visibility: visible;
+        }
+        .tooltip:hover {
+            cursor: help;
+            border-bottom: 3px solid #801E8F;
         }
         text{
             font-family: sans-serif;
@@ -104,7 +109,7 @@
     </style>
 </head>
 <body>
-    <div class = 'text'>
+    <div class = 'text' style='margin-bottom: 250px; margin-top: 250px;'>
         <h1><strong>K-pop, Language, and the Billboard Hot 100</strong></h1>
 
 
@@ -226,7 +231,7 @@
         </p>
     </div>
 
-    <div class='h100_step' id='Pinkfong'>
+    <div class='h100_step' id='Pinkfong' style='margin-bottom: 250px;'>
         <h2>Pinkfong?</h2>
 
 
@@ -251,13 +256,30 @@
     <p>
     What does that blueprint look like for K-pop songs? The following section answers this question by adding data about K-pop songs on Billboard’s Digital Song Sales, Streaming Songs, and Radio Songs charts to the Hot 100 data. A song’s rank on these charts isn’t the same as the overall number of sales, streams, and radio plays it earned, but it still illustrates how these songs made it onto the Hot 100.
     </p>
-    <p>
-        <em>The below chart displays all K-pop songs that have appeared on the Billboard Hot 100, Digital Song Sales, Streaming Songs, and Radio Songs charts, as listed by <a href="https://en.wikipedia.org/wiki/List_of_K-pop_songs_on_the_Billboard_charts#Billboard_Hot_100_(Complete)">this Wikipedia page</a> with a few edits. Each circle represents a song, with the green shapes representing the percentage of lyrics originally in English and the pink representing the lyrics originally in Korean. Each song is displayed at the highest position it achieved on each chart. Hover over a song to reveal lines connecting all of its chart appearances; if no lines appear, the song only ranked on one chart. Note that the Digital Song Sales, Streaming Songs, and Radio Songs charts only list 50 positions.</em>
-        </p>
 </div>
 
 <div class='subcharts'>
     <div class='subcharts_container'>
+        <svg></svg>
+        <div class='plot_caption'>
+            <p>
+                <em>The above chart displays all K-pop songs that have appeared on the Billboard Hot 100, Digital Song Sales, Streaming Songs, and Radio Songs charts, as listed by <a href="https://en.wikipedia.org/wiki/List_of_K-pop_songs_on_the_Billboard_charts#Billboard_Hot_100_(Complete)">this Wikipedia page</a> with a few edits. Each circle represents a song, with the green shapes representing the percentage of lyrics originally in English and the pink representing the lyrics originally in Korean. Each song is displayed at the highest position it achieved on each chart. Hover over a song to reveal lines connecting all of its chart appearances; if no lines appear, the song only ranked on one chart. Note that the Digital Song Sales, Streaming Songs, and Radio Songs charts only list 50 positions.</em>
+                </p>
+        </div>
+    </div>
+    <div class='subchart_step' id='_h100'>
+        <p>
+            This chart gives an overview of all K-pop songs that have appeared on the Hot 100, Digital Song Sales, Streaming Songs, and Radio Songs charts. The size of each circle corresponds to the number of K-pop songs that have made it onto the chart, and the average percentage of English lyrics for that chart is shown as well.
+            </p>
+            <p>
+            As the chart suggests, the short answer to how most K-pop songs make it onto the Hot 100 is sales. Thanks to dedicated fans, songs from BTS and Blackpink, the most popular K-pop groups in the US, are more likely to make it onto the Sales chart than the Hot 100. This includes songs with more Korean lyrics and more b-side songs, whereas we’ve seen that the Hot 100 favors English-heavy title tracks.
+            </p>
+            <p>
+            Conversely, it’s also clear from this chart that almost all K-pop songs become popular despite, and certainly not because of, their radio airplay numbers. Thanks to DJs’ reluctance to give non-English songs a chance, most K-pop songs could never come close to mainstream US songs in terms of radio plays. 
+            </p>
+            <p>
+            The overall takeaway is that the recent success of K-pop in the US is due mostly to intense fan support rather than passive listening, though there are certainly people who listen to K-pop songs casually. Scroll down for a more detailed look at how K-pop songs have fared on each chart. 
+            </p>
     </div>
     <div class='subchart_step' id='_sales'>
         <h2>Digital Sales</h2>
@@ -290,7 +312,7 @@
         Before 2013, however, Billboard didn’t include YouTube views in its streaming numbers. The breakout success of “Gangnam Style” was <a href="https://pitchfork.com/thepitch/psys-gangnam-style-changed-pop-music-whether-you-like-it-or-not/">one of the reasons the rule changed</a>, with an immediate impact on the types of songs that made it into the charts. After the modification, “<a href="https://www.youtube.com/watch?v=qV0LHCHf-pE">Harlem Shake</a>”, <span class="tooltip">another <a href="https://www.youtube.com/watch?v=8f7wj_RcqYk">video-and-dance-trend-fuelled</a> viral hit,<span class="tooltiptext">Almost everyone who was alive and connected to the internet in 2013 participated in the "Harlem Shake" dance trend — <a href="https://www.youtube.com/watch?v=uLEf36edQws">including predebut BTS.</a></span></span> <a href="https://www.billboard.com/articles/business/8545169/2013-year-of-streaming">reached #1 on the Hot 100,</a> an achievement “Gangnam Style” fell just short of prior to the update.
         </p>
     </div>
-    <div class='subchart_step' id='_radio'>
+    <div class='subchart_step' id='_radio' style='margin-bottom: 250px;'>
         <h2>Radio</h2>
 
 
@@ -308,52 +330,37 @@
         </p>
     </div>
 </div>
-<div class='text'>
-
-<ul>
-
-    <li>English / chart position correlation chart??
-    </li>
-    </ul>
-    <ul>
-    
-    <li>Language is pretty important, especially when it comes to more conservative/institutional bits of us music industry
-    
-    <li>But its changing quickly, especially for younger generations
-    
-    <li>Kpop artists dont need us validation (though they seek it + enjoy it + are influenced by us music), but like they are way popular in many other places — for example sm isnt on this chart but like they doing fine, etc.
-    
-    <li>But us audiences are missing out - and not just on korean artists but like everyone
-    
-    <li>Answer your questions: After 2020, it seems like a large part of the US public may finally be ready to regularly and seriously listen to music that isn’t from their language or culture. But how had K-pop artists fared on the Billboard Hot 100 chart before BTS’ singular achievements? What songs succeeded? And how important is language for artists who hope to break into the US mainstream? 
-    </li>
-    </ul>
+<div class='text' style='margin-bottom: 250px;'>
+    <p>
+        We’ve seen that the K-pop songs that chart on the Hot 100 tend to have more English than Korean lyrics. While US fans of K-pop groups have shown their willingness to buy and stream music across language barriers, radio stations and other gate-kept institutions have consistently reinforced the centrality of English. 
+        </p>
+        <p>
+        Time will tell if Americans’ attitudes towards non-English songs have truly shifted and what neww artists and songs might have a better chance at popularity here as a result. What’s certain, however, is that listeners miss out on so much great music if they refuse to give it a chance only because they can’t immediately understand it. 
+        </p>
 </div>
 <div class='text'>
     <h1>Who am I?</h1>
-
-
-        <p>
-        I’m a white <span class="tooltip">college student<span class="tooltiptext">But soon to be graduate and aspiring data journalist — if you liked this piece, hire me!</span></span> who was born and raised in the US. I definitely don’t speak Korean, but I can read <span class="tooltip">Hangul<span class="tooltiptext">The Korean alphabet.</span></span>
-        </p>
-        <p>
-        and know enough basic vocabulary and grammar to understand many Korean song lyrics without translation. 
-        </p>
-        <p>
-        I started listening to K-pop when I became a fan of BTS in the summer of 2017. I decided to check them out after I stumbled across some tweets analyzing their “<a href="https://www.youtube.com/watch?v=hmE9f-TEutc">Blood Sweat & Tears</a>” music video. The first song that really pulled me in was “<a href="https://www.youtube.com/watch?v=GZjt_sA2eso">Save Me</a>”, then “Blood Sweat & Tears”, then “<a href="https://www.youtube.com/watch?v=xEeFrLSkMm8">Spring Day</a>”, which quickly became my favorite song and remains so to this day. Like so many other beginner BTS fans, I decided that I wanted to learn the names of each member. After closely studying the “<a href="https://www.youtube.com/watch?v=BVwAVbKYYeM">Dope</a>” music video, working my way through their entire discography, and watching more “crack” videos than I care to admit, I knew that BTS was well worth my time. 
-        </p>
-        <p>
-        I started listening to other Korean artists around the same time (including K-indie and K-hip-hop singers), largely thanks to Spotify and YouTube’s recommendation algorithms. If you want proof that I really have listened to a wide variety of Korean songs, here’s a random selection of my favorite songs by artists other than BTS: “<a href="https://www.youtube.com/watch?v=nM0xDI5R50E">BBIBBI</a>”, “<a href="https://www.youtube.com/watch?v=WB4547-tSJA">Gang Gang Schiele</a>”, “<a href="https://www.youtube.com/watch?v=ScSn235gQx0">TWIT</a>”, “<a href="https://www.youtube.com/watch?v=zndvqTc4P9I">Icy</a>”, “<a href="https://www.youtube.com/watch?v=RKhsHGfrFmY">Crooked</a>”, “<a href="https://www.youtube.com/watch?v=2gXjAWqCc2g">Luvproof</a>”, “<a href="https://www.youtube.com/watch?v=6sHIq41sI-w">TOUCH</a>”, “<a href="https://www.youtube.com/watch?v=44EpAfRreJ4">haPPiness</a>”, and “<a href="https://www.youtube.com/watch?v=595hs1Ri-V4">Organic Life</a>”.  In the fall of 2018, I studied in Seoul for a semester, which introduced me to more K-pop artists and strengthened my limited understanding of Korean. I listened to many new K-pop songs as they were released, but I wasn’t plugged into the social media communication networks that keep hardcore fans updated on artists and fandom conversations. 
-        </p>
-        <p>
-        That changed in the spring of 2020 when I, like so many others, decided to create a stan Twitter account to escape lockdown boredom. I knew exactly when “Dynamite” and <em>BE</em> would be released, what the collectively-decided comeback goals were for each, and played a very small part in achieving those goals by streaming and buying music. 
-        </p>
-        <p>
-        I also looked up the translations for every track on <em>BE</em> as soon as they were available and regularly revisit translations for my favorite songs. I rarely pay close attention to the lyrics of English songs because I don’t feel like I have to. With songs by BTS and other artists who mostly don’t perform in English, I either completely ignore the lyrical meaning or take the time to read through it line by line and commit it to memory. My personal experience engaging with music across a language barrier, therefore, is similar to what Ellie Bate <a href="https://www.buzzfeed.com/eleanorbate/bts-bang-bang-con-live-concert-army">described in an article for Buzzfeed</a>: “the language barrier actually works as a means to encourage fans to look deeper into the group's music and analyse translations of their lyrics.” 
-        </p>
-        <p>
-        You can find the code used to collect, process, and analyze the data in this piece here: <a href="https://github.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/tree/master">https://github.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/tree/master</a>. 
-        </p>
+    <p>
+    I’m a white <span class="tooltip">college student<span class="tooltiptext">But soon to be graduate and aspiring data journalist — if you liked this piece, hire me!</span></span> who was born and raised in the US. I definitely don’t speak Korean, but I can read <span class="tooltip">Hangul<span class="tooltiptext">The Korean alphabet.</span></span>
+    </p>
+    <p>
+    and know enough basic vocabulary and grammar to understand many Korean song lyrics without translation. 
+    </p>
+    <p>
+    I started listening to K-pop when I became a fan of BTS in the summer of 2017. I decided to check them out after I stumbled across some tweets <span class="tooltip">analyzing their “<a href="https://www.youtube.com/watch?v=hmE9f-TEutc">Blood Sweat & Tears</a>” music video.<span class="tooltiptext">There is a huge community of "theorist" fans who produce often brilliant and always complex analyses of BTS' intertextual works that I've barely even scratched the surface of.</span></span> The first song that really pulled me in was “<a href="https://www.youtube.com/watch?v=GZjt_sA2eso">Save Me</a>”, then “Blood Sweat & Tears”, then “<a href="https://www.youtube.com/watch?v=xEeFrLSkMm8">Spring Day</a>”, which quickly became my favorite song and remains so to this day. Like so many other beginner BTS fans, I decided that I wanted to learn the names of each member. <span class="tooltip">After closely studying the “<a href="https://www.youtube.com/watch?v=BVwAVbKYYeM">Dope</a>” music video,<span class="tooltiptext">This music video is useful for learning the members’ names and voices because they perform in easily distinguishable uniforms.</span></span> and working my way through their entire discography I knew that BTS was well worth my time. 
+    </p>
+    <p>
+    I started listening to other Korean artists around the same time (including K-indie and K-hip-hop singers), largely thanks to Spotify and YouTube’s recommendation algorithms. If you want proof that I really have listened to a wide variety of Korean songs, here’s a random selection of my favorite songs by artists other than BTS: “<a href="https://www.youtube.com/watch?v=nM0xDI5R50E">BBIBBI</a>”, “<a href="https://www.youtube.com/watch?v=WB4547-tSJA">Gang Gang Schiele</a>”, “<a href="https://www.youtube.com/watch?v=ScSn235gQx0">TWIT</a>”, “<a href="https://www.youtube.com/watch?v=zndvqTc4P9I">Icy</a>”, “<a href="https://www.youtube.com/watch?v=RKhsHGfrFmY">Crooked</a>”, “<a href="https://www.youtube.com/watch?v=2gXjAWqCc2g">Luvproof</a>”, “<a href="https://www.youtube.com/watch?v=6sHIq41sI-w">TOUCH</a>”, “<a href="https://www.youtube.com/watch?v=44EpAfRreJ4">haPPiness</a>”, and “<a href="https://www.youtube.com/watch?v=595hs1Ri-V4">Organic Life</a>”.  In the fall of 2018, I studied in Seoul for a semester, which introduced me to more K-pop artists and strengthened my limited understanding of Korean. I listened to many new K-pop songs as they were released, but I wasn’t plugged into the social media communication networks that keep hardcore fans updated on artists and fandom conversations. 
+    </p>
+    <p>
+    That changed in the spring of 2020 when I, like so many others, decided to create a <span class="tooltip">stan Twitter<span class="tooltiptext">”Stan Twitter” simply refers to digital communities of fans of BTS and other artists on the platform.</span></span> account to escape lockdown boredom. I knew exactly when “Dynamite” and <em>BE</em> would be released, what the collectively-decided comeback goals were for each, and played a very small part in achieving those goals by streaming and buying music. 
+    </p>
+    <p>
+    I also looked up the translations for every track on <em>BE</em> as soon as they were available and regularly revisit translations for my favorite songs. I rarely pay close attention to the lyrics of English songs because I don’t feel like I have to. With songs by BTS and other artists who mostly don’t perform in English, I either completely ignore the lyrical meaning or take the time to read through it line by line and commit it to memory. My personal experience engaging with music across a language barrier, therefore, is similar to what Ellie Bate <a href="https://www.buzzfeed.com/eleanorbate/bts-bang-bang-con-live-concert-army">described in an article for Buzzfeed</a>: “the language barrier actually works as a means to encourage fans to look deeper into the group's music and analyse translations of their lyrics.” 
+    </p>
+    <p>
+    You can find the code used to collect, process, and analyze the data in this piece here: <a href="https://github.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/tree/master">https://github.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/tree/master</a>. 
+    </p>
 </div>
     <script>
          d3.csv("https://raw.githubusercontent.com/emmastiefel/Kpop-Language-Billboard-Data-Processing/master/hot100_radio_streaming_sales_Kpop.csv", d3.autoType).then(function(data){
@@ -565,7 +572,6 @@
                 enter: function(el) {
                     el.classList.add('entered');
                     this_filter = el.id; // store filter/element id
-                    console.log(this_filter)
                     //display artist dots when scrolled into view
                     svg.select('#'+this_filter).style('display', 'inline')
                 },
@@ -587,22 +593,22 @@
             ////PLOT FOR LANGUAGE AND CHART POSITION
             //create svg
             var w = 500
-            var h = 600
+            var h = 450
             var p_h = 40
             var p_w = 60
             var sub_svg = d3.select('.subcharts_container')
-                        .append('svg')
+                        .select('svg')
                         .attr("viewBox", '0 0 ' + w +' ' + h);
 
             //create band scale for each song
             var chart_labels = ['_h100', '_sales', '_streaming', '_radio'];
-            const chart_heights = {'_h100': p_w + 40, '_sales': p_w + 190, '_streaming': w-p_w-60, '_radio': w-p_w}
+            const chart_heights = {'_h100': p_w + 40, '_sales': p_w + 200, '_streaming': w-p_w- 40, '_radio': w-45}
             const chart_names = {'_h100': ['Hot 100', ''], '_sales': ['Digital Song', 'Sales'], '_streaming': ['Streaming', 'Songs'], '_radio': ['Radio', 'Songs']}
                             
             //create chart position scale (map to height)
             var chart_scale = d3.scaleLinear()
                                 .domain([100, 1])
-                                .range([h-p_h, p_h])
+                                .range([h-p_h/4, p_h])
 
             ///labels + axes///
             //lines for each chart
@@ -612,7 +618,7 @@
                     .append('path')
                     .attr('d', function(d){
                         if (d == '_h100'){
-                            return d3.line()([[chart_heights[d], p_h], [chart_heights[d], h-p_h]])
+                            return d3.line()([[chart_heights[d], p_h], [chart_heights[d], h-p_h/4]])
                         } else{
                             //other charts only have 50 positions!!
                             return d3.line()([[chart_heights[d], p_h], [chart_heights[d], chart_scale(50)]])
@@ -627,7 +633,7 @@
                     .append('text')
                     .attr('class', 'chart_titles')
                     .attr('x', function(d){ return chart_heights[d]})
-                    .attr('y', p_h/4)
+                    .attr('y', p_h/2)
                     .style('text-anchor', 'middle');
             chart_titles.append('tspan')
                     .text(function(d){ return chart_names[d][0]});
@@ -703,13 +709,17 @@
                             .attr('id', function(d){ 
                                 //create variable to store circle centerpoints for this song.... yeet
                                 d['song_points'] = []
-                                return d.unique_id})
-                            .style('display', function(d){
-                                if (d.peak_position_h100 > 100){
-                                    return 'none';
-                                }
-                            });
-            
+                                return d.unique_id});
+
+             //function to display individual songs + hide averages
+             function show_songs(chart_label) {
+                sub_svg.selectAll('.'+chart_label+'_average')
+                    .style('display', 'none');
+                songs.selectAll('.'+chart_label+'_circle')
+                    .style('display', 'inline');
+                songs.selectAll('.'+chart_label+'_partial')
+                    .style('display', 'inline');
+            }  
 
             //function to draw circles for each song
             //draw circle to represent total lyrics of each song
@@ -738,13 +748,15 @@
                         d_x = chart_heights[chart_label] + (j)*(circle_r*2+1); 
 
                         d['node_positions_'+chart_label] = {'x': d_x, 'fy': d_y}
+                        //d['node_positions_'+chart_label] = {'x': d_x, 'y': d_y}
 
                         //draw circles for total lyrics
                         sub_svg.select('#'+d['unique_id'])
                                 .append('circle')
                                 .attr('class', chart_label+'_circle')
                                 .attr('r', circle_r)
-                                .style('fill', '#C744DB');
+                                .style('fill', '#C744DB')
+                                .style('display', 'none');
                         //draw partiall circle to represent english lyrics
                         sub_svg.select('#'+d['unique_id'])
                             .append('path')
@@ -759,9 +771,36 @@
                                     .endAngle((Math.PI * 2)* this_ratio); 
                                 return arcGenerator();
                             })
-                            .style('fill', '#2EDBAA');
+                            .style('fill', '#2EDBAA')
+                            .style('display', 'none');
                     }
                 }
+
+
+
+                //draw average circle
+                sub_svg.append('circle')
+                    .attr('class', chart_label+'_average')
+                    .attr('cx', chart_heights[chart_label])
+                    .attr('cy', chart_scale(d3.mean(chart_data.map(d => d['peak_position'+chart_label]))))
+                    .attr('r', Math.sqrt(chart_data.length * circle_r**2))
+                    .style('fill', '#C744DB');
+                sub_svg.append('path')
+                    .attr('class', chart_label+'_average')
+                    .attr("d", function(d){
+                                var this_r = Math.sqrt(chart_data.length * circle_r**2);  
+                                var this_ratio = d3.mean(chart_data.map(d => d.english_percentage));
+                                var arcGenerator = d3.arc()
+                                    .outerRadius(this_r)
+                                    .innerRadius(0)
+                                    .startAngle(0)
+                                    .endAngle((Math.PI * 2)* this_ratio); 
+                                return arcGenerator();
+                            })
+                    .attr("transform", function(d){
+                            return "translate("+chart_heights[chart_label]+","+chart_scale(d3.mean(chart_data.map(d => d['peak_position'+chart_label])))+")"
+                        })
+                    .style('fill', '#2EDBAA');
 
 
                 //force sim to avoid overlap
@@ -771,6 +810,7 @@
                     .force('collision', d3.forceCollide().radius(circle_r))
                     //keep close to original x-position if possible
                     .force('x', d3.forceX().x(chart_heights[chart_label]))
+                    //.force('y', d3.forceY().y(chart_scale(d3.mean(chart_data.map(d => d['peak_position'+chart_label])))))
                     .on('tick', function(){
                         sub_svg.selectAll('.'+chart_label+'_circle')
                             .attr('cy', function(d){
@@ -791,10 +831,7 @@
                 draw_song_circles(chart_label)
             }
             
-            //function to display songs not on hot 100 :)
-            function show_not_h100() {
-                songs.style('display', 'inline');
-            } show_not_h100()            
+                      
 
             songs.on('mouseover', function(d){
                             //display tooltips
@@ -847,6 +884,22 @@
                                 sub_svg.select('.song_path').remove()
                                 d3.select('.diy_tool_tip').style('display', 'none')
                             })
+
+
+        //SCROLL TRIGGERS - ENTER VIEW
+        enterView({
+                selector: '.subchart_step',
+                enter: function(el) {
+                    el.classList.add('entered');
+                    this_filter = el.id; // store filter/element id
+                    //display artist dots when scrolled into view
+                    show_songs(this_filter);
+                },
+                exit: function(el){
+                },
+                offset: 0.7, // enter at top of viewport
+            });
+            
 
         });</script>
     
