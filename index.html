@@ -69,8 +69,8 @@
                 display: var(--clip-display);
             }
             .clip__img {
-                display: block;
-                width: 30%;
+                display: inline;
+                height: 150px;
             }
             button {
                 background: none;
@@ -247,13 +247,10 @@
                             }});
 
                     //add visuals
-                    clips.append('img')
-                        .attr('class', 'clip__img')
-                        .attr('id', 'static')
-                        .attr('src', function(d) {
-                            console.log(d.Visuals)
-                            return 'visa-fees-static.png'});
-                    
+                    clips.append('div')
+                        .html(d.Visuals)
+                        
+
                             
                     //add text
                     clips.append('p')
