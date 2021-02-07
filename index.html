@@ -250,7 +250,9 @@
                     clips.append('img')
                         .attr('class', 'clip__img')
                         .attr('id', 'static')
-                        .attr('src', 'visa-fees-static.png');
+                        .attr('src', function(d) {
+                            console.log(d.Visuals)
+                            return 'visa-fees-static.png'});
                     
                             
                     //add text
