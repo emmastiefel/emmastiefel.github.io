@@ -68,9 +68,14 @@
             .clip {
                 display: var(--clip-display);
             }
+            .clip__img__container {
+                margin-bottom: 15px;
+            }
             .clip__img {
-                display: inline;
-                height: 150px;
+                display: inline-block;
+                width: 100%;
+                max-width: 400px;
+                padding: 5px;
             }
             button {
                 background: none;
@@ -189,7 +194,7 @@
                 <hr class='clip-rule'>
                 <button class='show-clips'>Click to see all of my work.</button>                
                 <script>
-                    d3.csv("Clips List.csv", function(d){
+                    d3.csv("Clips List - Visuals - Clips List.csv", function(d){
                         //function to parse time
                         tParser = d3.timeParse("%m/%d/%Y");
                     //process data columns
@@ -197,6 +202,7 @@
                         Link: d["Link"],
                         Title: d["Title"],
                         Skills: d["Skills"],
+                        Visuals: d["Visuals"],
                         Importance: parseInt(d["Importance"]),
                         Description: d["Description"],
                         Date: tParser(d["Date Published"]),
@@ -248,7 +254,8 @@
 
                     //add visuals
                     clips.append('div')
-                        .html(d.Visuals)
+                        .attr('class', 'clip__img__container')
+                        .html(function(d){ return d.Visuals})
                         
 
                             
