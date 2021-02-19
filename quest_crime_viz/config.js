@@ -8,6 +8,7 @@ var config = {
     title: 'Safety around Minerva Residence Halls',
     subtitle: 'A descriptive and interesting subtitle to draw in the reader',
     byline: 'by jasen and emma',
+    introduction: 'intro.html',
     footer: 'Source: source citations, etc.',
     chapters: [
         { //section 1
