@@ -100,13 +100,26 @@
             width: 100%;
             opacity: 1.0;
         }
-
+        .introduction {
+            width: 50%;
+            margin-left: 25%;
+            text-align: left;
+        }
         @media (max-width: 750px) {
             .centered, .lefty, .righty, .fully {
                 width: 90vw;
                 margin: 0 auto;
             }
         }
+        
+        /* Fix issue on mobile browser where scroll breaks  
+        @media screen and (prefers-reduced-motion: reduce) { 
+
+            !!!!!!
+            make setting to reduce map zoom
+            !!!!!!!
+            
+        }*/
 
         /* Fix issue on mobile browser where scroll breaks  */
         .mapboxgl-canvas-container.mapboxgl-touch-zoom-rotate.mapboxgl-touch-drag-pan, 
@@ -183,6 +196,7 @@ if (config.introduction) {
     // https://www.w3schools.com/howto/howto_html_include.asp
     var introduction = document.createElement('div');
     introduction.setAttribute('w3-include-html', config.introduction)
+    introduction.setAttribute('class', 'introduction')
     header.appendChild(introduction);
 }
 
