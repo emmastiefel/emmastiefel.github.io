@@ -12,17 +12,16 @@ var config = {
     footer: 'Source: source citations, etc.',
     chapters: [
         { //section 1
-            id: 'slug-style-id',
+            id: 'section1',
             alignment: 'left',
             hidden: false,
-            title: 'Total Crime',
-            //image: './path/to/image/source.png',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            html: 'section1.html',
             location: {
-                center: [-122.40939, 37.78358],
-                zoom: 14,
+                center: { lon: -122.41302, lat: 37.78360 },
+                zoom: 16.00,
                 pitch: 0.00,
                 bearing: 0.00
+                //center: [-122.40939, 37.78358],
             },
             mapAnimation: 'flyTo',
             rotateAnimation: false,
@@ -30,30 +29,41 @@ var config = {
             onChapterEnter: [
                  {
                      layer: 'total',
-                     opacity: 0.5,
-                     'stroke-opacity': 1
+                     opacity: 0.75
                  }
             ],
-            onChapterExit: [
-                {
-                    layer: 'total',
-                    opacity: 0,
-                    'stroke-opacity': 0
-                }
-            ]
+            onChapterExit: []
         },
         { //section 2
-            id: 'other-identifier',
-            alignment: 'right',
+            id: 'section2',
+            alignment: 'left',
             hidden: false,
-            title: 'Larceny Theft',
-            viz: "res_category_counts",
-            //image: './path/to/image/source.png',
-            description: 'Copy these sections to add to your story.',
+            html: 'section2.html',
             location: {
-                //center: [-122.40847, 37.79186 ], 851 center
-                center: [-122.40939, 37.78358],
-                zoom: 14,
+                center: { lon: -122.42800, lat: 37.78360 },
+                zoom: 13.96,
+                pitch: 0.00,
+                bearing: 0.00
+            },
+            mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [],
+           onChapterExit: [
+            {
+                layer: 'total',
+                opacity: 0
+            }
+           ]
+        },
+        { //section 3
+            id: 'section3',
+            alignment: 'left',
+            hidden: false,
+            html: 'section3.html',
+            location: {
+                center: { lon: -122.42800, lat: 37.78360 },
+                zoom: 13.96,
                 pitch: 0.00,
                 bearing: 0.00
             },
@@ -62,16 +72,28 @@ var config = {
             callback: '',
             onChapterEnter: [
                 {
-                    layer: 'larceny theft',
-                    opacity: 0.5
+                    layer: 'violent_crime',
+                    opacity: 0.75
                 }
-           ],
-           onChapterExit: [
-               {
-                   layer: 'larceny theft',
-                   opacity: 0
-               }
-           ]
+            ],
+           onChapterExit: []
+        },
+        { //section 4
+            id: 'section4',
+            alignment: 'right',
+            hidden: false,
+            html: 'section4.html',
+            location: {
+                center: { lon: -122.39609, lat: 37.78253 },
+                zoom: 13.96,
+                pitch: 0.00,
+                bearing: 0.00
+            },
+            mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [],
+           onChapterExit: []
         }
     ]
 };
