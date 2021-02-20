@@ -76,7 +76,12 @@ var config = {
                     opacity: 0.75
                 }
             ],
-           onChapterExit: []
+           onChapterExit: [
+            {
+                layer: 'violent_crime',
+                opacity: 0
+            }
+           ]
         },
         { //section 4
             id: 'section4',
@@ -86,6 +91,108 @@ var config = {
             location: {
                 center: { lon: -122.39609, lat: 37.78253 },
                 zoom: 13.96,
+                pitch: 0.00,
+                bearing: 0.00
+            },
+            mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [],
+           onChapterExit: []
+        },
+        { //section 5 - catcalling
+            id: 'section5',
+            alignment: 'right',
+            hidden: false,
+            html: 'section5.html',
+            location: {
+                center: { lon: -122.39609, lat: 37.78253 },
+                zoom: 13.96,
+                pitch: 0.00,
+                bearing: 0.00
+            },
+            mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [],
+           onChapterExit: []
+        },
+        { //section 6 - bias
+            id: 'section6',
+            alignment: 'right',
+            hidden: false,
+            html: 'section6.html',
+            location: {
+                center: { lon: -122.39609, lat: 37.78253 },
+                zoom: 13.96,
+                pitch: 0.00,
+                bearing: 0.00
+            },
+            mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [],
+           onChapterExit: []
+        },
+        { //section 7 - seoul
+            id: 'section7',
+            alignment: 'left',
+            hidden: false,
+            html: 'section7.html',
+            location: {
+                center: { lon: 126.97699, lat: 37.50654 },
+                zoom: 11.50,
+                pitch: 0.00,
+                bearing: 0.00
+            },
+            mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [],
+           onChapterExit: []
+        },
+        { //section 8 - other res halls
+            id: 'section8',
+            alignment: 'left',
+            hidden: false,
+            html: 'section8.html',
+            location: {
+                center: { lon: 8.08309, lat: 16.38562 },
+                zoom: 2.07,
+                pitch: 0.00,
+                bearing: 0.00
+            },
+            mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [],
+           onChapterExit: []
+        },
+        { //section 9 - conclusion
+            id: 'section9',
+            alignment: 'left',
+            hidden: false,
+            html: 'section9.html',
+            location: {
+                center: { lon: 8.08309, lat: 16.38562 },
+                zoom: 2.07,
+                pitch: 0.00,
+                bearing: 0.00
+            },
+            mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [],
+           onChapterExit: []
+        },
+        { //section 10 - methodology
+            id: 'section10',
+            alignment: 'left',
+            hidden: false,
+            html: 'section10.html',
+            location: {
+                center: { lon: 8.08309, lat: 16.38562 },
+                zoom: 2.07,
                 pitch: 0.00,
                 bearing: 0.00
             },
