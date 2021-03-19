@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- 
+     python -m http.server 8886 &.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>:D</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+
+    </style>
+</head>
+<body>
+    <h1>yeehaw</h1>
+    <div id='map' class='map' style='width: 400px; height: 300px;'></div>
+        <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZW1tYS1tcXVlc3QiLCJhIjoiY2trdDVtdmQyMTdtdTMxbW9ucXY2eXRlayJ9.JyYgyB7A-MvdcQs2Xbs3Ig';
+        var map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/emma-mquest/ckmf6oqvm6fzz17qm8c28203h', // style URL
+            center: { lon: -122.40940, lat: 37.78357 }, // starting position [lng, lat]
+            zoom: 16 // starting zoom
+        });
+
+        map.on('load', function () {
+            //make violent crime layer invisible 
+            //https://docs.mapbox.com/mapbox-gl-js/example/toggle-layers/
+            map.setLayoutProperty('violent_crime_circles', 'visibility', 'none');
+
+
+            //implement tooltips to show intersection counts on hover, hopefully
+            // Create a popup, but don't add it to the map yet.
+            var popup = new mapboxgl.Popup({
+                closeButton: false,
+                closeOnClick: false
+            });
+            map.on('click', 'total_crime_circles', function (e) {
+                
+                var coordinates = e.features[0].geometry.coordinates.slice();
+                var description = e.features[0].properties.Total_Count;
+                
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+                
+                // Populate the popup and set its coordinates
+                // based on the feature found.
+                popup.setLngLat(coordinates).setHTML(description+' crimes reported in 2019').addTo(map);
+            });
+
+    });
+        </script>
+</body>
