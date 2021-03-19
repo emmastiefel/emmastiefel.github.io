@@ -9,12 +9,20 @@
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
     <style>
-
+        :root {
+            /* define color palette */
+            --darkBlack: #000000;
+            --darkRed: #ff0000;
+            --midBlack: #8a8a8a;
+            --midRed: #e65c5c;
+            --lightBlack: #f0efef;
+            --lightRed: #ffe6e6;
+        }
     </style>
 </head>
 <body>
     <h1>yeehaw</h1>
-    <div id='map' class='map' style='width: 400px; height: 300px;'></div>
+    <div id='map' class='map' style='width: 100%; height: 300px;'></div>
         <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoiZW1tYS1tcXVlc3QiLCJhIjoiY2trdDVtdmQyMTdtdTMxbW9ucXY2eXRlayJ9.JyYgyB7A-MvdcQs2Xbs3Ig';
         var map = new mapboxgl.Map({
@@ -55,4 +63,5 @@
 
     });
         </script>
+    <div id='survey-viz' class="flourish-embed" data-src="story/801252"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
 </body>
