@@ -22,6 +22,11 @@
             font-family: sans-serif;
             width: 50%;
             margin-left: 25%;
+            margin-top: 100px;
+        }
+        h1, h2, h3 {
+            text-decoration: underline;
+            text-decoration-color: var(--darkRed)
         }
         .viz {
             width: 500px; 
@@ -36,6 +41,10 @@
     <div id=’introduction’ class='text'>
         <h1>How (un)safe is 16 Turk Street? Analyzing reports of crime and harassment
         around Minerva’s San Francisco residence hall </h1>
+        <p>
+            <em>By Emma Stiefel for <a href="https://www.minervaquest.com/">the Minerva
+            Quest</a></em>
+            </p>
         <p>
         <em>This piece is part one of a series about crime and safety around the 16 Turk
         Street Minerva residence hall. You can also read the second article in the
@@ -396,71 +405,83 @@
         long-term future, during which incident report rates will presumably return to
         pre-pandemic levels.
         </p>
+        <p>
+            <em>This data journalism article is a Minerva Quest Report. It was reviewed to
+            ensure that it adheres to our<a
+            href="https://www.minervaquest.com/content-guidelines/"> content guidelines</a>
+            and<a href="https://www.minervaquest.com/category-definitions/"> category
+            definitions</a>. If you believe that it has violated a content guideline, please
+            reach out by <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSd__5QTJFngEWk5FDKQiSqY_zmvP-3e0zUX2Ak8PTesfXspaA/viewform?usp=sf_link">completing
+            this form</a>. If you have any other feedback, please get in touch by emailing
+            theminervaquest@gmail.com.</em>
+            </p>
     </div>    
 
-        <script>
-        mapboxgl.accessToken = 'pk.eyJ1IjoiZW1tYS1tcXVlc3QiLCJhIjoiY2trdDVtdmQyMTdtdTMxbW9ucXY2eXRlayJ9.JyYgyB7A-MvdcQs2Xbs3Ig';
-        var total_map = new mapboxgl.Map({
-            container: 'total_map', // container ID
-            style: 'mapbox://styles/emma-mquest/ckmf6oqvm6fzz17qm8c28203h', // style URL
-            center:  { lon: -122.40932, lat: 37.78560 }, // starting position [lng, lat]
-            zoom: 13 // starting zoom
-        });
-        var violent_map = new mapboxgl.Map({
-            container: 'violent_map', // container ID
-            style: 'mapbox://styles/emma-mquest/ckmi27zv2g5o917tfhq1m7nq4', // style URL
-            center:  { lon: -122.40932, lat: 37.78560 }, // starting position [lng, lat]
-            zoom: 13 // starting zoom
-        });
 
-        total_map.on('load', function () {
-            //implement tooltips to show intersection counts on hover, hopefully
-            // Create a popup, but don't add it to the map yet.
-            var popup = new mapboxgl.Popup({
-                closeButton: false,
-                closeOnClick: false
-            });
-            total_map.on('click', 'total_crime_circles', function (e) {
-                
-                var coordinates = e.features[0].geometry.coordinates.slice();
-                var description = e.features[0].properties.Total_Count;
-                
-                // Ensure that if the map is zoomed out such that multiple
-                // copies of the feature are visible, the popup appears
-                // over the copy being pointed to.
-                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                }
-                
-                // Populate the popup and set its coordinates
-                // based on the feature found.
-                popup.setLngLat(coordinates).setHTML(parseInt(description)+' crimes reported in 2019').addTo(total_map);
-            });
-        });
+    <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZW1tYS1tcXVlc3QiLCJhIjoiY2trdDVtdmQyMTdtdTMxbW9ucXY2eXRlayJ9.JyYgyB7A-MvdcQs2Xbs3Ig';
+    var total_map = new mapboxgl.Map({
+        container: 'total_map', // container ID
+        style: 'mapbox://styles/emma-mquest/ckmf6oqvm6fzz17qm8c28203h', // style URL
+        center:  { lon: -122.40932, lat: 37.78560 }, // starting position [lng, lat]
+        zoom: 13 // starting zoom
+    });
+    var violent_map = new mapboxgl.Map({
+        container: 'violent_map', // container ID
+        style: 'mapbox://styles/emma-mquest/ckmi27zv2g5o917tfhq1m7nq4', // style URL
+        center:  { lon: -122.40932, lat: 37.78560 }, // starting position [lng, lat]
+        zoom: 13 // starting zoom
+    });
 
-        violent_map.on('load', function () {
-            //implement tooltips to show intersection counts on hover, hopefully
-            // Create a popup, but don't add it to the map yet.
-            var popup = new mapboxgl.Popup({
-                closeButton: false,
-                closeOnClick: false
-            });
-            violent_map.on('click', 'violent_crime_circles', function (e) {
-                
-                var coordinates = e.features[0].geometry.coordinates.slice();
-                var description = e.features[0].properties.Total_Count;
-                
-                // Ensure that if the map is zoomed out such that multiple
-                // copies of the feature are visible, the popup appears
-                // over the copy being pointed to.
-                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                }
-                
-                // Populate the popup and set its coordinates
-                // based on the feature found.
-                popup.setLngLat(coordinates).setHTML(parseInt(description)+' violent crimes reported in 2019').addTo(violent_map);
-            });
+    total_map.on('load', function () {
+        //implement tooltips to show intersection counts on hover, hopefully
+        // Create a popup, but don't add it to the map yet.
+        var popup = new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false
         });
-        </script>
+        total_map.on('click', 'total_crime_circles', function (e) {
+            
+            var coordinates = e.features[0].geometry.coordinates.slice();
+            var description = e.features[0].properties.Total_Count;
+            
+            // Ensure that if the map is zoomed out such that multiple
+            // copies of the feature are visible, the popup appears
+            // over the copy being pointed to.
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+            
+            // Populate the popup and set its coordinates
+            // based on the feature found.
+            popup.setLngLat(coordinates).setHTML(parseInt(description)+' crimes reported in 2019').addTo(total_map);
+        });
+    });
+
+    violent_map.on('load', function () {
+        //implement tooltips to show intersection counts on hover, hopefully
+        // Create a popup, but don't add it to the map yet.
+        var popup = new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false
+        });
+        violent_map.on('click', 'violent_crime_circles', function (e) {
+            
+            var coordinates = e.features[0].geometry.coordinates.slice();
+            var description = e.features[0].properties.Total_Count;
+            
+            // Ensure that if the map is zoomed out such that multiple
+            // copies of the feature are visible, the popup appears
+            // over the copy being pointed to.
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+            
+            // Populate the popup and set its coordinates
+            // based on the feature found.
+            popup.setLngLat(coordinates).setHTML(parseInt(description)+' violent crimes reported in 2019').addTo(violent_map);
+        });
+    });
+    </script>
 </body>
