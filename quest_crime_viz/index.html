@@ -5,6 +5,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A data-driven investigation into the threat of crime around Minerva's residence hall in San Francisco.">
     <title>How (un)safe is 16 Turk Street?</title>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
@@ -34,6 +36,13 @@
         }
         .map {
             height: 300px;
+        }
+
+        @media (max-width: 400px) {
+            .text {
+                margin-left: 5%;
+                width: 90%;
+            }
         }
     </style>
 </head>
