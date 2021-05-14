@@ -264,7 +264,7 @@
                           .attr('class', 'description')
                           .attr('id', function(d, i){ return 'description-' + i})
                           .attr('title', 'Click to show the description of this piece.')
-                          .text(function(d){ return d.Description})
+                          .html(function(d){ return d.Description})
         
                     //expandable description button
                     //<button type="button" class="collapsible">Open Collapsible</button>
